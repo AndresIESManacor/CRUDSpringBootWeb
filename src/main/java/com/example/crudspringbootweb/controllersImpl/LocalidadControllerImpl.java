@@ -54,6 +54,7 @@ public class LocalidadControllerImpl implements LocalidadController {
             model.addAttribute("object",new Factura());
             model.addAttribute("error","TRYING TO SAVE FACTURA THAT EXIST");
         }
+        //MIRAR TAMBIEN POR EL NOMBRE PARA QUE HAYA DOS REPETIDOS
         saveLocalidad(localidad);
         return new RedirectView("/localidades");
     }

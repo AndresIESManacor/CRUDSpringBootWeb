@@ -57,8 +57,11 @@ public class MembresiaControllerImpl implements MembresiaController {
             @RequestParam(value="numFactura", required=true) String numFactura,
             ModelMap model) {
         Optional<Factura> factura = facturaService.findFacturaById(numFactura);
-        factura.ifPresent(value -> saveMembresia(new Membresia(fechaInicio, fechaFin, value)));
-        model.addAttribute("error","FACTURA NOT FOUND");
+        if (factura.isPresent()) {
+            saveMembresia(new Membresia(fechaInicio, fechaFin,factura.get()));
+        } else {
+            model.addAttribute("error","FACTURA NOT FOUND");
+        }
         return new RedirectView("/membresias");
     }
 
