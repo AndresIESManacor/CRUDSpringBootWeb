@@ -6,6 +6,7 @@ import com.example.crudspringbootweb.service.FacturaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,26 +18,44 @@ public class FacturaControllerImpl implements FacturaController {
     @Autowired
     FacturaService facturaService;
 
-    // http://localhost:8888/factura/create (CREATE FACTURA)
-    @RequestMapping(value = "/factura/create",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String facturaadd(@ModelAttribute Factura factura, ModelMap model) {
+    //////////////         FACTURAS FORMULARIOS        ////////////////////
+
+    @RequestMapping(value = "/factura/create", method = RequestMethod.GET)
+    public String create(ModelMap model) {
+        model.addAttribute("type","factura-create");
+        model.addAttribute("object",new Factura());
+        return "formularis/layout-form";
+    }
+
+    @RequestMapping(value = "/factura/update/{id}", method = RequestMethod.GET)
+    public String update(@PathVariable String id, ModelMap model) {
+        Optional<Factura> factura = facturaService.findFacturaById(id);
+        if (factura.isPresent()) {
+            model.addAttribute("type","factura-update");
+            model.addAttribute("object",factura.get());
+            return "formularis/layout-form";
+        }
+        model.addAttribute("error","FACTURA SELECTED DOESNT PRESENT");
+        return "links";
+    }
+
+    //////////////         ROUTES        ////////////////////
+
+    @RequestMapping(value = "/factura/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    public String save(@ModelAttribute Factura factura, ModelMap model) {
         saveFactura(factura);
-        model.addAttribute("facturas",facturaService.findAllFactura());
-        return "tables/layout-table";
+        return "links";
     }
 
 
-    // http://localhost:8888/factura/update (UPDATE FACTURA)
-    @RequestMapping(value = "/factura/update",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String facturasupdate(@ModelAttribute Factura factura, ModelMap model) {
+    @RequestMapping(value = "/factura/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    public String put(@ModelAttribute Factura factura, ModelMap model) {
             updateFactura(factura);
-            model.addAttribute("facturas",facturaService.findAllFactura());
-            return "tables/layout-table";
+            return "links";
     }
 
-    // http://localhost:8888/factura/delete/{id} (DELETE ID)
     @RequestMapping(value = "/factura/delete/{id}", method = RequestMethod.GET, produces = "application/json")
-    public String facturadelete(@PathVariable String id, ModelMap model) {
+    public String delete(@PathVariable String id, ModelMap model) {
         Optional<Factura> factura =  facturaService.findFacturaById(id);
         if (factura.isPresent()) {
             model.addAttribute("factura",factura.get());
@@ -49,10 +68,6 @@ public class FacturaControllerImpl implements FacturaController {
 
     }
 
-
-    /* ------------------------------------------ */
-
-    // http://localhost:8888/facturas (SHOW ALL)
     @RequestMapping(value = "/facturas",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String getAllFactura(ModelMap model) {
@@ -60,7 +75,6 @@ public class FacturaControllerImpl implements FacturaController {
         return "tables/layout-table";
     }
 
-    // http://localhost:8888/factura/String (SHOW ONE)
     @RequestMapping(value = "/factura/{id}",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String findFacturaById(@PathVariable String id, ModelMap model) {
@@ -72,6 +86,10 @@ public class FacturaControllerImpl implements FacturaController {
         model.addAttribute("error","FACTURA NOT FOUNDED");
         return "links";
     }
+
+
+    /* ------------------------------------------ */
+
 
     @Override
     public Factura saveFactura(Factura factura) {

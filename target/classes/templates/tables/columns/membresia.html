@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
 
-<!-- ALL FACTURAS -->
+<!-- ALL MEMBRESIA -->
 <table th:fragment="thead">
   <thead>
   <tr class="row100 head">
@@ -22,18 +22,10 @@
   </thead>
 </table>
 
-<div th:fragment="tbody-compose (membresia)">
+<div th:fragment="tbody-compose (membresias)">
   <table>
     <tbody>
-    <tr class="body" th:each="mItem : ${membresia}">
-      <td class="column-width10 first-column" th:text="${mItem.idMembresia}"></td>
-      <td class="column-width20" th:text="${mItem.fechaInicio}"></td>
-      <td class="column-width20" th:text="${mItem.fechaFin}"></td>
-      <td class="column-width10" th:text="${mItem.factura.numFactura}"></td>
-      <td class="column-width10"><a href="/membresiaC" class="create-column">Create</a></td>
-      <td class="column-width10"><a href="/membresiaU" class="update-column">Update</a></td>
-      <td class="column-width10"><a th:href="@{'/membresia/' + ${mItem.idMembresia}}" class="read-column">Read</a></td>
-      <td class="column-width10"><a th:href="@{'/membresia/delete/' + ${mItem.idMembresia}}" class="delete-column">Delete</a></td>
+    <tr class="row100 body" th:each="membresia : ${membresias}" th:include="tables/columns/membresia :: body-rows(${membresia})">
     </tr>
     </tbody>
   </table>
@@ -42,18 +34,24 @@
 <div th:fragment="tbody-single(membresia)">
   <table>
     <tbody>
-    <tr class="body">
-      <td class="column-width10 first-column" th:text="${membresia.idMembresia}"></td>
-      <td class="column-width20" th:text="${membresia.fechaInicio}"></td>
-      <td class="column-width20" th:text="${membresia.fechaFin}"></td>
-      <td class="column-width10" th:text="${membresia.factura.numFactura}"></td>
-      <td class="column-width10"><a href="/membresiaC" class="create-column">Create</a></td>
-      <td class="column-width10"><a href="/membresiaU" class="update-column">Update</a></td>
-      <td class="column-width10"><a th:href="@{'/membresia/' + ${membresia.idMembresia}}" class="read-column">Read</a></td>
-      <td class="column-width10"><a th:href="@{'/membresia/delete/' + ${membresia.idMembresia}}" class="delete-column">Delete</a></td>
+    <tr class="row100 body" th:include="tables/columns/membresia :: body-rows(${membresia})">
     </tr>
     </tbody>
   </table>
 </div>
+
+
+<tr class="row100 body" th:fragment="body-rows(membresia)">
+  <td class="column-width10 first-column" th:text="${membresia.idMembresia}"></td>
+  <td class="column-width20" th:text="${membresia.fechaInicio}"></td>
+  <td class="column-width20" th:text="${membresia.fechaFin}"></td>
+
+  <td class="column-width10"><a th:href="@{'/factura/'${membresia.factura.numFactura}}" th:text="${membresia.factura.numFactura}"></a></td>
+
+  <td class="column-width10"><a href="/membresia/create" class="create-column">Create</a></td>
+  <td class="column-width10"><a th:href="@{'/membresia/update/' + ${membresia.idMembresia}}" class="update-column">Update</a></td>
+  <td class="column-width10"><a th:href="@{'/membresia/' + ${membresia.idMembresia}}" class="read-column">Read</a></td>
+  <td class="column-width10"><a th:href="@{'/membresia/delete/' + ${membresia.idMembresia}}" class="delete-column">Delete</a></td>
+</tr>
 </body>
 </html>

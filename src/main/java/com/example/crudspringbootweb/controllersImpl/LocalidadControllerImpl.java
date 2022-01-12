@@ -19,66 +19,54 @@ public class LocalidadControllerImpl implements LocalidadController {
     @Autowired
     LocalidadService localidadService;
 
-    // http://localhost:8888/localidad/add (CREATE FACTURA)
-    @RequestMapping(value = "/localidad/add",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String localidadadd(
-            @RequestParam(value="nombreLocalidad", required=true) String nombreLocalidad,
-            @RequestParam(value="codigoPostal", required=true) String codigoPostal,
-            ModelMap model) {
-        try {
-            Localidad localidad = new Localidad();
-            localidad.setNombreLocalidad(nombreLocalidad);
-            localidad.setCodigoPostal(Integer.parseInt(codigoPostal));
-            saveLocalidad(localidad);
-            model.addAttribute("localidades",localidadService.findAllLocalidad());
-        } catch (Exception e) {
-            return null;
+    //////////////         LOCALIZACION    FORMULARIS     ////////////////////
+
+    @RequestMapping(value = "/localidad/create", method = RequestMethod.GET)
+    public String create(ModelMap model) {
+        model.addAttribute("type","localidad-create");
+        model.addAttribute("object",new Localidad());
+        return "formularis/layout-form";
+    }
+
+    @RequestMapping(value = "/localidad/update/{id}", method = RequestMethod.GET)
+    public String update(@PathVariable int id, ModelMap model) {
+        Optional<Localidad> localidad = localidadService.findLocalidadById(id);
+        if (localidad.isPresent()) {
+            model.addAttribute("type","localidad-update");
+            model.addAttribute("object",localidad.get());
+            return "formularis/layout-form";
         }
-        return "tables/layout-table";
+        model.addAttribute("error","LOCALIDAD SELECTED DOESNT PRESENT");
+        return "links";
     }
 
 
+    //////////////         LOCALIZACION  ACTIONS       ////////////////////
 
-    // http://localhost:8888/localidad/update (UPDATE FACTURA)
-    @RequestMapping(value = "/localidad/update",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String localidadupdate(
-            @RequestParam(value="idLocalidad", required=true) String idLocalidad,
-            @RequestParam(value="nombreLocalidad", required=true) String nombreLocalidad,
-            @RequestParam(value="codigoPostal", required=true) String codigoPostal,
-            ModelMap model) {
-        try {
-            Localidad localidad = new Localidad();
-            localidad.setIdLocalidad(Integer.parseInt(idLocalidad));
-            localidad.setNombreLocalidad(nombreLocalidad);
-            localidad.setCodigoPostal(Integer.parseInt(codigoPostal));
-            updateLocalidad(localidad);
-            model.addAttribute("localidades",localidadService.findAllLocalidad());
-            return "tables/layout-table";
-        } catch (Exception e) {
-            model.addAttribute("error",e);
-            return "links";
-        }
+
+    @RequestMapping(value = "/localidad/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    public String save(@ModelAttribute Localidad localidad) {
+        saveLocalidad(localidad);
+        return "links";
     }
 
-    // http://localhost:8888/localidad/delete/{id} (DELETE ID)
+    @RequestMapping(value = "/localidad/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    public String put(@ModelAttribute Localidad localidad) {
+        updateLocalidad(localidad);
+        return "links";
+    }
+
     @RequestMapping(value = "/localidad/delete/{id}", method = RequestMethod.GET, produces = "application/json")
-    public String localidadDelete(@PathVariable int id, ModelMap model) {
+    public String delete(@PathVariable int id, ModelMap model) {
         Optional<Localidad> localidad =  localidadService.findLocalidadById(id);
         if (localidad.isPresent()) {
-            model.addAttribute("localidad",localidad.get());
             deleteLocalidadById(id);
-            return "tables/layout-table";
         } else {
             model.addAttribute("error","LOCALIDAD NOT FOUNDED");
-            return "links";
         }
+        return "links";
     }
 
-
-    /* ------------------------------------------ */
-
-
-    // http://localhost:8888/localidades (SHOW ALL)
     @RequestMapping(value = "/localidades",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String getAllLocalidad(ModelMap model) {
@@ -86,7 +74,6 @@ public class LocalidadControllerImpl implements LocalidadController {
         return "tables/layout-table";
     }
 
-    // http://localhost:8888/localidad/String (SHOW ONE)
     @RequestMapping(value = "/localidad/{id}",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String findLocalidadById(@PathVariable int id, ModelMap model) {
@@ -98,6 +85,10 @@ public class LocalidadControllerImpl implements LocalidadController {
         model.addAttribute("error","FACTURA NOT FOUNDED");
         return "links";
     }
+
+
+    /* ------------------------------------------ */
+
 
     @Override
     public Localidad saveLocalidad(Localidad localidad) {

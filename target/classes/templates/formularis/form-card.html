@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>FORMULARIOS CARDS</title>
 </head>
 <body>
 <div class="background" style="margin-top: 50px" th:fragment="form-card (type, object)">
@@ -14,7 +14,7 @@
 
                         <div th:if="${type} == 'factura-create'">
                             <!-- FORM FACTURA CREATE -->
-                            <form th:action="@{/factura/create}" method="POST" th:object="${object}">
+                            <form th:action="@{/factura/save}" method="POST" th:object="${object}">
                                 <div th:replace="formularis/factura :: factura-field ('CREATE')"></div>
                                 <div class="app-form-group buttons">
                                     <a href="/"><button class="app-form-button">RETURN</button></a>
@@ -25,8 +25,53 @@
 
                         <div th:if="${type} == 'factura-update'">
                             <!-- FORM FACTURA UPDATE -->
-                            <form th:action="@{/factura/update}" method="POST" th:object="${object}">
+                            <form th:action="@{/factura/put}" method="POST" th:object="${object}">
                                 <div th:replace="formularis/factura :: factura-field ('UPDATE')"></div>
+                                <div class="app-form-group buttons">
+                                    <a href="/"><button class="app-form-button">RETURN</button></a>
+                                    <input type="submit" class="app-form-button" value="UPDATE"/>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div th:if="${type} == 'membresia-create'">
+                            <!-- FORM MEMBRESIA CREATE -->
+                            <form th:action="@{/membresia/save}" method="POST">
+                                <div th:replace="formularis/membresia :: membresia-field ('CREATE')"></div>
+                                <div class="app-form-group buttons">
+                                    <button class="app-form-button"><a href="/">RETURN</a></button>
+                                    <input type="submit" class="app-form-button" value="CREATE"/>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div th:if="${type} == 'membresia-update'">
+                            <!-- FORM MEMBRESIA UPDATE -->
+                            <form th:action="@{/membresia/put}" method="POST">
+                                <div th:replace="formularis/membresia :: membresia-field ('UPDATE')"></div>
+                                <div class="app-form-group buttons">
+                                    <a href="/"><button class="app-form-button">RETURN</button></a>
+                                    <input type="submit" class="app-form-button" value="UPDATE"/>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div th:if="${type} == 'localidad-create'">
+                            <!-- FORM LOCALIDAD CREATE -->
+                            <form th:action="@{/localidad/save}" method="POST" th:object="${object}">
+                                <div th:replace="formularis/localizacion :: localidad-field ('CREATE')"></div>
+                                <div class="app-form-group buttons">
+                                    <button class="app-form-button"><a href="/">RETURN</a></button>
+                                    <input type="submit" class="app-form-button" value="CREATE"/>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div th:if="${type} == 'localidad-update'">
+                            <!-- FORM LOCALIDAD UPDATE -->
+                            <form th:action="@{/localidad/put}" method="POST" th:object="${object}">
+                                <div th:replace="formularis/localizacion :: localidad-field ('UPDATE')"></div>
                                 <div class="app-form-group buttons">
                                     <a href="/"><button class="app-form-button">RETURN</button></a>
                                     <input type="submit" class="app-form-button" value="UPDATE"/>

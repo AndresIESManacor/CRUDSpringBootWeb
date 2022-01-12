@@ -4,6 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Data
 @Entity
@@ -30,6 +33,12 @@ public class Membresia {
         this.fechaFin = fechaFin;
         this.factura = factura;
     }
+    public Membresia(int idMembresia, String fechaInicio, String fechaFin, Factura factura) {
+        this.idMembresia = idMembresia;
+        this.fechaInicio = convertStringToTimestamp(fechaInicio);
+        this.fechaFin = convertStringToTimestamp(fechaFin);
+        this.factura = factura;
+    }
 
     public Membresia() {
 
@@ -39,5 +48,14 @@ public class Membresia {
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.factura = factura;
+    }
+
+    public static Timestamp convertStringToTimestamp(String strDate) {
+        strDate = strDate.replace("T"," ");
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return Optional.of(strDate) //
+                .map(str -> LocalDateTime.parse(str, formatter))
+                .map(Timestamp::valueOf) //
+                .orElse(null);
     }
 }

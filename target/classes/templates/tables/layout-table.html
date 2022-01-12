@@ -11,65 +11,80 @@
     <div class="wrap-table100">
         <div class="table100 ver1 m-b-110">
 
-            <!-- TABLE FACTURAS -->
             <div th:if="${facturas} != null">
-                <div th:if="${facturas.size()} > 0">
+                <!-- TABLE FACTURAS -->
+                <div th:if="${facturas.size()} != 0">
                     <div th:replace="tables/tables :: table-facturas (${facturas})"></div>
+                </div>
+                <div th:unless="${facturas.size()} != 0">
+                    THERE IS NO FACTURAS NOW
                 </div>
             </div>
 
-            <!-- TABLE SINGLE FACTURA -->
             <div th:if="${factura} != null">
+                <!-- TABLE SINGLE FACTURA -->
                 <div th:replace="tables/tables :: table-facturas-single (${factura})"></div>
             </div>
 
-            <!-- TABLE MEMBRESIA -->
             <div th:if="${membresias} != null">
-                <div th:if="${membresias.size()} > 0">
+                <!-- TABLE MEMBRESIA -->
+                <div th:if="${membresias.size()} != 0">
                     <div th:replace="tables/tables :: table-membresias (${membresias})"></div>
+                </div>
+                <div th:unless="${membresias.size()} != 0">
+                    THERE IS NO MEMBRESIA NOW
                 </div>
             </div>
 
-            <!-- TABLE SINGLE MEMBRESIA -->
             <div th:if="${membresia} != null">
+                <!-- TABLE SINGLE MEMBRESIA -->
                 <div th:replace="tables/tables :: table-membresia-single (${membresia})"></div>
             </div>
 
 
-            <!-- TABLE LOCALIDAD -->
             <div th:if="${localidades} != null">
-                <div th:if="${localidades.size()} > 0">
+                <!-- TABLE LOCALIDAD -->
+                <div th:if="${localidades.size()} != 0">
                     <div th:replace="tables/tables :: table-localidades (${localidades})"></div>
+                </div>
+                <div th:unless="${localidades.size()} != 0">
+                    THERE IS NO LOCALIDADES NOW
                 </div>
             </div>
 
-            <!-- TABLE SINGLE LOCALIDAD -->
             <div th:if="${localidad} != null">
+                <!-- TABLE SINGLE LOCALIDAD -->
                 <div th:replace="tables/tables :: table-localidad-single (${localidad})"></div>
             </div>
 
 
-            <!-- TABLE USERACOUNT -->
             <div th:if="${useracounts} != null">
-                <div th:if="${useracounts.size()} > 0">
+                <!-- TABLE USERACOUNT -->
+                <div th:if="${useracounts.size()} != 0">
                     <div th:replace="tables/tables :: table-useracounts (${useracounts})"></div>
+                </div>
+                <div th:unless="${useracounts.size()} != 0">
+                    THERE IS NO USERACOUNT NOW
                 </div>
             </div>
 
-            <!-- TABLE SINGLE USERACOUNT -->
             <div th:if="${useracount} != null">
+                <!-- TABLE SINGLE USERACOUNT -->
                 <div th:replace="tables/tables :: table-useracount-single (${useracount})"></div>
             </div>
 
-            <!-- TABLE RESTAURANTES -->
             <div th:if="${restaurants} != null">
-                <div th:if="${restaurants.size()} > 0">
+                <!-- TABLE RESTAURANTES -->
+                <div th:if="${restaurants.size()} != 0">
                     <div th:replace="tables/tables :: table-restaurants (${restaurants})"></div>
+                </div>
+                <div th:unless="${restaurants.size()} != 0">
+                    THERE IS NO RESTAURANTS NOW
                 </div>
             </div>
 
-            <!-- TABLE SINGLE RESTAURANTES -->
             <div th:if="${restaurant} != null">
+                <!-- TABLE SINGLE RESTAURANTES -->
                 <div th:replace="tables/tables :: table-restaurant-single (${restaurant})"></div>
             </div>
         </div>

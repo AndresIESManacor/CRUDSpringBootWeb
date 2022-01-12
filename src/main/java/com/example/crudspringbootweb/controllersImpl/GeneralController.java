@@ -11,12 +11,8 @@ public class GeneralController {
     // http://localhost:8888/ (SHOW All Forms)
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
     public String getAllForms(ModelMap model){
-        model.addAttribute("type","factura-update");
-        model.addAttribute("object",new Factura("1","suu",33));
-        return "formularis/layout-form";
+        return "links";
     }
-
-    //MY ROUTES
 
     //////////////         USER         ////////////////////
 
@@ -32,55 +28,6 @@ public class GeneralController {
         return "formularis/useracount/userUpdate";
     }
 
-    /* ------------------------------------------ */
-
-    //////////////         FACTURAS         ////////////////////
-
-    // http://localhost:8888/facturaC (CREATE FACTURA)
-    @RequestMapping(value = "/facturaC", method = RequestMethod.GET)
-    public String facturaC() {
-        return "formularis/factura/facturaAdd";
-    }
-
-    // http://localhost:8888/facturaU (UPDATE FACTURA)
-    @RequestMapping(value = "/facturaU", method = RequestMethod.GET)
-    public String facturaU() {
-        return "formularis/factura/facturaUpdate";
-    }
-
-    /* ------------------------------------------ */
-
-
-    //////////////         LOCALIZACION         ////////////////////
-
-    // http://localhost:8888/localidadC (CREATE FACTURA)
-    @RequestMapping(value = "/localidadC", method = RequestMethod.GET)
-    public String localidadC() {
-        return "formularis/localizacion/localizacionAdd";
-    }
-
-    // http://localhost:8888/localidadU (UPDATE FACTURA)
-    @RequestMapping(value = "/localidadU", method = RequestMethod.GET)
-    public String localidadU() {
-        return "formularis/localizacion/localizacionUpdate";
-    }
-
-    /* ------------------------------------------ */
-
-
-    //////////////         MEMBRESIA         ////////////////////
-
-    // http://localhost:8888/membresiaC (CREATE MEMBRESIA)
-    @RequestMapping(value = "/membresiaC", method = RequestMethod.GET)
-    public String membresiaC() {
-        return "formularis/membresia/membresiaAdd";
-    }
-
-    // http://localhost:8888/membresiaU (UPDATE MEMBRESIA)
-    @RequestMapping(value = "/membresiaU", method = RequestMethod.GET)
-    public String membresiaU() {
-        return "formularis/membresia/membresiaUpdate";
-    }
 
     /* ------------------------------------------ */
 

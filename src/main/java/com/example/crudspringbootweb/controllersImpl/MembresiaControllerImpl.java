@@ -26,71 +26,64 @@ public class MembresiaControllerImpl implements MembresiaController {
     @Autowired
     FacturaService facturaService;
 
-    // http://localhost:8888/membresia/add (CREATE FACTURA)
-    @RequestMapping(value = "/membresia/add",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String membresiaadd(
+    //////////////         MEMBRESIA FORMULARIOS        ////////////////////
+
+    @RequestMapping(value = "/membresia/create", method = RequestMethod.GET)
+    public String create(ModelMap model) {
+        model.addAttribute("type","membresia-create");
+        return "formularis/layout-form";
+    }
+
+    @RequestMapping(value = "/membresia/update/{id}", method = RequestMethod.GET)
+    public String update(@PathVariable int id, ModelMap model) {
+        Optional<Membresia> membresia = membresiaService.findMembresiaById(id);
+        if (membresia.isPresent()) {
+            model.addAttribute("type","membresia-update");
+            return "formularis/layout-form";
+        }
+        model.addAttribute("error","MEMBRESIA SELECTED DOESNT PRESENT");
+        return "links";
+    }
+
+    //////////////         MEMBRESIA ACTIONS        ////////////////////
+
+    @RequestMapping(value = "/membresia/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    public String save(
+            @RequestParam(value="idMembresia", required=true) int idMembresia,
             @RequestParam(value="fechaInicio", required=true) String fechaInicio,
             @RequestParam(value="fechaFin", required=true) String fechaFin,
-            @RequestParam(value="numFactura", required = true) String numFactura,
+            @RequestParam(value="numFactura", required=true) String numFactura,
             ModelMap model) {
-        try {
-            Optional<Factura> factura = facturaService.findFacturaById(numFactura);
-            Timestamp timestampInicio = convertStringToTimestamp(fechaInicio);
-            Timestamp timestampFinal = convertStringToTimestamp(fechaFin);
-
-            if (factura != null && factura.isPresent()) {
-                Membresia membresia = new Membresia(timestampInicio,timestampFinal,factura.get());
-                saveMembresia(membresia);
-                model.addAttribute("membresia",membresia);
-                return "tables/layout-table";
-            } else {
-                model.addAttribute("error","FACTURA ID SELECTED DOESNT EXIST");
-                return "links";
-            }
-        } catch (Exception e) {
-            model.addAttribute("error",e);
-            return "links";
+        Optional<Factura> factura = facturaService.findFacturaById(numFactura);
+        if (factura.isPresent()) {
+            Membresia membresia = saveMembresia(new Membresia(idMembresia, fechaInicio, fechaFin,factura.get()));
+            model.addAttribute("membresia",membresia);
+            return "tables/layout-table";
         }
-    }
-
-    static Timestamp convertStringToTimestamp(String strDate) {
-        strDate = strDate.replace("T"," ");
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return Optional.of(strDate) //
-                .map(str -> LocalDateTime.parse(str, formatter))
-                .map(Timestamp::valueOf) //
-                .orElse(null);
+        model.addAttribute("error","FACTURA NOT FOUND");
+        return "links";
     }
 
 
-    // http://localhost:8888/membresia/update (UPDATE FACTURA)
-    @RequestMapping(value = "/membresia/update",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String membresiaupdate(
-            @RequestParam(value="idMembresia", required=true) String idMembresia,
+    @RequestMapping(value = "/membresia/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    public String put(
+            @RequestParam(value="idMembresia", required=true) int idMembresia,
             @RequestParam(value="fechaInicio", required=true) String fechaInicio,
             @RequestParam(value="fechaFin", required=true) String fechaFin,
-            @RequestParam(value="numFactura", required = true) String numFactura,
+            @RequestParam(value="numFactura", required=true) String numFactura,
             ModelMap model) {
-        try {
-            Optional<Factura> factura = facturaService.findFacturaById(numFactura);
-            if (factura != null && factura.isPresent()) {
-                Membresia membresia = new Membresia(Integer.parseInt(idMembresia), Timestamp.valueOf(fechaInicio),Timestamp.valueOf(fechaFin),factura.get());
-                updateMembresia(membresia);
-                model.addAttribute("membresia",membresia);
-                return "tables/layout-table";
-            } else {
-                model.addAttribute("error","THE ID FOR FACTURA IS NOT CREATED YET");
-                return "links";
-            }
-        } catch (Exception e) {
-            model.addAttribute("error",e);
-            return "links";
+        Optional<Factura> factura = facturaService.findFacturaById(numFactura);
+        if (factura.isPresent()) {
+            updateMembresia(new Membresia(idMembresia, fechaInicio, fechaFin,factura.get()));
+            model.addAttribute("membresias",membresiaService.findAllMembresia());
+            return "tables/layout-table";
         }
+        model.addAttribute("error","FACTURA NOT FOUND");
+        return "links";
     }
 
-    // http://localhost:8888/membresia/delete/{id} (DELETE ID)
     @RequestMapping(value = "/membresia/delete/{id}", method = RequestMethod.GET, produces = "application/json")
-    public String membresiadelete(@PathVariable int id, ModelMap model) {
+    public String delete(@PathVariable int id, ModelMap model) {
         Optional<Membresia> membresia =  membresiaService.findMembresiaById(id);
         if (membresia.isPresent()) {
             model.addAttribute("membresia",membresia.get());
@@ -102,10 +95,6 @@ public class MembresiaControllerImpl implements MembresiaController {
         }
     }
 
-    /* ------------------------------------------ */
-
-
-    // http://localhost:8888/membresias (SHOW ALL)
     @RequestMapping(value = "/membresias",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String getAllMembresia(ModelMap model) {
@@ -113,7 +102,6 @@ public class MembresiaControllerImpl implements MembresiaController {
         return "tables/layout-table";
     }
 
-    // http://localhost:8888/membresia/1 (SHOW ONE)
     @RequestMapping(value = "/membresia/{id}",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String findMembresiaById(@PathVariable int id, ModelMap model) {
@@ -125,6 +113,16 @@ public class MembresiaControllerImpl implements MembresiaController {
         model.addAttribute("error","MEMBRESIA NOT FOUNDED");
         return "links";
     }
+
+    @RequestMapping(value = "/membresia/update",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public String errorReturn(ModelMap model) {
+        model.addAttribute("error","Page not found");
+        return "links";
+    }
+
+    /* ------------------------------------------ */
+
+
 
     @Override
     public Membresia saveMembresia(Membresia membresia) {
