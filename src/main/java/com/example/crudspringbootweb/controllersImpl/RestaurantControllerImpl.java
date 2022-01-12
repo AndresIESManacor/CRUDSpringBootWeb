@@ -59,7 +59,7 @@ public class RestaurantControllerImpl implements RestaurantControllers {
     public String updateRestaurant(
             @RequestParam(value="nombre", required=true) String nombre,
             @RequestParam(value="diesAnticipacionReservas", required=true) String diesAnticipacionReservas,
-           @RequestParam(value="telefonoRestaurante", required=true) String telefonoRestaurante,
+            @RequestParam(value="telefonoRestaurante", required=true) String telefonoRestaurante,
             @RequestParam(value="isValidated", required=true) boolean isValidated,
             @RequestParam(value="visible", required=true) boolean visible,
             @RequestParam(value="idLocalidad", required=true) String idLocalidad,

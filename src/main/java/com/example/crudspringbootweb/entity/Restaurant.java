@@ -43,6 +43,7 @@ public class Restaurant {
     public Restaurant() {
 
     }
+
     public Restaurant(int idRestaurant, String nombre, int diesAnticipacionReservas, long telefonoRestaurante, boolean isValidated, Localidad localidad, Membresia membresia, Useracount user, boolean visible) {
         this.idRestaurant = idRestaurant;
         this.nombre = nombre;
@@ -54,6 +55,7 @@ public class Restaurant {
         this.useracount = user;
         this.visible = visible;
     }
+
     public Restaurant(String nombre, int diesAnticipacionReservas, long telefonoRestaurante, boolean isValidated, Localidad localidad, Membresia membresia, Useracount user, boolean visible) {
         this.nombre = nombre;
         this.diesAnticipacionReservas = diesAnticipacionReservas;

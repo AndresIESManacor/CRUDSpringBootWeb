@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="background" style="margin-top: 50px" th:fragment="form-card (type, object)">
+    <div class="container">
+        <div class="screen">
+            <div class="screen-body">
+                <div class="screen-body-item">
+                    <div class="app-form">
+
+                        <!-- FORM FACTURA CREATE -->
+                        <div th:if="${type} == 'factura-create'">
+                            <form action="/" method="POST">
+                                <div th:replace="formularis/factura/factura-app :: factura-app-create"></div>
+                                <div class="app-form-group buttons">
+                                    <button class="app-form-button">CANCEL</button>
+                                    <button class="app-form-button">SEND</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- FORM FACTURA UPDATE -->
+                        <div th:if="${type} == 'factura-update'">
+                            <form action="/" method="POST">
+                                <div th:replace="formularis/factura/factura-app :: factura-app-update (${object})"></div>
+                                <div class="app-form-group buttons">
+                                    <a href="/"><button class="app-form-button">RETURN</button></a>
+                                    <input type="submit" class="app-form-button" value="SUBMIT"/>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

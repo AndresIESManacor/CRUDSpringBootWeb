@@ -1,18 +1,20 @@
 package com.example.crudspringbootweb.controllersImpl;
 
-import com.example.crudspringbootweb.service.RestaurantService;
-import com.example.crudspringbootweb.service.UseracountService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.crudspringbootweb.entity.Factura;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-public class HomeController {
-    @Autowired
-    RestaurantService restaurantService;
+public class GeneralController {
 
-    @Autowired
-    UseracountService useracountService;
+    // http://localhost:8888/ (SHOW All Forms)
+    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
+    public String getAllForms(ModelMap model){
+        model.addAttribute("type","factura-update");
+        model.addAttribute("object",new Factura("Andres el mas guapo","22",34));
+        return "formularis/layout-form";
+    }
 
     //MY ROUTES
 
@@ -100,9 +102,21 @@ public class HomeController {
     /* ------------------------------------------ */
 
 
-    // http://localhost:8888/ (SHOW All Forms)
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-    public String getAllForms(){
-        return "links";
-    }
+    //////////////         IMAGENES         ////////////////////
+
+    // http://localhost:8888/imagenC (CREATE MEMBRESIA)
+//    @RequestMapping(value = "/imagenC", method = RequestMethod.GET)
+//    public String imagenC() {
+//        return "formularis/restaurant/restauranteAdd";
+//    }
+
+    // http://localhost:8888/imagenU (UPDATE MEMBRESIA)
+//    @RequestMapping(value = "/imagenU", method = RequestMethod.GET)
+//    public String imagenU() {
+//        return "formularis/restaurant/restauranteUpdate";
+//    }
+
+    /* ------------------------------------------ */
+
+
 }

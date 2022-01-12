@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:fragment="factura-app-create">
+        <div class="app-form-group">
+            <input class="app-form-control" placeholder="EMAIL">
+        </div>
+        <div class="app-form-group">
+            <input class="app-form-control" placeholder="CONTACT NO">
+        </div>
+        <div class="app-form-group message">
+            <input class="app-form-control" placeholder="MESSAGE">
+        </div>
+    </div>
+
+    <div th:fragment="factura-app-update (object)">
+        <h3 style="color: white; font-size: medium; text-align: center" th:text="${'UPDATE'}"></h3>
+        <div class="app-form-group" style="display: flex; flex-direction: row; justify-content: center;">
+            <label>
+                <input class="app-form-control" style="text-align: center" placeholder="NUMFACTURA" th:value="${object.numFactura}">
+            </label>
+        </div>
+        <div class="app-form-group message">
+            <label>
+                <p style="color: white">Direccion</p>
+                <input type="text" maxlength="32" class="app-form-control" placeholder="TU DIRECCION">
+            </label>
+        </div>
+        <div class="app-form-group">
+            <label>
+                <p style="color: white">Importe</p>
+                <input type="number" min="0" class="app-form-control" placeholder="EL IMPORTE">
+            </label>
+        </div>
+    </div>
+</body>
+</html>
