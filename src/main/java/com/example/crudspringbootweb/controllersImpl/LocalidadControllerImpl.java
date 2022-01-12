@@ -7,8 +7,10 @@ import com.example.crudspringbootweb.service.LocalidadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,31 +47,39 @@ public class LocalidadControllerImpl implements LocalidadController {
 
 
     @RequestMapping(value = "/localidad/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String save(@ModelAttribute Localidad localidad) {
+    public RedirectView save(@ModelAttribute Localidad localidad, ModelMap model) {
+        Optional<Localidad> requestLocalidad = localidadService.findLocalidadById(localidad.getIdLocalidad());
+        if (requestLocalidad.isPresent()) {
+            model.addAttribute("type","factura-create");
+            model.addAttribute("object",new Factura());
+            model.addAttribute("error","TRYING TO SAVE FACTURA THAT EXIST");
+        }
         saveLocalidad(localidad);
-        return "links";
+        return new RedirectView("/localidades");
     }
 
     @RequestMapping(value = "/localidad/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String put(@ModelAttribute Localidad localidad) {
+    public RedirectView put(@ModelAttribute Localidad localidad, ModelMap model) {
+        model.remove("factura");
         updateLocalidad(localidad);
-        return "links";
+        return new RedirectView("/localidades");
     }
 
     @RequestMapping(value = "/localidad/delete/{id}", method = RequestMethod.GET, produces = "application/json")
-    public String delete(@PathVariable int id, ModelMap model) {
+    public RedirectView delete(@PathVariable int id, ModelMap model) {
         Optional<Localidad> localidad =  localidadService.findLocalidadById(id);
         if (localidad.isPresent()) {
             deleteLocalidadById(id);
         } else {
             model.addAttribute("error","LOCALIDAD NOT FOUNDED");
         }
-        return "links";
+        return new RedirectView("/localidades");
     }
 
     @RequestMapping(value = "/localidades",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String getAllLocalidad(ModelMap model) {
+        model.remove("localidad");
         model.addAttribute("localidades",localidadService.findAllLocalidad());
         return "tables/layout-table";
     }

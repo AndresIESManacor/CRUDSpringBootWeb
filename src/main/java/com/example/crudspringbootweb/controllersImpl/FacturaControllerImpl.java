@@ -43,7 +43,7 @@ public class FacturaControllerImpl implements FacturaController {
     //////////////         ROUTES        ////////////////////
 
     @RequestMapping(value = "/factura/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String save(@ModelAttribute Factura factura, ModelMap model) {
+    public RedirectView save(@ModelAttribute Factura factura, ModelMap model) {
         Optional<Factura> requestFactura = facturaService.findFacturaById(factura.getNumFactura());
         if (requestFactura.isPresent()) {
             model.addAttribute("type","factura-create");
@@ -51,7 +51,7 @@ public class FacturaControllerImpl implements FacturaController {
             model.addAttribute("error","TRYING TO SAVE FACTURA THAT EXIST");
         }
         saveFactura(factura);
-        return getAllFactura(model);
+        return new RedirectView("/facturas");
     }
 
 
