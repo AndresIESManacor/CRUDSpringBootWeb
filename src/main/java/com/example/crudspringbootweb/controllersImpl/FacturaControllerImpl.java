@@ -17,48 +17,21 @@ public class FacturaControllerImpl implements FacturaController {
     @Autowired
     FacturaService facturaService;
 
-    // http://localhost:8888/factura/add (CREATE FACTURA)
-    @RequestMapping(value = "/factura/add",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String facturaadd(
-            @RequestParam(value="numFactura", required=true) String numFactura,
-            @RequestParam(value="direccion", required=true) String direccion,
-            @RequestParam(value="importe", required=true) String importe,
-            ModelMap model)
-    {
-        try {
-            Factura factura = new Factura();
-            factura.setNumFactura(numFactura);
-            factura.setDireccion(direccion);
-            factura.setImporte(Float.parseFloat(importe));
-            saveFactura(factura);
-            model.addAttribute("facturas",facturaService.findAllFactura());
-        } catch (Exception e) {
-            return null;
-        }
+    // http://localhost:8888/factura/create (CREATE FACTURA)
+    @RequestMapping(value = "/factura/create",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    public String facturaadd(@ModelAttribute Factura factura, ModelMap model) {
+        saveFactura(factura);
+        model.addAttribute("facturas",facturaService.findAllFactura());
         return "tables/layout-table";
     }
 
 
     // http://localhost:8888/factura/update (UPDATE FACTURA)
     @RequestMapping(value = "/factura/update",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String facturasupdate(
-            @RequestParam(value="numFactura", required=true) String numFactura,
-            @RequestParam(value="direccion", required=true) String direccion,
-            @RequestParam(value="importe", required=true) String importe,
-            ModelMap model)
-    {
-        try {
-            Factura factura = new Factura();
-            factura.setNumFactura(numFactura);
-            factura.setDireccion(direccion);
-            factura.setImporte(Float.parseFloat(importe));
-            facturaService.updateFactura(factura);
+    public String facturasupdate(@ModelAttribute Factura factura, ModelMap model) {
+            updateFactura(factura);
             model.addAttribute("facturas",facturaService.findAllFactura());
             return "tables/layout-table";
-        } catch (Exception e) {
-            model.addAttribute("error",e);
-            return "links";
-        }
     }
 
     // http://localhost:8888/factura/delete/{id} (DELETE ID)

@@ -12,24 +12,24 @@
                 <div class="screen-body-item">
                     <div class="app-form">
 
-                        <!-- FORM FACTURA CREATE -->
                         <div th:if="${type} == 'factura-create'">
-                            <form action="/" method="POST">
-                                <div th:replace="formularis/factura/factura-app :: factura-app-create"></div>
+                            <!-- FORM FACTURA CREATE -->
+                            <form th:action="@{/factura/create}" method="POST" th:object="${object}">
+                                <div th:replace="formularis/factura :: factura-field ('CREATE')"></div>
                                 <div class="app-form-group buttons">
-                                    <button class="app-form-button">CANCEL</button>
-                                    <button class="app-form-button">SEND</button>
+                                    <a href="/"><button class="app-form-button">RETURN</button></a>
+                                    <input type="submit" class="app-form-button" value="CREATE"/>
                                 </div>
                             </form>
                         </div>
 
-                        <!-- FORM FACTURA UPDATE -->
                         <div th:if="${type} == 'factura-update'">
-                            <form action="/" method="POST">
-                                <div th:replace="formularis/factura/factura-app :: factura-app-update (${object})"></div>
+                            <!-- FORM FACTURA UPDATE -->
+                            <form th:action="@{/factura/update}" method="POST" th:object="${object}">
+                                <div th:replace="formularis/factura :: factura-field ('UPDATE')"></div>
                                 <div class="app-form-group buttons">
                                     <a href="/"><button class="app-form-button">RETURN</button></a>
-                                    <input type="submit" class="app-form-button" value="SUBMIT"/>
+                                    <input type="submit" class="app-form-button" value="UPDATE"/>
                                 </div>
                             </form>
                         </div>

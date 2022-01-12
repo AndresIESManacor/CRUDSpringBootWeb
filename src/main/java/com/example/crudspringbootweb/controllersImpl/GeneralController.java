@@ -12,7 +12,7 @@ public class GeneralController {
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
     public String getAllForms(ModelMap model){
         model.addAttribute("type","factura-update");
-        model.addAttribute("object",new Factura("Andres el mas guapo","22",34));
+        model.addAttribute("object",new Factura("1","suu",33));
         return "formularis/layout-form";
     }
 
