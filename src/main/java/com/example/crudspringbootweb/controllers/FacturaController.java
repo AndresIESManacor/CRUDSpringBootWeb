@@ -14,7 +14,7 @@ public interface FacturaController {
 
     public Factura saveFactura(Factura factura);
 
-    public String deleteFacturaById(String id);
+    public void deleteFacturaById(String id);
 
-    public String updateFactura(Factura facturaNew);
+    public void updateFactura(Factura facturaNew);
 }

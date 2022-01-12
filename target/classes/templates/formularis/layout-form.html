@@ -6,6 +6,7 @@
   <link rel="stylesheet" th:href="@{/form.css}">
 </head>
 <body>
+    <h2 th:text="${error}" style="color: red; text-align: center"></h2>
   <div th:replace="formularis/form-card :: form-card (${type},${object})"></div>
 </body>
 </html>

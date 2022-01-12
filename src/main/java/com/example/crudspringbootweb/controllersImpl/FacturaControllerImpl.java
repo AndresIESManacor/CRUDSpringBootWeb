@@ -6,9 +6,10 @@ import com.example.crudspringbootweb.service.FacturaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Optional;
 
@@ -43,34 +44,39 @@ public class FacturaControllerImpl implements FacturaController {
 
     @RequestMapping(value = "/factura/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
     public String save(@ModelAttribute Factura factura, ModelMap model) {
+        Optional<Factura> requestFactura = facturaService.findFacturaById(factura.getNumFactura());
+        if (requestFactura.isPresent()) {
+            model.addAttribute("type","factura-create");
+            model.addAttribute("object",new Factura());
+            model.addAttribute("error","TRYING TO SAVE FACTURA THAT EXIST");
+        }
         saveFactura(factura);
-        return "links";
+        return getAllFactura(model);
     }
 
 
     @RequestMapping(value = "/factura/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String put(@ModelAttribute Factura factura, ModelMap model) {
-            updateFactura(factura);
-            return "links";
+    public RedirectView put(@ModelAttribute Factura factura, ModelMap model) {
+        updateFactura(factura);
+        model.remove("factura");
+        return new RedirectView("/facturas");
     }
 
     @RequestMapping(value = "/factura/delete/{id}", method = RequestMethod.GET, produces = "application/json")
-    public String delete(@PathVariable String id, ModelMap model) {
+    public RedirectView delete(@PathVariable String id, ModelMap model) {
         Optional<Factura> factura =  facturaService.findFacturaById(id);
         if (factura.isPresent()) {
-            model.addAttribute("factura",factura.get());
             deleteFacturaById(id);
-            return "tables/layout-table";
         } else {
             model.addAttribute("error","FACTURA NOT FOUNDED");
-            return "links";
         }
-
+        return new RedirectView("/facturas");
     }
 
     @RequestMapping(value = "/facturas",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String getAllFactura(ModelMap model) {
+        model.remove("factura");
         model.addAttribute("facturas",facturaService.findAllFactura());
         return "tables/layout-table";
     }
@@ -101,12 +107,12 @@ public class FacturaControllerImpl implements FacturaController {
     }
 
     @Override
-    public String deleteFacturaById(String id) {
-        return facturaService.deleteFactura(id);
+    public void deleteFacturaById(String id) {
+        facturaService.deleteFactura(id);
     }
 
     @Override
-    public String updateFactura(Factura facturaNew) {
-        return facturaService.updateFactura(facturaNew);
+    public void updateFactura(Factura facturaNew) {
+        facturaService.updateFactura(facturaNew);
     }
 }
