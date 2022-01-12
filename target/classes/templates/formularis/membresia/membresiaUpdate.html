@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" th:href="@{/myStyle.css}">
+</head>
+<body style="justify-content: center; display: flex;">
+  <form method="POST" action="/membresia/add">
+    <h1>Update Membresia</h1>
+    <p>Need to submit -> <a href="/facturaC">Factura</a></p>
+    <p>Go to -> <a href="/membresiaC">create</a></p>
+
+    <label for="idMembresia">Id Membresia</label>
+    <input type="text" id="idMembresia" name="idMembresia" placeholder="Id Membresia..">
+
+    <label for="fechaInicio">Fecha Inicio</label>  <br>
+    <input type="datetime-local" id="fechaInicio" name="fechaInicio" placeholder="Fecha Inicio..">
+
+    <br>
+    <br>
+
+    <label for="fechaFin">Fecha Fin</label>  <br>
+    <input type="datetime-local" id="fechaFin" name="fechaFin" placeholder="Fecha Fin..">
+
+    <br>
+    <br>
+
+    <label for="numFactura">Numero Factura</label>
+    <input type="text" id="numFactura" name="numFactura" placeholder="Factura..">
+
+    <input type="submit" value="Submit">
+    <a href="/"><input class="return" type="button" value="Return"></a>
+  </form>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>LOCALIDAD</title>
+</head>
+<body>
+
+<!-- ALL LOCALIDAD  -->
+<table th:fragment="thead">
+    <thead>
+    <tr class="row100 head">
+        <th class="column-width20 first-column">idLocalidad</th>
+        <th class="column-width20">nombreLocalidad</th>
+        <th class="column-width20">codigoPostal</th>
+        <th class="column-width10">Create</th>
+        <th class="column-width10">Update</th>
+        <th class="column-width10">Read</th>
+        <th class="column-width10">Delete</th>
+    </tr>
+    </thead>
+</table>
+
+<div th:fragment="tbody-compose (localidades)">
+    <table>
+        <tbody>
+        <tr class="body" th:each="mItem : ${localidades}">
+            <td class="column-width20 first-column" th:text="${mItem.idLocalidad}"></td>
+            <td class="column-width20" th:text="${mItem.nombreLocalidad}"></td>
+            <td class="column-width20" th:text="${mItem.codigoPostal}"></td>
+            <td class="column-width10"><a href="/localidadC" class="create-column">Create</a></td>
+            <td class="column-width10"><a href="/localidadU" class="update-column">Update</a></td>
+            <td class="column-width10"><a th:href="@{'/localidad/' + ${mItem.idLocalidad}}" class="read-column">Read</a></td>
+            <td class="column-width10"><a th:href="@{'/localidad/delete/' + ${mItem.idLocalidad}}" class="delete-column">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="tbody-single(localidad)">
+    <table>
+        <tbody>
+        <tr class="body">
+            <td class="column-width10 first-column" th:text="${localidad.idLocalidad}"></td>
+            <td class="column-width20" th:text="${localidad.nombreLocalidad}"></td>
+            <td class="column-width20" th:text="${localidad.codigoPostal}"></td>
+            <td class="column-width10"><a href="/localidadC" class="create-column">Create</a></td>
+            <td class="column-width10"><a href="/localidadU" class="update-column">Update</a></td>
+            <td class="column-width10"><a th:href="@{'/localidad/' + ${localidad.idLocalidad}}" class="read-column">Read</a></td>
+            <td class="column-width10"><a th:href="@{'/localidad/delete/' + ${localidad.idLocalidad}}" class="delete-column">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

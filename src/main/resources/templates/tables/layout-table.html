@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Facturas</title>
+    <link rel="stylesheet" th:href="@{/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/table.css}"/>
+</head>
+<body>
+<div class="container-table100">
+    <div class="wrap-table100">
+        <div class="table100 ver1 m-b-110">
+
+            <!-- TABLE FACTURAS -->
+            <div th:if="${facturas} != null">
+                <div th:if="${facturas.size()} > 0">
+                    <div th:replace="tables/tables :: table-facturas (${facturas})"></div>
+                </div>
+            </div>
+
+            <!-- TABLE SINGLE FACTURA -->
+            <div th:if="${factura} != null">
+                <div th:replace="tables/tables :: table-facturas-single (${factura})"></div>
+            </div>
+
+            <!-- TABLE MEMBRESIA -->
+            <div th:if="${membresias} != null">
+                <div th:if="${membresias.size()} > 0">
+                    <div th:replace="tables/tables :: table-membresias (${membresias})"></div>
+                </div>
+            </div>
+
+            <!-- TABLE SINGLE MEMBRESIA -->
+            <div th:if="${membresia} != null">
+                <div th:replace="tables/tables :: table-membresia-single (${membresia})"></div>
+            </div>
+
+
+            <!-- TABLE LOCALIDAD -->
+            <div th:if="${localidades} != null">
+                <div th:if="${localidades.size()} > 0">
+                    <div th:replace="tables/tables :: table-localidades (${localidades})"></div>
+                </div>
+            </div>
+
+            <!-- TABLE SINGLE LOCALIDAD -->
+            <div th:if="${localidad} != null">
+                <div th:replace="tables/tables :: table-localidad-single (${localidad})"></div>
+            </div>
+
+
+            <!-- TABLE USERACOUNT -->
+            <div th:if="${useracounts} != null">
+                <div th:if="${useracounts.size()} > 0">
+                    <div th:replace="tables/tables :: table-useracounts (${useracounts})"></div>
+                </div>
+            </div>
+
+            <!-- TABLE SINGLE USERACOUNT -->
+            <div th:if="${useracount} != null">
+                <div th:replace="tables/tables :: table-useracount-single (${useracount})"></div>
+            </div>
+
+            <!-- TABLE RESTAURANTES -->
+            <div th:if="${restaurants} != null">
+                <div th:if="${restaurants.size()} > 0">
+                    <div th:replace="tables/tables :: table-restaurants (${restaurants})"></div>
+                </div>
+            </div>
+
+            <!-- TABLE SINGLE RESTAURANTES -->
+            <div th:if="${restaurant} != null">
+                <div th:replace="tables/tables :: table-restaurant-single (${restaurant})"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="/">Return</a>
+</body>
+</html>

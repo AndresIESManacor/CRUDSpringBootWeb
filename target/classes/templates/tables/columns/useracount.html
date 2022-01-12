@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- ALL USERACOUNT -->
+<table th:fragment="thead">
+  <thead>
+  <tr class="row100 head">
+    <th class="column-width5 first-column">idUser</th>
+    <th class="column-width10">nombreUsuario</th>
+    <th class="column-width5">contraseña</th>
+
+    <th class="column-width10">correo</th>
+    <th class="column-width10">telefono</th>
+    <th class="column-width10">nombre</th>
+    <th class="column-width10">apellido1</th>
+    <th class="column-width10">apellido2</th>
+    <th class="column-width5">dni</th>
+    <th class="column-width5">isAdmin</th>
+
+    <th class="column-width5">Create</th>
+    <th class="column-width5">Update</th>
+    <th class="column-width5">Read</th>
+    <th class="column-width5">Delete</th>
+  </tr>
+  </thead>
+</table>
+
+<div th:fragment="tbody-compose (useracounts)">
+  <table>
+    <tbody>
+    <tr class="body" th:each="mItem : ${useracounts}">
+      <td class="column-width5 first-column" th:text="${mItem.idUser}"></td>
+      <td class="column-width10" th:text="${mItem.nombreUsuario}"></th>
+      <td class="column-width5" th:text="${mItem.password}"></td>
+
+      <td class="column-width10" th:text="${mItem.correo}"></td>
+      <td class="column-width10" th:text="${mItem.telefono}"></td>
+      <td class="column-width10" th:text="${mItem.nombre}"></td>
+      <td class="column-width10" th:text="${mItem.apellido1}"></td>
+      <td class="column-width10" th:text="${mItem.apellido2}"></td>
+      <td class="column-width5" th:text="${mItem.dni}"></td>
+      <td class="column-width5" th:text="${mItem.isAdmin}"></td>
+
+      <td class="column-width5"><a href="/userC" class="create-column">Create</a></td>
+      <td class="column-width5"><a href="/userU" class="update-column">Update</a></td>
+      <td class="column-width5"><a th:href="@{'/localidad/' + ${mItem.idUser}}" class="read-column">Read</a></td>
+      <td class="column-width5"><a th:href="@{'/localidad/delete/' + ${mItem.idUser}}" class="delete-column">Delete</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div th:fragment="tbody-single(useracount)">
+  <table>
+    <tbody>
+    <tr class="body">
+      <td class="column-width5 first-column" th:text="${useracount.idUser}"></td>
+      <td class="column-width10" th:text="${useracount.nombreUsuario}"></td>
+      <td class="column-width5" th:text="${useracount.password}"></td>
+
+      <td class="column-width10" th:text="${useracount.correo}"></td>
+      <td class="column-width10" th:text="${useracount.telefono}"></td>
+      <td class="column-width10" th:text="${useracount.nombre}"></td>
+      <td class="column-width10" th:text="${useracount.apellido1}"></td>
+      <td class="column-width10" th:text="${useracount.apellido2}"></td>
+      <td class="column-width5" th:text="${useracount.dni}"></td>
+      <td class="column-width5" th:text="${useracount.isAdmin}"></td>
+
+      <td class="column-width5"><a href="/userC" class="create-column">Create</a></td>
+      <td class="column-width5"><a href="/userU" class="update-column">Update</a></td>
+      <td class="column-width5"><a th:href="@{'/user/' + ${useracount.idUser}}" class="read-column">Read</a></td>
+      <td class="column-width5"><a th:href="@{'/user/delete/' + ${useracount.idUser}}" class="delete-column">Delete</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

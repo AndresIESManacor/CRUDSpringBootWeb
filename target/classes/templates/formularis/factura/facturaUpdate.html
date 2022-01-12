@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" th:href="@{/myStyle.css}">
+</head>
+<body style="text-align: center">
+    <div style="justify-content: center; display: flex; text-align: left">
+        <form method="POST" action="/factura/update">
+            <h1>Update Factura</h1>
+            <p>Need to submit -> <a href="#">nothing</a></p>
+            <p>Go to -> <a href="/facturaC">create</a></p>
+            <label for="numFactura">Factura Num</label>
+            <input type="text" id="numFactura" name="numFactura" placeholder="Num Factura..">
+
+            <label for="direccion">Direccion</label>
+            <input type="text" id="direccion" name="direccion" placeholder="direccion..">
+
+            <label for="importe">Importe</label>
+            <input type="number" id="importe" name="importe" placeholder="importe..">
+
+            <input type="submit" value="Submit">
+            <a href="/"><input class="return" type="button" value="Return"></a>
+        </form>
+    </div>
+</body>
+</html>

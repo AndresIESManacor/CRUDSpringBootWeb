@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- ALL RESTAURANTES  -->
+<table th:fragment="thead">
+    <thead>
+    <tr class="row100 head">
+        <th class="column-width10 first-column">idRestaurante</th>
+        <th class="column-width10">nombre</th>
+        <th class="column-width10">diesAnticipacionReservas</th>
+        <th class="column-width10">telefonoRestaurante</th>
+        <th class="column-width5">isValidated</th>
+        <th class="column-width5">visible</th>
+        <th class="column-width10">idLocalidad</th>
+        <th class="column-width10">idMembresia</th>
+        <th class="column-width10">idUser</th>
+
+        <th class="column-width5">Create</th>
+        <th class="column-width5">Update</th>
+        <th class="column-width5">Read</th>
+        <th class="column-width5">Delete</th>
+    </tr>
+    </thead>
+</table>
+
+<div th:fragment="tbody-compose (restaurants)">
+    <table>
+        <tbody>
+        <tr class="body" th:each="restaurant : ${restaurants}">
+            <td class="column-width10 first-column" th:text="${restaurant.idRestaurant}"></td>
+            <td class="column-width10" th:text="${restaurant.nombre}"></td>
+            <td class="column-width10" th:text="${restaurant.diesAnticipacionReservas}"></td>
+            <td class="column-width10" th:text="${restaurant.telefonoRestaurante}"></td>
+            <td class="column-width5" th:text="${restaurant.isValidated}"></td>
+            <td class="column-width5" th:text="${restaurant.visible}"></td>
+            <td class="column-width10" th:text="${restaurant.localidad.idLocalidad}"></td>
+            <td class="column-width10" th:text="${restaurant.membresia.idMembresia}">idMembresia</td>
+            <td class="column-width10" th:text="${restaurant.useracount.idUser}">idUser</td>
+
+            <td class="column-width5"><a href="/restaurantC" class="create-column">Create</a></td>
+            <td class="column-width5"><a href="/restaurantU" class="update-column">Update</a></td>
+            <td class="column-width5"><a th:href="@{'/restaurant/' + ${restaurant.idRestaurant}}" class="read-column">Read</a></td>
+            <td class="column-width5"><a th:href="@{'/restaurant/delete/' + ${restaurant.idRestaurant}}" class="delete-column">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="tbody-single(restaurant)">
+    <table>
+        <tbody>
+        <tr class="body">
+            <td class="column-width10 first-column" th:text="${restaurant.idRestaurant}"></td>
+            <td class="column-width10" th:text="${restaurant.nombre}"></td>
+            <td class="column-width10" th:text="${restaurant.diesAnticipacionReservas}"></td>
+            <td class="column-width10" th:text="${restaurant.telefonoRestaurante}"></td>
+            <td class="column-width5" th:text="${restaurant.isValidated}"></td>
+            <td class="column-width5" th:text="${restaurant.visible}"></td>
+            <td class="column-width10" th:text="${restaurant.localidad.idLocalidad}"></td>
+            <td class="column-width10" th:text="${restaurant.membresia.idMembresia}">idMembresia</td>
+            <td class="column-width10" th:text="${restaurant.useracount.idUser}">idUser</td>
+
+            <td class="column-width5"><a href="/restaurantC" class="create-column">Create</a></td>
+            <td class="column-width5"><a href="/restaurantU" class="update-column">Update</a></td>
+            <td class="column-width5"><a th:href="@{'/restaurant/' + ${restaurant.idRestaurant}}" class="read-column">Read</a></td>
+            <td class="column-width5"><a th:href="@{'/restaurant/delete/' + ${restaurant.idRestaurant}}" class="delete-column">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

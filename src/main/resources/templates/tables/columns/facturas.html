@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- ALL FACTURAS -->
+<table th:fragment="thead">
+  <thead>
+    <tr class="row100 head">
+      <th class="column-width20 first-column">Num Factura</th>
+      <th class="column-width20">Direccion</th>
+      <th class="column-width20">Importe</th>
+      <th class="column-width10">Create</th>
+      <th class="column-width10">Update</th>
+      <th class="column-width10">Read</th>
+      <th class="column-width10">Delete</th>
+    </tr>
+  </thead>
+</table>
+
+<div th:fragment="tbody-compose (facturas)">
+  <table>
+    <tbody>
+      <tr class="row100 body" th:each="mItem : ${facturas}">
+        <td class="column-width20 first-column" th:text="${mItem.numFactura}"></td>
+        <td class="column-width20" th:text="${mItem.direccion}"></td>
+        <td class="column-width20" th:text="${mItem.importe}"></td>
+        <td class="column-width10"><a href="/facturaC" class="create-column">Create</a></td>
+        <td class="column-width10"><a href="/facturaU" class="update-column">Update</a></td>
+        <td class="column-width10"><a th:href="@{'/factura/' + ${mItem.numFactura}}" class="read-column">Read</a></td>
+        <td class="column-width10"><a th:href="@{'/factura/delete/' + ${mItem.numFactura}}" class="delete-column">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div th:fragment="tbody-single(factura)">
+  <table>
+    <tbody>
+      <tr class="row100 body">
+        <td class="column-width20 first-column" th:text="${factura.numFactura}"></td>
+        <td class="column-width20" th:text="${factura.direccion}"></td>
+        <td class="column-width20" th:text="${factura.importe}"></td>
+        <td class="column-width10"><a href="/facturaC" class="create-column">Create</a></td>
+        <td class="column-width10"><a href="/facturaU" class="update-column">Update</a></td>
+        <td class="column-width10"><a th:href="@{'/factura/' + ${factura.numFactura}}" class="read-column">Read</a></td>
+        <td class="column-width10"><a th:href="@{'/factura/delete/' + ${factura.numFactura}}" class="delete-column">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

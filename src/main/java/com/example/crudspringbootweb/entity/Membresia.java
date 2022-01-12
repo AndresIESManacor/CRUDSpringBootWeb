@@ -1,0 +1,43 @@
+package com.example.crudspringbootweb.entity;
+
+import lombok.Data;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
+
+@Data
+@Entity
+@Table(name = "Membresia")
+public class Membresia {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idMembresia")
+    private int idMembresia;
+
+    @Column(name = "fechaInicio")
+    private Timestamp fechaInicio;
+
+    @Column(name = "fechaFin")
+    private Timestamp fechaFin;
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "numFactura")
+    private Factura factura;
+
+    public Membresia(int idMembresia, Timestamp fechaInicio, Timestamp fechaFin, Factura factura) {
+        this.idMembresia = idMembresia;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.factura = factura;
+    }
+
+    public Membresia() {
+
+    }
+
+    public Membresia(Timestamp fechaInicio, Timestamp fechaFin, Factura factura) {
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.factura = factura;
+    }
+}

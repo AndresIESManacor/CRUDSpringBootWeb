@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    input[type=text], select {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    input[type=submit] {
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+
+    div {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <form method="POST" action="/restaurant/add">
+    <div style="display: flex; flex-direction: row">
+      <div style="width: 500px">
+        <h1>Añadir Tu Restaurante</h1>
+        <label for="idRestaurante">Id Restaurante</label>
+        <input type="text" id="idRestaurante" name="idRestaurante" placeholder="Id Restaurant..">
+
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Name..">
+
+        <label for="diesAnticipacionReservas">Dias Anticipacion</label>
+        <input type="text" id="diesAnticipacionReservas" name="diesAnticipacionReservas" placeholder="Dias..">
+
+        <label for="telefonoRestaurante">Telefono</label>
+        <input type="text" id="telefonoRestaurante" name="telefonoRestaurante" placeholder="Telefono..">
+
+        <label for="isValidated">Validado</label>
+        <select id="isValidated" name="isValidated">
+          <option value="true">true</option>
+          <option value="false">false</option>
+        </select>
+
+        <label for="visible">Visible</label>
+        <select id="visible" name="visible">
+          <option value="true">true</option>
+          <option value="false">false</option>
+        </select>
+      </div>
+      <div style="width: 300px">
+        <h1>Añadir Useracount</h1>
+        <label for="idUser">Id User</label>
+        <input type="text" id="idUser" name="idUser" placeholder="Id User..">
+
+        <label for="nombreUsuario">Username</label>
+        <input type="text" id="nombreUsuario" name="nombreUsuario" placeholder="Username..">
+
+        <label for="contraseña">Password</label>
+        <input type="text" id="contraseña" name="contraseña" placeholder="Password..">
+
+        <hr>
+
+        <label for="correo">Correo</label>
+        <input type="text" id="correo" name="correo" placeholder="Correo..">
+
+        <label for="telefono">Telefono</label>
+        <input type="text" id="telefono" name="telefono" placeholder="telefono..">
+
+        <label for="nombreUser">Nombre</label>
+        <input type="text" id="nombreUser" name="nombreUser" placeholder="nombre..">
+
+        <label for="apellido1">Apellido 1</label>
+        <input type="text" id="apellido1" name="apellido1" placeholder="apellido1..">
+
+        <label for="apellido2">Apellido 2</label>
+        <input type="text" id="apellido2" name="apellido2" placeholder="apellido2..">
+
+        <label for="dni">DNI</label>
+        <input type="text" id="dni" name="dni" placeholder="dni..">
+      </div>
+      <div style="width: 300px">
+        <h1>Añadir Membresia</h1>
+        <label for="idMembresia">Id Membresia</label>
+        <input type="text" id="idMembresia" name="idMembresia" placeholder="Id Membresia..">
+
+        <label for="fechaInicio">Fecha Inicio</label>
+        <input type="text" id="fechaInicio" name="fechaInicio" placeholder="Fecha Inicio..">
+
+        <label for="fechaFin">Fecha Fin</label>
+        <input type="text" id="fechaFin" name="fechaFin" placeholder="Fecha Fin..">
+        <hr>
+        <div>
+          <h3>Añadir Factura</h3>
+          <label for="numFactura">Id Factura</label>
+          <input type="text" id="numFactura" name="numFactura" placeholder="Num Factura..">
+
+          <label for="direccion">Direccion</label>
+          <input type="text" id="direccion" name="direccion" placeholder="direccion..">
+
+          <label for="importe">Importe</label>
+          <input type="text" id="importe" name="importe" placeholder="importe..">
+        </div>
+      </div>
+      <div style="width: 300px">
+        <h1>Añadir Localizacion</h1>
+        <label for="idLocalizacion">Id Localizacion</label>
+        <input type="text" id="idLocalizacion" name="idLocalizacion" placeholder="Id Localizacion..">
+
+        <label for="nombreLocalidad">Nombre</label>
+        <input type="text" id="nombreLocalidad" name="nombreLocalidad" placeholder="nombreLocaliadad..">
+
+        <label for="codigoPostal">Codigo Postal</label>
+        <input type="text" id="codigoPostal" name="codigoPostal" placeholder="Id codigoPostal..">
+      </div>
+    </div>
+    <input type="submit" value="Crear Restaurante">
+  </form>
+</div>
+</body>
+</html>
