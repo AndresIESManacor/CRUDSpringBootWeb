@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -31,6 +32,7 @@ public class MembresiaControllerImpl implements MembresiaController {
     @RequestMapping(value = "/membresia/create", method = RequestMethod.GET)
     public String create(ModelMap model) {
         model.addAttribute("type","membresia-create");
+        model.addAttribute("object",new Membresia());
         return "formularis/layout-form";
     }
 
@@ -39,6 +41,7 @@ public class MembresiaControllerImpl implements MembresiaController {
         Optional<Membresia> membresia = membresiaService.findMembresiaById(id);
         if (membresia.isPresent()) {
             model.addAttribute("type","membresia-update");
+            model.addAttribute("type",membresia.get());
             return "formularis/layout-form";
         }
         model.addAttribute("error","MEMBRESIA SELECTED DOESNT PRESENT");
@@ -48,25 +51,20 @@ public class MembresiaControllerImpl implements MembresiaController {
     //////////////         MEMBRESIA ACTIONS        ////////////////////
 
     @RequestMapping(value = "/membresia/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String save(
-            @RequestParam(value="idMembresia", required=true) int idMembresia,
+    public RedirectView save(
             @RequestParam(value="fechaInicio", required=true) String fechaInicio,
             @RequestParam(value="fechaFin", required=true) String fechaFin,
             @RequestParam(value="numFactura", required=true) String numFactura,
             ModelMap model) {
         Optional<Factura> factura = facturaService.findFacturaById(numFactura);
-        if (factura.isPresent()) {
-            Membresia membresia = saveMembresia(new Membresia(idMembresia, fechaInicio, fechaFin,factura.get()));
-            model.addAttribute("membresia",membresia);
-            return "tables/layout-table";
-        }
+        factura.ifPresent(value -> saveMembresia(new Membresia(fechaInicio, fechaFin, value)));
         model.addAttribute("error","FACTURA NOT FOUND");
-        return "links";
+        return new RedirectView("/membresias");
     }
 
 
     @RequestMapping(value = "/membresia/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String put(
+    public RedirectView put(
             @RequestParam(value="idMembresia", required=true) int idMembresia,
             @RequestParam(value="fechaInicio", required=true) String fechaInicio,
             @RequestParam(value="fechaFin", required=true) String fechaFin,
@@ -74,30 +72,34 @@ public class MembresiaControllerImpl implements MembresiaController {
             ModelMap model) {
         Optional<Factura> factura = facturaService.findFacturaById(numFactura);
         if (factura.isPresent()) {
-            updateMembresia(new Membresia(idMembresia, fechaInicio, fechaFin,factura.get()));
-            model.addAttribute("membresias",membresiaService.findAllMembresia());
-            return "tables/layout-table";
+            Membresia membresia = new Membresia(idMembresia, fechaInicio, fechaFin,factura.get());
+            Optional<Membresia> requestMembresia = membresiaService.findMembresiaById(membresia.getIdMembresia());
+            if (requestMembresia.isPresent()) {
+                model.addAttribute("error","MEMBRESIA IS PRESENT ALLREADY");
+            } else {
+                updateMembresia(membresia);
+            }
+        } else {
+            model.addAttribute("error","FACTURA NOT FOUND");
         }
-        model.addAttribute("error","FACTURA NOT FOUND");
-        return "links";
+        return new RedirectView("/membresias");
     }
 
     @RequestMapping(value = "/membresia/delete/{id}", method = RequestMethod.GET, produces = "application/json")
-    public String delete(@PathVariable int id, ModelMap model) {
+    public RedirectView delete(@PathVariable int id, ModelMap model) {
         Optional<Membresia> membresia =  membresiaService.findMembresiaById(id);
         if (membresia.isPresent()) {
-            model.addAttribute("membresia",membresia.get());
             deleteMembresiaById(id);
-            return "tables/layout-table";
         } else {
             model.addAttribute("error","MEMBRESIA NOT FOUNDED");
-            return "links";
         }
+        return new RedirectView("/membresias");
     }
 
     @RequestMapping(value = "/membresias",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String getAllMembresia(ModelMap model) {
+        model.remove("membresia");
         model.addAttribute("membresias",membresiaService.findAllMembresia());
         return "tables/layout-table";
     }
@@ -114,6 +116,8 @@ public class MembresiaControllerImpl implements MembresiaController {
         return "links";
     }
 
+
+    //ERROR QUE ME DA PORQUE SI
     @RequestMapping(value = "/membresia/update",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     public String errorReturn(ModelMap model) {
         model.addAttribute("error","Page not found");

@@ -46,7 +46,7 @@
   <td class="column-width20" th:text="${membresia.fechaInicio}"></td>
   <td class="column-width20" th:text="${membresia.fechaFin}"></td>
 
-  <td class="column-width10"><a th:href="@{'/factura/'${membresia.factura.numFactura}}" th:text="${membresia.factura.numFactura}"></a></td>
+  <td class="column-width10"><a th:href="@{'/factura/'+${membresia.factura.numFactura}}" th:text="${membresia.factura.numFactura}"></a></td>
 
   <td class="column-width10"><a href="/membresia/create" class="create-column">Create</a></td>
   <td class="column-width10"><a th:href="@{'/membresia/update/' + ${membresia.idMembresia}}" class="update-column">Update</a></td>

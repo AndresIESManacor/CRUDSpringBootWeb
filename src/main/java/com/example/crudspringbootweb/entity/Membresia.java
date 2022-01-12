@@ -50,6 +50,12 @@ public class Membresia {
         this.factura = factura;
     }
 
+    public Membresia(String fechaInicio, String fechaFin, Factura factura) {
+        this.fechaInicio = convertStringToTimestamp(fechaInicio);
+        this.fechaFin = convertStringToTimestamp(fechaFin);
+        this.factura = factura;
+    }
+
     public static Timestamp convertStringToTimestamp(String strDate) {
         strDate = strDate.replace("T"," ");
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
