@@ -43,7 +43,8 @@ public class FacturaControllerImpl implements FacturaController {
     //////////////         ROUTES        ////////////////////
 
     @RequestMapping(value = "/factura/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public RedirectView save(@ModelAttribute Factura factura, ModelMap model) {
+    public String save(@ModelAttribute Factura factura, ModelMap model) {
+        inicializeModelMap(model);
         Optional<Factura> requestFactura = facturaService.findFacturaById(factura.getNumFactura());
         if (requestFactura.isPresent()) {
             model.addAttribute("type","factura-create");
@@ -52,15 +53,15 @@ public class FacturaControllerImpl implements FacturaController {
         } else {
             saveFactura(factura);
         }
-        return new RedirectView("/facturas");
+        return getAllFactura(model);
     }
 
 
     @RequestMapping(value = "/factura/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public RedirectView put(@ModelAttribute Factura factura, ModelMap model) {
+    public String put(@ModelAttribute Factura factura, ModelMap model) {
+        inicializeModelMap(model);
         updateFactura(factura);
-        model.remove("factura");
-        return new RedirectView("/facturas");
+        return getAllFactura(model);
     }
 
     @RequestMapping(value = "/factura/delete/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -77,7 +78,6 @@ public class FacturaControllerImpl implements FacturaController {
     @RequestMapping(value = "/facturas",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String getAllFactura(ModelMap model) {
-        model.remove("factura");
         model.addAttribute("facturas",facturaService.findAllFactura());
         return "tables/layout-table";
     }
@@ -115,5 +115,11 @@ public class FacturaControllerImpl implements FacturaController {
     @Override
     public void updateFactura(Factura facturaNew) {
         facturaService.updateFactura(facturaNew);
+    }
+
+    public void inicializeModelMap(ModelMap model) {
+        model.remove("factura");
+        model.remove("facturas");
+        model.remove("error");
     }
 }
