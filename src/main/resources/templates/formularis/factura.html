@@ -24,7 +24,7 @@
         <div class="app-form-group">
             <label>
                 <p style="color: white">Importe</p>
-                <input th:field="*{importe}" type="number" min="0" step="any" class="app-form-control" autocomplete=“off”  placeholder="EL IMPORTE" required>
+                <input th:field="*{importe}" type="number" oninput="this.value = Math.abs(this.value)" step="any" class="app-form-control" autocomplete=“off”  placeholder="EL IMPORTE" required>
             </label>
         </div>
     </div>
