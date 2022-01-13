@@ -44,7 +44,7 @@ public class FacturaControllerImpl implements FacturaController {
     @RequestMapping(value = "/factura/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
     public String save(@ModelAttribute Factura factura, ModelMap model) {
         inicializeModelMap(model);
-        Optional<Factura> requestFactura = facturaService.findFacturaById(factura.getNumFactura());
+        Optional<Factura> requestFactura = facturaService.findFacturaById(factura.getNum_factura());
         if (requestFactura.isPresent()) {
             model.addAttribute("type","factura-create");
             model.addAttribute("object",new Factura());
@@ -52,7 +52,7 @@ public class FacturaControllerImpl implements FacturaController {
         } else {
             saveFactura(factura);
         }
-        return getAllFactura(model);
+        return show(model);
     }
 
 
@@ -60,7 +60,7 @@ public class FacturaControllerImpl implements FacturaController {
     public String put(@ModelAttribute Factura factura, ModelMap model) {
         inicializeModelMap(model);
         updateFactura(factura);
-        return getAllFactura(model);
+        return show(model);
     }
 
     @RequestMapping(value = "/factura/delete/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -76,7 +76,7 @@ public class FacturaControllerImpl implements FacturaController {
 
     @RequestMapping(value = "/facturas",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
-    public String getAllFactura(ModelMap model) {
+    public String show(ModelMap model) {
         model.addAttribute("facturas",facturaService.findAllFactura());
         return "tables/layout-table";
     }
@@ -98,12 +98,10 @@ public class FacturaControllerImpl implements FacturaController {
 
 
     @Override
-    public Factura saveFactura(Factura factura) {
+    public void saveFactura(Factura factura) {
         if (factura!=null) {
             facturaService.saveFactura(factura);
-            return factura;
         }
-        return null;
     }
 
     @Override

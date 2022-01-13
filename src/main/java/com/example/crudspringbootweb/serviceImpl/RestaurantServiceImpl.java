@@ -45,14 +45,14 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public String updateRestaurant(Restaurant restaurantNew) {
-        int num = restaurantNew.getIdRestaurant();
+        int num = restaurantNew.getId_restaurante();
         if (restaurantRepository.findById(num).isPresent()) {
             Restaurant customerToUpdate = new Restaurant(
-                    restaurantNew.getIdRestaurant(),
+                    restaurantNew.getId_restaurante(),
                     restaurantNew.getNombre(),
-                    restaurantNew.getDiesAnticipacionReservas(),
-                    restaurantNew.getTelefonoRestaurante(),
-                    restaurantNew.isValidated(),
+                    restaurantNew.getDies_anticipacion_reservas(),
+                    restaurantNew.getTelefono_restaurante(),
+                    restaurantNew.is_validated(),
                     restaurantNew.getLocalidad(),
                     restaurantNew.getMembresia(),
                     restaurantNew.getUseracount(),

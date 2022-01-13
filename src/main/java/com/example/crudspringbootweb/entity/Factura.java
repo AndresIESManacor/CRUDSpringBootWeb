@@ -6,11 +6,11 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "Factura")
+@Table(name = "factura")
 public class Factura {
     @Id
-    @Column(name = "numFactura")
-    private String numFactura;
+    @Column(name = "num_factura")
+    private String num_factura;
 
     @Column(name = "direccion")
     private String direccion;
@@ -18,8 +18,8 @@ public class Factura {
     @Column(name = "importe")
     private float importe;
 
-    public Factura(String numFactura, String direccion, float importe) {
-        this.numFactura = numFactura;
+    public Factura(String num_factura, String direccion, float importe) {
+        this.num_factura = num_factura;
         this.direccion = direccion;
         this.importe = importe;
     }

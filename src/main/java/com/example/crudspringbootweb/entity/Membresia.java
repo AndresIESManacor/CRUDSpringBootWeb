@@ -10,33 +10,33 @@ import java.util.Optional;
 
 @Data
 @Entity
-@Table(name = "Membresia")
+@Table(name = "membresia")
 public class Membresia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idMembresia")
-    private int idMembresia;
+    @Column(name = "id_membresia")
+    private int id_membresia;
 
-    @Column(name = "fechaInicio")
-    private Timestamp fechaInicio;
+    @Column(name = "fecha_inicio")
+    private Timestamp fecha_inicio;
 
-    @Column(name = "fechaFin")
-    private Timestamp fechaFin;
+    @Column(name = "fecha_fin")
+    private Timestamp fecha_fin;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "numFactura")
     private Factura factura;
 
-    public Membresia(int idMembresia, Timestamp fechaInicio, Timestamp fechaFin, Factura factura) {
-        this.idMembresia = idMembresia;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+    public Membresia(int id_membresia, Timestamp fecha_inicio, Timestamp fecha_fin, Factura factura) {
+        this.id_membresia = id_membresia;
+        this.fecha_inicio = fecha_inicio;
+        this.fecha_fin = fecha_fin;
         this.factura = factura;
     }
-    public Membresia(int idMembresia, String fechaInicio, String fechaFin, Factura factura) {
-        this.idMembresia = idMembresia;
-        this.fechaInicio = convertStringToTimestamp(fechaInicio);
-        this.fechaFin = convertStringToTimestamp(fechaFin);
+    public Membresia(int id_membresia, String fecha_inicio, String fecha_fin, Factura factura) {
+        this.id_membresia = id_membresia;
+        this.fecha_inicio = convertStringToTimestamp(fecha_inicio);
+        this.fecha_fin = convertStringToTimestamp(fecha_fin);
         this.factura = factura;
     }
 
@@ -44,15 +44,15 @@ public class Membresia {
 
     }
 
-    public Membresia(Timestamp fechaInicio, Timestamp fechaFin, Factura factura) {
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+    public Membresia(Timestamp fecha_inicio, Timestamp fecha_fin, Factura factura) {
+        this.fecha_inicio = fecha_inicio;
+        this.fecha_fin = fecha_fin;
         this.factura = factura;
     }
 
-    public Membresia(String fechaInicio, String fechaFin, Factura factura) {
-        this.fechaInicio = convertStringToTimestamp(fechaInicio);
-        this.fechaFin = convertStringToTimestamp(fechaFin);
+    public Membresia(String fecha_inicio, String fecha_fin, Factura factura) {
+        this.fecha_inicio = convertStringToTimestamp(fecha_inicio);
+        this.fecha_fin = convertStringToTimestamp(fecha_fin);
         this.factura = factura;
     }
 

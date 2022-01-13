@@ -44,12 +44,12 @@ public class MembresiaServiceImpl implements MembresiaService {
 
     @Override
     public String updateMembresia(Membresia membresia) {
-        int num = membresia.getIdMembresia();
+        int num = membresia.getId_membresia();
         if (membresiaRepository.findById(num).isPresent()) {
             Membresia membresiaUpdate = new Membresia(
-                    membresia.getIdMembresia(),
-                    membresia.getFechaInicio(),
-                    membresia.getFechaFin(),
+                    membresia.getId_membresia(),
+                    membresia.getFecha_inicio(),
+                    membresia.getFecha_fin(),
                     membresia.getFactura()
             );
             membresiaRepository.save(membresiaUpdate);

@@ -1,7 +1,6 @@
 package com.example.crudspringbootweb.serviceImpl;
 
 import com.example.crudspringbootweb.entity.Localidad;
-import com.example.crudspringbootweb.entity.Useracount;
 import com.example.crudspringbootweb.repository.Restaurante.LocalidadRepository;
 import com.example.crudspringbootweb.service.LocalidadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +44,12 @@ public class LocaliadadServiceImpl implements LocalidadService {
 
     @Override
     public String updateLocalidad(Localidad localidad) {
-        int num = localidad.getIdLocalidad();
+        int num = localidad.getId_localidad();
         if (localidadRepository.findById(num).isPresent()) {
             Localidad localidadUpdate = new Localidad(
-                    localidad.getIdLocalidad(),
-                    localidad.getNombreLocalidad(),
-                    localidad.getCodigoPostal()
+                    localidad.getId_localidad(),
+                    localidad.getNombre_localidad(),
+                    localidad.getCodigo_postal()
             );
             localidadRepository.save(localidadUpdate);
             return "Useracount modificado";

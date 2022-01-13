@@ -6,35 +6,35 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name="Restaurante")
+@Table(name="restaurante")
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idRestaurante")
-    private int idRestaurant;
+    @Column(name = "id_restaurante")
+    private int id_restaurante;
 
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "diesAnticipacionReservas")
-    private int diesAnticipacionReservas;
+    @Column(name = "dies_anticipacion_reservas")
+    private int dies_anticipacion_reservas;
 
-    @Column(name = "telefonoRestaurante")
-    private long telefonoRestaurante;
+    @Column(name = "telefono_restaurante")
+    private long telefono_restaurante;
 
-    @Column(name = "isValidated")
-    private boolean isValidated;
+    @Column(name = "is_validated")
+    private boolean is_validated;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "idLocalidad")
+    @JoinColumn(name = "id_localidad")
     private Localidad localidad;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "idMembresia")
+    @JoinColumn(name = "id_membresia")
     private Membresia membresia;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "idUser")
+    @JoinColumn(name = "id_user")
     private Useracount useracount;
 
     @Column(name = "visible")
@@ -44,23 +44,23 @@ public class Restaurant {
 
     }
 
-    public Restaurant(int idRestaurant, String nombre, int diesAnticipacionReservas, long telefonoRestaurante, boolean isValidated, Localidad localidad, Membresia membresia, Useracount user, boolean visible) {
-        this.idRestaurant = idRestaurant;
+    public Restaurant(int id_restaurante, String nombre, int dies_anticipacion_reservas, long telefono_restaurante, boolean is_validated, Localidad localidad, Membresia membresia, Useracount user, boolean visible) {
+        this.id_restaurante = id_restaurante;
         this.nombre = nombre;
-        this.diesAnticipacionReservas = diesAnticipacionReservas;
-        this.telefonoRestaurante = telefonoRestaurante;
-        this.isValidated = isValidated;
+        this.dies_anticipacion_reservas = dies_anticipacion_reservas;
+        this.telefono_restaurante = telefono_restaurante;
+        this.is_validated = is_validated;
         this.localidad = localidad;
         this.membresia = membresia;
         this.useracount = user;
         this.visible = visible;
     }
 
-    public Restaurant(String nombre, int diesAnticipacionReservas, long telefonoRestaurante, boolean isValidated, Localidad localidad, Membresia membresia, Useracount user, boolean visible) {
+    public Restaurant(String nombre, int dies_anticipacion_reservas, long telefono_restaurante, boolean is_validated, Localidad localidad, Membresia membresia, Useracount user, boolean visible) {
         this.nombre = nombre;
-        this.diesAnticipacionReservas = diesAnticipacionReservas;
-        this.telefonoRestaurante = telefonoRestaurante;
-        this.isValidated = isValidated;
+        this.dies_anticipacion_reservas = dies_anticipacion_reservas;
+        this.telefono_restaurante = telefono_restaurante;
+        this.is_validated = is_validated;
         this.localidad = localidad;
         this.membresia = membresia;
         this.useracount = user;

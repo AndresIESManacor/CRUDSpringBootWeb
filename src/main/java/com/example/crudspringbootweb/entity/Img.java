@@ -6,30 +6,30 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "IMG")
-public class Image {
+@Table(name = "img")
+public class Img {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idImg")
-    int idImg;
+    @Column(name="id_img")
+    int id_img;
 
     @Column(name="url")
     String url;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "idRestaurante")
+    @JoinColumn(name = "id_restaurante")
     private Restaurant restaurant;
 
-    public Image(int idImg, String url, Restaurant restaurant) {
-        this.idImg = idImg;
+    public Img(int id_img, String url, Restaurant restaurant) {
+        this.id_img = id_img;
         this.url = url;
         this.restaurant = restaurant;
     }
 
-    public Image(String url, Restaurant restaurant) {
+    public Img(String url, Restaurant restaurant) {
         this.url = url;
         this.restaurant = restaurant;
     }
 
-    public Image() {}
+    public Img() {}
 }

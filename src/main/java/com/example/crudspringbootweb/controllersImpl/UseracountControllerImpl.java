@@ -1,20 +1,15 @@
 package com.example.crudspringbootweb.controllersImpl;
 
 import com.example.crudspringbootweb.controllers.UseracountController;
-import com.example.crudspringbootweb.entity.Factura;
-import com.example.crudspringbootweb.entity.Localidad;
-import com.example.crudspringbootweb.entity.Membresia;
 import com.example.crudspringbootweb.entity.Useracount;
 import com.example.crudspringbootweb.service.UseracountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -51,7 +46,7 @@ public class UseracountControllerImpl implements UseracountController {
     @RequestMapping(value = "/user/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
     public String save(@ModelAttribute Useracount useracount, ModelMap model) {
         inicializeModelMap(model);
-        Optional<Useracount> requestUseracount = useracountService.findUseracountById(useracount.getIdUser());
+        Optional<Useracount> requestUseracount = useracountService.findUseracountById(useracount.getId_user());
         if (requestUseracount.isPresent()) {
             model.addAttribute("type","useracount-create");
             model.addAttribute("object",new Useracount());
@@ -59,14 +54,14 @@ public class UseracountControllerImpl implements UseracountController {
         } else {
             saveUseracount(useracount);
         }
-        return getAllUseracount(model);
+        return show(model);
     }
 
     @RequestMapping(value = "/user/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
     public String put(@ModelAttribute Useracount useracount, ModelMap model) {
         inicializeModelMap(model);
         updateUseracount(useracount);
-        return getAllUseracount(model);
+        return show(model);
     }
 
     @RequestMapping(value = "/user/delete/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -82,7 +77,7 @@ public class UseracountControllerImpl implements UseracountController {
 
     @RequestMapping(value = "/users", method = RequestMethod.GET, produces = "application/json")
     @Override
-    public String getAllUseracount(ModelMap model) {
+    public String show(ModelMap model) {
         model.addAttribute("useracounts",useracountService.findAllUseracount());
         return "tables/layout-table";
     }
@@ -106,11 +101,10 @@ public class UseracountControllerImpl implements UseracountController {
 
 
     @Override
-    public Useracount saveUseracount(Useracount useracount) {
+    public void saveUseracount(Useracount useracount) {
         if (useracount != null) {
             useracountService.saveUseracount(useracount);
         }
-        return null;
     }
 
     @Override

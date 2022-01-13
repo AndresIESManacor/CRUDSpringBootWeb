@@ -1,7 +1,6 @@
 package com.example.crudspringbootweb.service;
 
 import com.example.crudspringbootweb.entity.Factura;
-import com.example.crudspringbootweb.repository.Restaurante.FacturaRepository;
 
 import java.util.List;
 import java.util.Optional;

@@ -44,10 +44,10 @@ public class FacturaServiceImpl implements FacturaService {
 
     @Override
     public String updateFactura(Factura factura) {
-        String id = factura.getNumFactura();
+        String id = factura.getNum_factura();
         if (facturaRepository.findById(id).isPresent()) {
             Factura facturaUpdate = new Factura();
-            facturaUpdate.setNumFactura(factura.getNumFactura());
+            facturaUpdate.setNum_factura(factura.getNum_factura());
             facturaUpdate.setDireccion(factura.getDireccion());
             facturaUpdate.setImporte(factura.getImporte());
             facturaRepository.save(facturaUpdate);

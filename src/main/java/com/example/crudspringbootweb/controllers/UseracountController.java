@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UseracountController {
-    public String getAllUseracount(ModelMap model);
+    public String show(ModelMap model);
 
     public String getUseracountById(int id, ModelMap model);
 
-    public Useracount saveUseracount(Useracount useracount);
+    public void saveUseracount(Useracount useracount);
 
     public String deleteUseracountById(int id);
 

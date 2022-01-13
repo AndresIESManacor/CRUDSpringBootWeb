@@ -1,7 +1,6 @@
 package com.example.crudspringbootweb.service;
 
 import com.example.crudspringbootweb.entity.Localidad;
-import com.example.crudspringbootweb.entity.Membresia;
 
 import java.util.List;
 import java.util.Optional;

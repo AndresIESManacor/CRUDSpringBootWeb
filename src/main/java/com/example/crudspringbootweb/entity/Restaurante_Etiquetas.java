@@ -7,21 +7,21 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "RestauranteEtiquetas")
-public class EtiquetaRestaurant implements Serializable {
+@Table(name = "restaurante_etiquetas")
+public class Restaurante_Etiquetas implements Serializable {
     @Id
     @ManyToOne(optional = false)
-    @JoinColumn(name = "idRestaurante")
+    @JoinColumn(name = "id_restaurante")
     private Restaurant restaurant;
 
     @Id
     @ManyToOne(optional = false)
-    @JoinColumn(name = "idEtiqueta")
-    private Etiqueta etiqueta;
+    @JoinColumn(name = "id_etiqueta")
+    private Etiquetas etiqueta;
 
-    public EtiquetaRestaurant(Restaurant restaurant, Etiqueta etiqueta) {
+    public Restaurante_Etiquetas(Restaurant restaurant, Etiquetas etiqueta) {
         this.restaurant = restaurant;
         this.etiqueta = etiqueta;
     }
-    public EtiquetaRestaurant(){}
+    public Restaurante_Etiquetas(){}
 }

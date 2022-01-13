@@ -9,15 +9,15 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@Table(name = "UserAcount")
+@Table(name = "user_acount")
 public class Useracount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idUser")
-    private int idUser;
+    @Column(name = "id_user")
+    private int id_user;
 
-    @Column(name = "nombreUsuario")
-    private String nombreUsuario;
+    @Column(name = "nombre_usuario")
+    private String nombre_usuario;
 
     @Column(name = "contraseña")
     private String password;
@@ -40,11 +40,11 @@ public class Useracount {
     @Column(name = "dni")
     private String dni;
 
-    @Column(name = "isAdmin")
-    private boolean isAdmin;
+    @Column(name = "is_admin")
+    private boolean is_admin;
 
-    public Useracount(String nombreUsuario, String password, String correo, long telefono, String nombre, String apellido1, String apellido2, String dni, boolean isAdmin) {
-        this.nombreUsuario = nombreUsuario;
+    public Useracount(String nombre_usuario, String password, String correo, long telefono, String nombre, String apellido1, String apellido2, String dni, boolean is_admin) {
+        this.nombre_usuario = nombre_usuario;
         this.password = password;
         this.correo = correo;
         this.telefono = telefono;
@@ -52,12 +52,12 @@ public class Useracount {
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.dni = dni;
-        this.isAdmin = isAdmin;
+        this.is_admin = is_admin;
     }
 
-    public Useracount(int idUser, String nombreUsuario, String password, String correo, long telefono, String nombre, String apellido1, String apellido2, String dni, boolean isAdmin) {
-        this.idUser = idUser;
-        this.nombreUsuario = nombreUsuario;
+    public Useracount(int id_user, String nombre_usuario, String password, String correo, long telefono, String nombre, String apellido1, String apellido2, String dni, boolean is_admin) {
+        this.id_user = id_user;
+        this.nombre_usuario = nombre_usuario;
         this.password = password;
         this.correo = correo;
         this.telefono = telefono;
@@ -65,7 +65,7 @@ public class Useracount {
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.dni = dni;
-        this.isAdmin = isAdmin;
+        this.is_admin = is_admin;
     }
 
     public Useracount() {

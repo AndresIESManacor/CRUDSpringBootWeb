@@ -44,11 +44,11 @@ public class UseracountServiceImpl implements UseracountService {
 
     @Override
     public String updateUseracount(Useracount useracount) {
-        int num = useracount.getIdUser();
+        int num = useracount.getId_user();
         if (useracountRepository.findById(num).isPresent()) {
             Useracount useracountUpdate = new Useracount(
-                    useracount.getIdUser(),
-                    useracount.getNombreUsuario(),
+                    useracount.getId_user(),
+                    useracount.getNombre_usuario(),
                     useracount.getPassword(),
                     useracount.getCorreo(),
                     useracount.getTelefono(),
@@ -56,7 +56,7 @@ public class UseracountServiceImpl implements UseracountService {
                     useracount.getApellido1(),
                     useracount.getApellido2(),
                     useracount.getDni(),
-                    useracount.isAdmin()
+                    useracount.is_admin()
             );
             useracountRepository.save(useracountUpdate);
             return "Useracount modificado";

@@ -49,7 +49,7 @@ public class LocalidadControllerImpl implements LocalidadController {
     @RequestMapping(value = "/localidad/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
     public String save(@ModelAttribute Localidad localidad, ModelMap model) {
         inicializeModelMap(model);
-        Optional<Localidad> requestLocalidad = localidadService.findLocalidadById(localidad.getIdLocalidad());
+        Optional<Localidad> requestLocalidad = localidadService.findLocalidadById(localidad.getId_localidad());
         if (requestLocalidad.isPresent()) {
             model.addAttribute("type","factura-create");
             model.addAttribute("object",new Factura());
@@ -62,7 +62,7 @@ public class LocalidadControllerImpl implements LocalidadController {
         } else {
             model.addAttribute("error","LOCALIDAD name allready exist");
         }
-        return getAllLocalidad(model);
+        return show(model);
     }
 
     @RequestMapping(value = "/localidad/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
@@ -74,7 +74,7 @@ public class LocalidadControllerImpl implements LocalidadController {
         } else {
             model.addAttribute("error","LOCALIDAD name allready exist");
         }
-        return getAllLocalidad(model);
+        return show(model);
     }
 
     @RequestMapping(value = "/localidad/delete/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -90,7 +90,7 @@ public class LocalidadControllerImpl implements LocalidadController {
 
     @RequestMapping(value = "/localidades",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
-    public String getAllLocalidad(ModelMap model) {
+    public String show(ModelMap model) {
         model.addAttribute("localidades",localidadService.findAllLocalidad());
         return "tables/layout-table";
     }
@@ -112,11 +112,10 @@ public class LocalidadControllerImpl implements LocalidadController {
 
 
     @Override
-    public Localidad saveLocalidad(Localidad localidad) {
+    public void saveLocalidad(Localidad localidad) {
         if (localidad!=null) {
-            return localidadService.saveLocalidad(localidad);
+            localidadService.saveLocalidad(localidad);
         }
-        return null;
     }
 
     @Override
@@ -131,7 +130,7 @@ public class LocalidadControllerImpl implements LocalidadController {
 
     public boolean findByName(List<Localidad> localidades, Localidad localidad) {
         for (Localidad localidade : localidades) {
-            if (Objects.equals(localidade.getNombreLocalidad(), localidad.getNombreLocalidad())) {
+            if (Objects.equals(localidade.getNombre_localidad(), localidad.getNombre_localidad())) {
                 return false;
             }
         }

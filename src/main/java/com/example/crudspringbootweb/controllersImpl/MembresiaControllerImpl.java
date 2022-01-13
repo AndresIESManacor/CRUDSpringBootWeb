@@ -12,10 +12,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -63,7 +59,7 @@ public class MembresiaControllerImpl implements MembresiaController {
         } else {
             model.addAttribute("error","FACTURA NOT FOUND");
         }
-        return getAllMembresia(model);
+        return show(model);
     }
 
 
@@ -78,7 +74,7 @@ public class MembresiaControllerImpl implements MembresiaController {
         Optional<Factura> factura = facturaService.findFacturaById(numFactura);
         if (factura.isPresent()) {
             Membresia membresia = new Membresia(idMembresia, fechaInicio, fechaFin,factura.get());
-            Optional<Membresia> requestMembresia = membresiaService.findMembresiaById(membresia.getIdMembresia());
+            Optional<Membresia> requestMembresia = membresiaService.findMembresiaById(membresia.getId_membresia());
             if (requestMembresia.isPresent()) {
                 model.addAttribute("error","MEMBRESIA IS PRESENT ALLREADY");
             } else {
@@ -87,7 +83,7 @@ public class MembresiaControllerImpl implements MembresiaController {
         } else {
             model.addAttribute("error","FACTURA NOT FOUND");
         }
-        return getAllMembresia(model);
+        return show(model);
     }
 
     @RequestMapping(value = "/membresia/delete/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -103,7 +99,7 @@ public class MembresiaControllerImpl implements MembresiaController {
 
     @RequestMapping(value = "/membresias",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
-    public String getAllMembresia(ModelMap model) {
+    public String show(ModelMap model) {
         model.addAttribute("membresias",membresiaService.findAllMembresia());
         return "tables/layout-table";
     }
@@ -133,11 +129,10 @@ public class MembresiaControllerImpl implements MembresiaController {
 
 
     @Override
-    public Membresia saveMembresia(Membresia membresia) {
+    public void saveMembresia(Membresia membresia) {
         if (membresia!=null) {
-            return membresiaService.saveMembresia(membresia);
+            membresiaService.saveMembresia(membresia);
         }
-        return null;
     }
 
     @Override
