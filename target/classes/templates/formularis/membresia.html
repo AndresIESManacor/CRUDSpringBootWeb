@@ -8,29 +8,26 @@
 <div th:fragment="membresia-field (type)">
     <h3 style="color: white; font-size: medium; text-align: center" th:text="${type}"></h3>
     <div class="app-form-group" style="display: flex; flex-direction: row; justify-content: center;">
-        <label th:if="${type=='CREATE'}">
-            <input id="idMembresia" name="idMembresia" type="hidden" class="app-form-control" style="text-align: center">
-        </label>
         <label th:unless="${type=='CREATE'}">
-            <input id="idMembresia" name="idMembresia" type="number" min="0" autocomplete=“off” class="app-form-control" style="text-align: center" placeholder="ID MEMBRESIA" required readonly>
+            <input id="id_membresia" name="idMembresia" type="number" min="0" autocomplete=“off” class="app-form-control" style="text-align: center" placeholder="ID MEMBRESIA" required readonly>
         </label>
     </div>
     <div class="app-form-group message">
         <label>
             <p style="color: white">Fecha Inicio</p>
-            <input id="fechaInicio" name="fechaInicio" type="datetime-local" class="app-form-control" required>
+            <input id="fecha_inicio" name="fechaInicio" type="datetime-local" class="app-form-control" required>
         </label>
     </div>
     <div class="app-form-group">
         <label>
             <p style="color: white">Fecha Fin</p>
-            <input id="fechaFin" name="fechaFin" type="datetime-local" class="app-form-control" required>
+            <input id="fecha_fin" name="fechaFin" type="datetime-local" class="app-form-control" required>
         </label>
     </div>
     <div class="app-form-group">
         <label>
             <p style="color: white">Num. Factura</p>
-            <input id="numFactura" name="numFactura" type="text" class="app-form-control" autocomplete=“off”  placeholder="NAME OF FACTURA" required>
+            <input id="num_factura" name="numFactura" type="text" class="app-form-control" autocomplete=“off”  placeholder="NAME OF FACTURA" required>
         </label>
     </div>
 </div>

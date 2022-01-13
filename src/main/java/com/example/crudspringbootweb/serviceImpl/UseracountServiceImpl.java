@@ -56,7 +56,7 @@ public class UseracountServiceImpl implements UseracountService {
                     useracount.getApellido1(),
                     useracount.getApellido2(),
                     useracount.getDni(),
-                    useracount.is_admin()
+                    useracount.isAdmin()
             );
             useracountRepository.save(useracountUpdate);
             return "Useracount modificado";

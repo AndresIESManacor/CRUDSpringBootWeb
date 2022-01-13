@@ -9,10 +9,10 @@
         <h3 style="color: white; font-size: medium; text-align: center" th:text="${type}"></h3>
         <div class="app-form-group" style="display: flex; flex-direction: row; justify-content: center;">
             <label th:if="${type=='CREATE'}">
-                <input th:field="*{numFactura}" type="text" onkeypress="return event.charCode !== 32" autocomplete="off" class="app-form-control" style="text-align: center" placeholder="NUMFACTURA" required>
+                <input th:field="*{num_factura}" type="text" onkeypress="return event.charCode !== 32" autocomplete="off" class="app-form-control" style="text-align: center" placeholder="NUMFACTURA" required>
             </label>
             <label th:unless="${type=='CREATE'}">
-                <input th:field="*{numFactura}" class="app-form-control" style="text-align: center" placeholder="NUMFACTURA" required readonly>
+                <input th:field="*{num_factura}" class="app-form-control" style="text-align: center" placeholder="NUMFACTURA" required readonly>
             </label>
         </div>
         <div class="app-form-group message">

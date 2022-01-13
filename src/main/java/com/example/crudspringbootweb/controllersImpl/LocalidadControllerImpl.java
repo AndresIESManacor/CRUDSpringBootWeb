@@ -54,13 +54,14 @@ public class LocalidadControllerImpl implements LocalidadController {
             model.addAttribute("type","factura-create");
             model.addAttribute("object",new Factura());
             model.addAttribute("error","TRYING TO SAVE FACTURA THAT EXIST");
-        }
-        //MIRAR TAMBIEN POR EL NOMBRE PARA QUE HAYA DOS REPETIDOS
-        List<Localidad> localidades = localidadService.findAllLocalidad();
-        if (findByName(localidades,localidad)) {
-            saveLocalidad(localidad);
         } else {
-            model.addAttribute("error","LOCALIDAD name allready exist");
+            //MIRAR TAMBIEN POR EL NOMBRE PARA QUE HAYA DOS REPETIDOS
+            List<Localidad> localidades = localidadService.findAllLocalidad();
+            if (isNombreInTheList(localidades,localidad)) {
+                model.addAttribute("error","LOCALIDAD name allready exist");
+            } else {
+                saveLocalidad(localidad);
+            }
         }
         return show(model);
     }
@@ -69,10 +70,10 @@ public class LocalidadControllerImpl implements LocalidadController {
     public String put(@ModelAttribute Localidad localidad, ModelMap model) {
         inicializeModelMap(model);
         List<Localidad> localidades = localidadService.findAllLocalidad();
-        if (findByName(localidades,localidad)) {
-            updateLocalidad(localidad);
-        } else {
+        if (isNombreInTheList(localidades,localidad)) {
             model.addAttribute("error","LOCALIDAD name allready exist");
+        } else {
+            updateLocalidad(localidad);
         }
         return show(model);
     }
@@ -128,13 +129,13 @@ public class LocalidadControllerImpl implements LocalidadController {
         return localidadService.updateLocalidad(localidadNew);
     }
 
-    public boolean findByName(List<Localidad> localidades, Localidad localidad) {
+    public boolean isNombreInTheList(List<Localidad> localidades, Localidad localidad) {
         for (Localidad localidade : localidades) {
             if (Objects.equals(localidade.getNombre_localidad(), localidad.getNombre_localidad())) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     public void inicializeModelMap(ModelMap model) {

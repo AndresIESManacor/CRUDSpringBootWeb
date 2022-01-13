@@ -9,22 +9,22 @@
   <h3 style="color: white; font-size: medium; text-align: center" th:text="${type}"></h3>
   <div class="app-form-group" style="display: flex; flex-direction: row; justify-content: center;">
     <label th:if="${type=='CREATE'}">
-      <input th:field="*{idLocalidad}" type="hidden" autocomplete="off" class="app-form-control" style="text-align: center" placeholder="ID LOCALIDAD">
+      <input th:field="*{id_localidad}" type="hidden" autocomplete="off" class="app-form-control" style="text-align: center" placeholder="ID LOCALIDAD">
     </label>
     <label th:unless="${type=='CREATE'}">
-      <input th:field="*{idLocalidad}" type="number" min="0" autocomplete=“off” class="app-form-control" style="text-align: center" placeholder="ID LOCALIDAD" required readonly>
+      <input th:field="*{id_localidad}" type="number" min="0" autocomplete=“off” class="app-form-control" style="text-align: center" placeholder="ID LOCALIDAD" required readonly>
     </label>
   </div>
   <div class="app-form-group message">
     <label>
       <p style="color: white">Nombre</p>
-      <input th:field="*{nombreLocalidad}" type="text" maxlength="50" class="app-form-control" autocomplete="off" placeholder="NOMBRE LOCALIDAD" required>
+      <input th:field="*{nombre_localidad}" type="text" maxlength="50" class="app-form-control" autocomplete="off" placeholder="NOMBRE LOCALIDAD" required>
     </label>
   </div>
   <div class="app-form-group">
     <label>
       <p style="color: white">Codigo Postal</p>
-      <input th:field="*{codigoPostal}" type="number" min="0" class="app-form-control" autocomplete="off" placeholder="CODIGO POSTAL" required>
+      <input th:field="*{codigo_postal}" type="number" min="0" class="app-form-control" autocomplete="off" placeholder="CODIGO POSTAL" required>
     </label>
   </div>
 </div>

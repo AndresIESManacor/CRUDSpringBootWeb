@@ -60,7 +60,7 @@
                         <div th:if="${type} == 'localidad-create'">
                             <!-- FORM LOCALIDAD CREATE -->
                             <form th:action="@{/localidad/save}" method="POST" th:object="${object}">
-                                <div th:replace="formularis/localizacion :: localidad-field ('CREATE')"></div>
+                                <div th:replace="formularis/localidad :: localidad-field ('CREATE')"></div>
                                 <div class="app-form-group buttons">
                                     <button class="app-form-button"><a href="/">RETURN</a></button>
                                     <input type="submit" class="app-form-button" value="CREATE"/>
@@ -71,7 +71,7 @@
                         <div th:if="${type} == 'localidad-update'">
                             <!-- FORM LOCALIDAD UPDATE -->
                             <form th:action="@{/localidad/put}" method="POST" th:object="${object}">
-                                <div th:replace="formularis/localizacion :: localidad-field ('UPDATE')"></div>
+                                <div th:replace="formularis/localidad :: localidad-field ('UPDATE')"></div>
                                 <div class="app-form-group buttons">
                                     <button class="app-form-button"><a href="/">RETURN</a></button>
                                     <input type="submit" class="app-form-button" value="UPDATE"/>

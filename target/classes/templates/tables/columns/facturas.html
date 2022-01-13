@@ -41,13 +41,13 @@
 
 
 <tr class="row100 body" th:fragment="body-rows(factura)">
-    <td class="column-width20 first-column" th:text="${factura.numFactura}"></td>
+    <td class="column-width20 first-column" th:text="${factura.num_factura}"></td>
     <td class="column-width20" th:text="${factura.direccion}"></td>
     <td class="column-width20" th:text="${factura.importe}"></td>
     <td class="column-width10"><a href="/factura/create" class="create-column">Create</a></td>
-    <td class="column-width10"><a th:href="@{'/factura/update/' + ${factura.numFactura}}" class="update-column">Update</a></td>
-    <td class="column-width10"><a th:href="@{'/factura/' + ${factura.numFactura}}" class="read-column">Read</a></td>
-    <td class="column-width10"><a th:href="@{'/factura/delete/' + ${factura.numFactura}}" class="delete-column">Delete</a></td>
+    <td class="column-width10"><a th:href="@{'/factura/update/' + ${factura.num_factura}}" class="update-column">Update</a></td>
+    <td class="column-width10"><a th:href="@{'/factura/' + ${factura.num_factura}}" class="read-column">Read</a></td>
+    <td class="column-width10"><a th:href="@{'/factura/delete/' + ${factura.num_factura}}" class="delete-column">Delete</a></td>
 </tr>
 
 </body>

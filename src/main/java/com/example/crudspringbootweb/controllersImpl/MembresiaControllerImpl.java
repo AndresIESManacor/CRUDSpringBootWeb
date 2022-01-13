@@ -48,14 +48,14 @@ public class MembresiaControllerImpl implements MembresiaController {
 
     @RequestMapping(value = "/membresia/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
     public String save(
-            @RequestParam(value="fechaInicio", required=true) String fechaInicio,
-            @RequestParam(value="fechaFin", required=true) String fechaFin,
-            @RequestParam(value="numFactura", required=true) String numFactura,
+            @RequestParam(value="fecha_inicio", required=true) String fecha_inicio,
+            @RequestParam(value="fecha_fin", required=true) String fecha_fin,
+            @RequestParam(value="num_factura", required=true) String num_factura,
             ModelMap model) {
         inicializeModelMap(model);
-        Optional<Factura> factura = facturaService.findFacturaById(numFactura);
+        Optional<Factura> factura = facturaService.findFacturaById(num_factura);
         if (factura.isPresent()) {
-            saveMembresia(new Membresia(fechaInicio, fechaFin,factura.get()));
+            saveMembresia(new Membresia(fecha_inicio, fecha_fin,factura.get()));
         } else {
             model.addAttribute("error","FACTURA NOT FOUND");
         }
@@ -65,15 +65,15 @@ public class MembresiaControllerImpl implements MembresiaController {
 
     @RequestMapping(value = "/membresia/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
     public String put(
-            @RequestParam(value="idMembresia", required=true) int idMembresia,
-            @RequestParam(value="fechaInicio", required=true) String fechaInicio,
-            @RequestParam(value="fechaFin", required=true) String fechaFin,
-            @RequestParam(value="numFactura", required=true) String numFactura,
+            @RequestParam(value="id_membresia", required=true) int id_membresia,
+            @RequestParam(value="fecha_inicio", required=true) String fecha_inicio,
+            @RequestParam(value="fecha_fin", required=true) String fecha_fin,
+            @RequestParam(value="num_factura", required=true) String num_factura,
             ModelMap model) {
         inicializeModelMap(model);
-        Optional<Factura> factura = facturaService.findFacturaById(numFactura);
+        Optional<Factura> factura = facturaService.findFacturaById(num_factura);
         if (factura.isPresent()) {
-            Membresia membresia = new Membresia(idMembresia, fechaInicio, fechaFin,factura.get());
+            Membresia membresia = new Membresia(id_membresia, fecha_inicio, fecha_fin,factura.get());
             Optional<Membresia> requestMembresia = membresiaService.findMembresiaById(membresia.getId_membresia());
             if (requestMembresia.isPresent()) {
                 model.addAttribute("error","MEMBRESIA IS PRESENT ALLREADY");

@@ -9,16 +9,16 @@
     <h3 style="color: white; font-size: medium; text-align: center" th:text="${type}"></h3>
     <div class="app-form-group" style="display: flex; flex-direction: row; justify-content: center;">
         <label th:if="${type=='CREATE'}">
-            <input th:field="*{idUser}" type="hidden" class="app-form-control" style="text-align: center" placeholder="ID USER" required>
+            <input th:field="*{id_user}" type="hidden" class="app-form-control" style="text-align: center" placeholder="ID USER" required>
         </label>
         <label th:unless="${type=='CREATE'}">
-            <input th:field="*{idUser}" class="app-form-control" style="text-align: center" placeholder="ID USER" required readonly>
+            <input th:field="*{id_user}" class="app-form-control" style="text-align: center" placeholder="ID USER" required readonly>
         </label>
     </div>
     <div class="app-form-group message">
         <label>
             <p style="color: white">Username</p>
-            <input th:field="*{nombreUsuario}" type="text" maxlength="32" class="app-form-control" autocomplete="off" placeholder="USERNAME" required>
+            <input th:field="*{nombre_usuario}" type="text" maxlength="32" class="app-form-control" autocomplete="off" placeholder="USERNAME" required>
         </label>
     </div>
     <div class="app-form-group">
@@ -66,7 +66,7 @@
     <div class="app-form-group">
         <label>
             <p style="color: white">IsAdmin</p>
-            <select th:field="*{Admin}">
+            <select th:field="*{admin}">
                 <option th:value="1">true</option>
                 <option th:value="0">false</option>
             </select>

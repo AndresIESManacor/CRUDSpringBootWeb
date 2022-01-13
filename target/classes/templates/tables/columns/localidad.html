@@ -40,13 +40,13 @@
 
 
 <tr class="body" th:fragment="body-rows(localidad)">
-    <td class="column-width10 first-column" th:text="${localidad.idLocalidad}"></td>
-    <td class="column-width20" th:text="${localidad.nombreLocalidad}"></td>
-    <td class="column-width20" th:text="${localidad.codigoPostal}"></td>
+    <td class="column-width10 first-column" th:text="${localidad.id_localidad}"></td>
+    <td class="column-width20" th:text="${localidad.nombre_localidad}"></td>
+    <td class="column-width20" th:text="${localidad.codigo_postal}"></td>
     <td class="column-width10"><a href="/localidad/create" class="create-column">Create</a></td>
-    <td class="column-width10"><a th:href="@{'/localidad/update/' + ${localidad.idLocalidad}}" class="update-column">Update</a></td>
-    <td class="column-width10"><a th:href="@{'/localidad/' + ${localidad.idLocalidad}}" class="read-column">Read</a></td>
-    <td class="column-width10"><a th:href="@{'/localidad/delete/' + ${localidad.idLocalidad}}" class="delete-column">Delete</a></td>
+    <td class="column-width10"><a th:href="@{'/localidad/update/' + ${localidad.id_localidad}}" class="update-column">Update</a></td>
+    <td class="column-width10"><a th:href="@{'/localidad/' + ${localidad.id_localidad}}" class="read-column">Read</a></td>
+    <td class="column-width10"><a th:href="@{'/localidad/delete/' + ${localidad.id_localidad}}" class="delete-column">Delete</a></td>
 </tr>
 
 </body>

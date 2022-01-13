@@ -49,8 +49,8 @@
 </div>
 
 <tr class="body" th:fragment="body-rows(useracount)">
-  <td class="column-width5 first-column" th:text="${useracount.idUser}"></td>
-  <td class="column-width10" th:text="${useracount.nombreUsuario}"></th>
+  <td class="column-width5 first-column" th:text="${useracount.id_user}"></td>
+  <td class="column-width10" th:text="${useracount.nombre_usuario}"></th>
   <td class="column-width5" th:text="${useracount.password}"></td>
 
   <td class="column-width10" th:text="${useracount.correo}"></td>
@@ -59,12 +59,12 @@
   <td class="column-width10" th:text="${useracount.apellido1}"></td>
   <td class="column-width10" th:text="${useracount.apellido2}"></td>
   <td class="column-width5" th:text="${useracount.dni}"></td>
-  <td class="column-width5" th:text="${useracount.isAdmin}"></td>
+  <td class="column-width5" th:text="${useracount.admin}"></td>
 
   <td class="column-width5"><a href="/user/create" class="create-column">Create</a></td>
-  <td class="column-width5"><a th:href="@{'/user/update/' + ${useracount.idUser}}" class="update-column">Update</a></td>
-  <td class="column-width5"><a th:href="@{'/user/' + ${useracount.idUser}}" class="read-column">Read</a></td>
-  <td class="column-width5"><a th:href="@{'/user/delete/' + ${useracount.idUser}}" class="delete-column">Delete</a></td>
+  <td class="column-width5"><a th:href="@{'/user/update/' + ${useracount.id_user}}" class="update-column">Update</a></td>
+  <td class="column-width5"><a th:href="@{'/user/' + ${useracount.id_user}}" class="read-column">Read</a></td>
+  <td class="column-width5"><a th:href="@{'/user/delete/' + ${useracount.id_user}}" class="delete-column">Delete</a></td>
 </tr>
 </body>
 </html>

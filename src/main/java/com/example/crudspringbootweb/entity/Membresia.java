@@ -24,7 +24,7 @@ public class Membresia {
     private Timestamp fecha_fin;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "numFactura")
+    @JoinColumn(name = "num_factura")
     private Factura factura;
 
     public Membresia(int id_membresia, Timestamp fecha_inicio, Timestamp fecha_fin, Factura factura) {
