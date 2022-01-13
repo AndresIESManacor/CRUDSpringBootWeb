@@ -10,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -47,7 +49,8 @@ public class LocalidadControllerImpl implements LocalidadController {
 
 
     @RequestMapping(value = "/localidad/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public RedirectView save(@ModelAttribute Localidad localidad, ModelMap model) {
+    public String save(@ModelAttribute Localidad localidad, ModelMap model) {
+        inicializeModelMap(model);
         Optional<Localidad> requestLocalidad = localidadService.findLocalidadById(localidad.getIdLocalidad());
         if (requestLocalidad.isPresent()) {
             model.addAttribute("type","factura-create");
@@ -55,15 +58,25 @@ public class LocalidadControllerImpl implements LocalidadController {
             model.addAttribute("error","TRYING TO SAVE FACTURA THAT EXIST");
         }
         //MIRAR TAMBIEN POR EL NOMBRE PARA QUE HAYA DOS REPETIDOS
-        saveLocalidad(localidad);
-        return new RedirectView("/localidades");
+        List<Localidad> localidades = localidadService.findAllLocalidad();
+        if (findByName(localidades,localidad)) {
+            saveLocalidad(localidad);
+        } else {
+            model.addAttribute("error","LOCALIDAD name allready exist");
+        }
+        return getAllLocalidad(model);
     }
 
     @RequestMapping(value = "/localidad/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public RedirectView put(@ModelAttribute Localidad localidad, ModelMap model) {
-        model.remove("factura");
-        updateLocalidad(localidad);
-        return new RedirectView("/localidades");
+    public String put(@ModelAttribute Localidad localidad, ModelMap model) {
+        inicializeModelMap(model);
+        List<Localidad> localidades = localidadService.findAllLocalidad();
+        if (findByName(localidades,localidad)) {
+            updateLocalidad(localidad);
+        } else {
+            model.addAttribute("error","LOCALIDAD name allready exist");
+        }
+        return getAllLocalidad(model);
     }
 
     @RequestMapping(value = "/localidad/delete/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -80,7 +93,6 @@ public class LocalidadControllerImpl implements LocalidadController {
     @RequestMapping(value = "/localidades",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String getAllLocalidad(ModelMap model) {
-        model.remove("localidad");
         model.addAttribute("localidades",localidadService.findAllLocalidad());
         return "tables/layout-table";
     }
@@ -117,5 +129,20 @@ public class LocalidadControllerImpl implements LocalidadController {
     @Override
     public String updateLocalidad(Localidad localidadNew) {
         return localidadService.updateLocalidad(localidadNew);
+    }
+
+    public boolean findByName(List<Localidad> localidades, Localidad localidad) {
+        for (Localidad localidade : localidades) {
+            if (Objects.equals(localidade.getNombreLocalidad(), localidad.getNombreLocalidad())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void inicializeModelMap(ModelMap model) {
+        model.remove("localidad");
+        model.remove("localidades");
+        model.remove("error");
     }
 }
