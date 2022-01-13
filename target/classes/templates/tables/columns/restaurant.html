@@ -31,21 +31,7 @@
 <div th:fragment="tbody-compose (restaurants)">
     <table>
         <tbody>
-        <tr class="body" th:each="restaurant : ${restaurants}">
-            <td class="column-width10 first-column" th:text="${restaurant.idRestaurant}"></td>
-            <td class="column-width10" th:text="${restaurant.nombre}"></td>
-            <td class="column-width10" th:text="${restaurant.diesAnticipacionReservas}"></td>
-            <td class="column-width10" th:text="${restaurant.telefonoRestaurante}"></td>
-            <td class="column-width5" th:text="${restaurant.isValidated}"></td>
-            <td class="column-width5" th:text="${restaurant.visible}"></td>
-            <td class="column-width10" th:text="${restaurant.localidad.idLocalidad}"></td>
-            <td class="column-width10" th:text="${restaurant.membresia.idMembresia}">idMembresia</td>
-            <td class="column-width10" th:text="${restaurant.useracount.idUser}">idUser</td>
-
-            <td class="column-width5"><a href="/restaurantC" class="create-column">Create</a></td>
-            <td class="column-width5"><a href="/restaurantU" class="update-column">Update</a></td>
-            <td class="column-width5"><a th:href="@{'/restaurant/' + ${restaurant.idRestaurant}}" class="read-column">Read</a></td>
-            <td class="column-width5"><a th:href="@{'/restaurant/delete/' + ${restaurant.idRestaurant}}" class="delete-column">Delete</a></td>
+        <tr class="body" th:each="restaurant : ${restaurants}" th:include="tables/columns/restaurant :: body-rows(${restaurant})">
         </tr>
         </tbody>
     </table>
@@ -54,24 +40,27 @@
 <div th:fragment="tbody-single(restaurant)">
     <table>
         <tbody>
-        <tr class="body">
-            <td class="column-width10 first-column" th:text="${restaurant.idRestaurant}"></td>
-            <td class="column-width10" th:text="${restaurant.nombre}"></td>
-            <td class="column-width10" th:text="${restaurant.diesAnticipacionReservas}"></td>
-            <td class="column-width10" th:text="${restaurant.telefonoRestaurante}"></td>
-            <td class="column-width5" th:text="${restaurant.isValidated}"></td>
-            <td class="column-width5" th:text="${restaurant.visible}"></td>
-            <td class="column-width10" th:text="${restaurant.localidad.idLocalidad}"></td>
-            <td class="column-width10" th:text="${restaurant.membresia.idMembresia}">idMembresia</td>
-            <td class="column-width10" th:text="${restaurant.useracount.idUser}">idUser</td>
-
-            <td class="column-width5"><a href="/restaurantC" class="create-column">Create</a></td>
-            <td class="column-width5"><a href="/restaurantU" class="update-column">Update</a></td>
-            <td class="column-width5"><a th:href="@{'/restaurant/' + ${restaurant.idRestaurant}}" class="read-column">Read</a></td>
-            <td class="column-width5"><a th:href="@{'/restaurant/delete/' + ${restaurant.idRestaurant}}" class="delete-column">Delete</a></td>
+        <tr class="body" th:include="tables/columns/restaurant :: body-rows(${restaurant})">
         </tr>
         </tbody>
     </table>
 </div>
+
+<tr class=" body" th:fragment="body-rows(restaurant)">
+    <td class="column-width10 first-column" th:text="${restaurant.id_restaurante}"></td>
+    <td class="column-width10" th:text="${restaurant.nombre}"></td>
+    <td class="column-width10" th:text="${restaurant.dies_anticipacion_reservas}"></td>
+    <td class="column-width10" th:text="${restaurant.telefono_restaurante}"></td>
+    <td class="column-width5" th:text="${restaurant.validated}"></td>
+    <td class="column-width5" th:text="${restaurant.visible}"></td>
+    <td class="column-width10"><a th:href="@{'/localidad/' + ${restaurant.localidad.id_localidad}}" th:text="${restaurant.localidad.nombre_localidad}"></a></td>
+    <td class="column-width10"><a th:href="@{'/membresia/' + ${restaurant.membresia.id_membresia}}" th:text="${restaurant.membresia.id_membresia}"></a></td>
+    <td class="column-width10"><a th:href="@{'/user/' + ${restaurant.useracount.id_user}}" th:text="${restaurant.useracount.nombre_usuario}"></a></td>
+
+    <td class="column-width5"><a href="/restaurant/create" class="create-column">Create</a></td>
+    <td class="column-width5"><a th:href="@{'/restaurant/update/' + ${restaurant.id_restaurante}}" class="update-column">Update</a></td>
+    <td class="column-width5"><a th:href="@{'/restaurant/' + ${restaurant.id_restaurante}}" class="read-column">Read</a></td>
+    <td class="column-width5"><a th:href="@{'/restaurant/delete/' + ${restaurant.id_restaurante}}" class="delete-column">Delete</a></td>
+</tr>
 </body>
 </html>

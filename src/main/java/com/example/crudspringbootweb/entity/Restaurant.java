@@ -22,8 +22,8 @@ public class Restaurant {
     @Column(name = "telefono_restaurante")
     private long telefono_restaurante;
 
-    @Column(name = "is_validated")
-    private boolean is_validated;
+    @Column(name = "validated")
+    private boolean validated;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_localidad")
@@ -44,23 +44,23 @@ public class Restaurant {
 
     }
 
-    public Restaurant(int id_restaurante, String nombre, int dies_anticipacion_reservas, long telefono_restaurante, boolean is_validated, Localidad localidad, Membresia membresia, Useracount user, boolean visible) {
+    public Restaurant(int id_restaurante, String nombre, int dies_anticipacion_reservas, long telefono_restaurante, boolean validated, Localidad localidad, Membresia membresia, Useracount user, boolean visible) {
         this.id_restaurante = id_restaurante;
         this.nombre = nombre;
         this.dies_anticipacion_reservas = dies_anticipacion_reservas;
         this.telefono_restaurante = telefono_restaurante;
-        this.is_validated = is_validated;
+        this.validated = validated;
         this.localidad = localidad;
         this.membresia = membresia;
         this.useracount = user;
         this.visible = visible;
     }
 
-    public Restaurant(String nombre, int dies_anticipacion_reservas, long telefono_restaurante, boolean is_validated, Localidad localidad, Membresia membresia, Useracount user, boolean visible) {
+    public Restaurant(String nombre, int dies_anticipacion_reservas, long telefono_restaurante, boolean validated, Localidad localidad, Membresia membresia, Useracount user, boolean visible) {
         this.nombre = nombre;
         this.dies_anticipacion_reservas = dies_anticipacion_reservas;
         this.telefono_restaurante = telefono_restaurante;
-        this.is_validated = is_validated;
+        this.validated = validated;
         this.localidad = localidad;
         this.membresia = membresia;
         this.useracount = user;

@@ -12,6 +12,10 @@ public interface UseracountService {
 
     public Useracount saveUseracount(Useracount useracountnew);
 
+    public List<Useracount> findUseracountsByEmail(String correo);
+
+    public List<Useracount> findUseracountByUsername(String correo);
+
     public String deleteUseracount(int id);
 
     public String updateUseracount(Useracount useracount);

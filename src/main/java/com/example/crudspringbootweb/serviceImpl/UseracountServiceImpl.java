@@ -3,6 +3,7 @@ package com.example.crudspringbootweb.serviceImpl;
 import com.example.crudspringbootweb.entity.Useracount;
 import com.example.crudspringbootweb.repository.Restaurante.UseracountRepository;
 import com.example.crudspringbootweb.service.UseracountService;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,5 +63,12 @@ public class UseracountServiceImpl implements UseracountService {
             return "Useracount modificado";
         }
         return "Error al Useracount el Restaurant";
+    }
+
+    public List<Useracount> findUseracountsByEmail(String email) {
+        return useracountRepository.findUseracountsByCorreo(email);
+    }
+    public List<Useracount> findUseracountByUsername(String username) {
+        return useracountRepository.findUseracountsByUsername(username);
     }
 }

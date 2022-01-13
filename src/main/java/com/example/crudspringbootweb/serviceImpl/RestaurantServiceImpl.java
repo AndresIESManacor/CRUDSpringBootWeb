@@ -52,7 +52,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                     restaurantNew.getNombre(),
                     restaurantNew.getDies_anticipacion_reservas(),
                     restaurantNew.getTelefono_restaurante(),
-                    restaurantNew.is_validated(),
+                    restaurantNew.isValidated(),
                     restaurantNew.getLocalidad(),
                     restaurantNew.getMembresia(),
                     restaurantNew.getUseracount(),

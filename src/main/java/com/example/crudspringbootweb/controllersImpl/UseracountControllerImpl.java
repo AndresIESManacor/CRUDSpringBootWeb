@@ -55,38 +55,33 @@ public class UseracountControllerImpl implements UseracountController {
             model.addAttribute("type","useracount-create");
             model.addAttribute("object",new Useracount());
             model.addAttribute("error","TRYING TO SAVE USERACOUNT THAT EXIST");
-            return show(model);
         } else {
-            //MIRAR TAMBIEN POR EL NOMBRE PARA QUE HAYA DOS REPETIDOS
-            List<Useracount> useracounts = useracountService.findAllUseracount();
-            if (isCorreoInTheList(useracounts,useracount)) {
-                model.addAttribute("error","USERACOUNT correo allready exist");
+            if (checkCorreo(useracount.getCorreo())) {
+                model.addAttribute("error","correo allready exist");
             } else {
-                if (isUserNameInTheList(useracounts,useracount)) {
-                    model.addAttribute("error","USERACOUNT username allready exist");
-                } else {
+                if (!checkUsername(useracount.getNombre_usuario())) {
                     saveUseracount(useracount);
+                } else {
+                    model.addAttribute("error","Username allready exist");
                 }
             }
-            return show(model);
         }
+        return show(model);
     }
 
     @RequestMapping(value = "/user/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
     public String put(@ModelAttribute Useracount useracount, ModelMap model) {
         inicializeModelMap(model);
-        List<Useracount> useracounts =  useracountService.findAllUseracount();
-        Optional<Useracount> requestUseracount =  useracountService.findUseracountById(useracount.getId_user());
-        if (requestUseracount.isPresent()) {
-            if (isCorreoInTheListComprovate(useracounts,useracount, requestUseracount.get())) {
-                model.addAttribute("error","Correo is allready in");
+        Optional<Useracount> useracountBefore =  useracountService.findUseracountById(useracount.getId_user());
+        if (useracountBefore.isPresent()) {
+            if (checkPassword(useracountBefore.get().getPassword(), useracount.getPassword())) {
+                // CHANGES --
+                model = checkToUpdate(useracount,useracountBefore.get(),model);
             } else {
-                if (isPasswordWithNameInTheList(useracounts, useracount, requestUseracount.get())) {
-                    updateUseracount(useracount);
-                } else {
-                    model.addAttribute("error", "Password is incorrect, unable to update");
-                }
+                model.addAttribute("error","password is incorrect (to update this user need to know the password)");
             }
+        } else {
+            model.addAttribute("error","Request user is not present");
         }
         return show(model);
     }
@@ -149,41 +144,42 @@ public class UseracountControllerImpl implements UseracountController {
         model.remove("useracounts");
         model.remove("error");
     }
-    public boolean isCorreoInTheList(List<Useracount> useracounts, Useracount useracount) {
-        for (Useracount user : useracounts) {
-            if (Objects.equals(user.getCorreo(), useracount.getCorreo())) {
-                return true;
-            }
-        }
-        return false;
+
+    public boolean checkCorreo(String correo) {
+        return !useracountService.findUseracountsByEmail(correo).isEmpty();
     }
-    public boolean isCorreoInTheListComprovate(List<Useracount> useracounts, Useracount useracount, Useracount beforeuseracount) {
-        for (Useracount user : useracounts) {
-            if (Objects.equals(user.getCorreo(), useracount.getCorreo())) {
-                if (Objects.equals(user.getCorreo(), beforeuseracount.getCorreo())) {
-                    return false;
-                }
-                return true;
-            }
-        }
-        return false;
+    public boolean checkUsername(String username) {
+        return !useracountService.findUseracountByUsername(username).isEmpty();
     }
-    public boolean isUserNameInTheList(List<Useracount> useracounts, Useracount useracount) {
-        for (Useracount user : useracounts) {
-            if (Objects.equals(user.getNombre_usuario(), useracount.getNombre_usuario())) {
-                return true;
-            }
-        }
-        return false;
+    public boolean checkPassword(String password, String passwordUpdate) {
+        return password.equals(passwordUpdate);
     }
-    public boolean isPasswordWithNameInTheList(List<Useracount> useracounts, Useracount useracount, Useracount beforeUseracount) {
-        for (Useracount user : useracounts) {
-            if (Objects.equals(user.getNombre_usuario(), beforeUseracount.getNombre_usuario())) {
-                if (Objects.equals(user.getPassword(), useracount.getPassword())) {
-                    return true;
-                }
-            }
+    public ModelMap checkToUpdate(Useracount useracount, Useracount useracountBefore, ModelMap model) {
+        if (isCorreoTaken(useracount,useracountBefore)) {
+            model.addAttribute("error","correo is taken");
+            return model;
         }
-        return false;
+        if (isUsernameTaken(useracount,useracountBefore)) {
+            model.addAttribute("error","username is taken");
+            return model;
+        }
+        updateUseracount(useracount);
+        return model;
     }
+
+    public boolean isCorreoTaken(Useracount useracount, Useracount useracountBefore) {
+        if (useracount.getCorreo().equals(useracountBefore.getCorreo())) {
+            return false;
+        } else {
+            return checkCorreo(useracount.getCorreo());
+        }
+    }
+    public boolean isUsernameTaken(Useracount useracount, Useracount useracountBefore) {
+        if (useracount.getNombre_usuario().equals(useracountBefore.getNombre_usuario())) {
+            return false;
+        } else {
+            return checkUsername(useracount.getNombre_usuario());
+        }
+    }
+
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import com.example.crudspringbootweb.controllers.RestaurantControllers;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Optional;
 
@@ -31,58 +32,62 @@ public class RestaurantControllerImpl implements RestaurantControllers {
     @Autowired
     LocalidadService localidadService;
 
-    // http://localhost:8888/restaurant/add (METHOD CREATE)
-    @RequestMapping(value = "/restaurant/add")
-    public String postRestaurant(
-            @RequestParam(value="nombre", required=true) String nombre,
-            @RequestParam(value="diesAnticipacionReservas", required=true) String diesAnticipacionReservas,
-            @RequestParam(value="telefonoRestaurante", required=true) String telefonoRestaurante,
-            @RequestParam(value="isValidated", required=true) boolean isValidated,
-            @RequestParam(value="visible", required=true) boolean visible,
-            @RequestParam(value="idLocalidad", required=true) String idLocalidad,
-            @RequestParam(value="idMembresia", required=true) String idMembresia,
-            @RequestParam(value="idUser", required=true) String idUser,
-            ModelMap model) {
-        String validation = validateRestaurant(nombre, Integer.parseInt(diesAnticipacionReservas), Long.parseLong(telefonoRestaurante), isValidated, visible, idLocalidad, idMembresia, idUser,"create");
+
+    //////////////         RESTAURANTES   FORMULARIOS      ////////////////////
+
+    @RequestMapping(value = "/restaurant/create", method = RequestMethod.GET)
+    public String create(ModelMap model) {
+        model.addAttribute("type","restaurant-create");
+        model.addAttribute("object",new Restaurant());
+        return "formularis/layout-form";
+    }
+
+    @RequestMapping(value = "/restaurant/update/{id}", method = RequestMethod.GET)
+    public String update(@PathVariable int id, ModelMap model) {
+        Optional<Restaurant> restaurant = restaurantService.findRestaurantById(id);
+        if (restaurant.isPresent()) {
+            model.addAttribute("type","restaurant-update");
+            model.addAttribute("object",restaurant.get());
+            return "formularis/layout-form";
+        }
+        model.addAttribute("error","RESTAURANT SELECTED DOESNT PRESENT");
+        return "links";
+    }
+
+
+    //////////////         RESTAURANTES   ACTIONS      ////////////////////
+
+    @RequestMapping(value = "/restaurant/save")
+    public String save(@ModelAttribute Restaurant restaurant, ModelMap model) {
+        inicializeModelMap(model);
+        String validation = validateRestaurant(restaurant);
         if (!validation.equals("OK")) {
             model.addAttribute("error",validation);
             return "links";
         }
-        model.addAttribute("restaurants",restaurantService.findAllRestaurants());
-        return "tables/layout-table";
+        saveRestaurant(restaurant);
+        return show(model);
     }
 
-    // http://localhost:8888/restaurant/add (METHOD CREATE)
-    @RequestMapping(value = "/restaurant/update")
-    public String updateRestaurant(
-            @RequestParam(value="nombre", required=true) String nombre,
-            @RequestParam(value="diesAnticipacionReservas", required=true) String diesAnticipacionReservas,
-            @RequestParam(value="telefonoRestaurante", required=true) String telefonoRestaurante,
-            @RequestParam(value="isValidated", required=true) boolean isValidated,
-            @RequestParam(value="visible", required=true) boolean visible,
-            @RequestParam(value="idLocalidad", required=true) String idLocalidad,
-            @RequestParam(value="idMembresia", required=true) String idMembresia,
-            @RequestParam(value="idUser", required=true) String idUser,
-            ModelMap model) {
-
-        String validation = validateRestaurant(nombre, Integer.parseInt(diesAnticipacionReservas), Long.parseLong(telefonoRestaurante), isValidated, visible, idLocalidad, idMembresia, idUser,"update");
+    @RequestMapping(value = "/restaurant/put")
+    public String put(@ModelAttribute Restaurant restaurant, ModelMap model) {
+        inicializeModelMap(model);
+        String validation = validateRestaurant(restaurant);
         if (!validation.equals("OK")) {
             model.addAttribute("error",validation);
             return "links";
         }
-        model.addAttribute("restaurants",restaurantService.findAllRestaurants());
-        return "tables/layout-table";
+        updateRestaurant(restaurant);
+        return show(model);
     }
 
-    // http://localhost:8888/restaurants (SHOW ALL)
     @RequestMapping(value = "/restaurants", method = RequestMethod.GET, produces = "application/json")
     @Override
-    public String getAllRestaurant(ModelMap model) {
+    public String show(ModelMap model) {
         model.addAttribute("restaurants",restaurantService.findAllRestaurants());
         return "tables/layout-table";
     }
 
-    // http://localhost:8888/restaurant/1 (SHOW)
     @RequestMapping(value = "/restaurant/{id}", method = RequestMethod.GET, produces = "application/json")
     @Override
     public String getRestaurantById(@PathVariable int id, ModelMap model) {
@@ -95,18 +100,23 @@ public class RestaurantControllerImpl implements RestaurantControllers {
         return "links";
     }
 
-
+    /* ------------------------------------------ */
 
     @Override
-    public Restaurant saveRestaurant(Restaurant restaurant) {
-        return restaurantService.saveRestaurant(restaurant);
+    public void saveRestaurant(Restaurant restaurant) {
+        restaurantService.saveRestaurant(restaurant);
     }
 
-    // http://localhost:8888/restaurant/delete/1 (DELETE)
     @RequestMapping(value = "/restaurant/delete/{id}", method = RequestMethod.GET, produces = "application/json")
     @Override
-    public String deleteRestaurant(@PathVariable int id) {
-        return restaurantService.deleteRestaurant(id);
+    public RedirectView delete(@PathVariable int id, ModelMap model) {
+        Optional<Localidad> localidad =  localidadService.findLocalidadById(id);
+        if (localidad.isPresent()) {
+            restaurantService.deleteRestaurant(id);
+        } else {
+            model.addAttribute("error","LOCALIDAD NOT FOUNDED");
+        }
+        return new RedirectView("/restaurants");
     }
 
     @Override
@@ -114,10 +124,10 @@ public class RestaurantControllerImpl implements RestaurantControllers {
         return restaurantService.updateRestaurant(restaurantNew);
     }
 
-    public String validateRestaurant(String nombre,Integer diesAnticipacionReservas, long telefonoRestaurante, boolean isValidated, boolean visible, String idLocalidad, String idMembresia, String idUser, String request) {
-        Optional<Localidad> localidad = localidadService.findLocalidadById(Integer.parseInt(idLocalidad));
-        Optional<Membresia> membresia = membresiaService.findMembresiaById(Integer.parseInt(idMembresia));
-        Optional<Useracount> useracount = useracountService.findUseracountById(Integer.parseInt(idUser));
+    public String validateRestaurant(Restaurant restaurant) {
+        Optional<Localidad> localidad = localidadService.findLocalidadById(restaurant.getLocalidad().getId_localidad());
+        Optional<Membresia> membresia = membresiaService.findMembresiaById(restaurant.getMembresia().getId_membresia());
+        Optional<Useracount> useracount = useracountService.findUseracountById(restaurant.getUseracount().getId_user());
 
         if (localidad.isEmpty()) {
             return "LOCALIDAD IS NOT PRESENT";
@@ -128,14 +138,12 @@ public class RestaurantControllerImpl implements RestaurantControllers {
         if (useracount.isEmpty()) {
             return "USERACOUNT IS NOT PRESENT";
         }
-        if (request.equals("update")) {
-            Restaurant restaurant = new Restaurant(nombre, diesAnticipacionReservas, telefonoRestaurante, isValidated, localidad.get(), membresia.get(), useracount.get(), visible);
-            updateRestaurant(restaurant);
-        }
-        if (request.equals("create")) {
-            Restaurant restaurant = new Restaurant(nombre, diesAnticipacionReservas, telefonoRestaurante, isValidated, localidad.get(), membresia.get(), useracount.get(), visible);
-            saveRestaurant(restaurant);
-        }
         return "OK";
+    }
+
+    public void inicializeModelMap(ModelMap model) {
+        model.remove("restaurant");
+        model.remove("restaurants");
+        model.remove("error");
     }
 }
