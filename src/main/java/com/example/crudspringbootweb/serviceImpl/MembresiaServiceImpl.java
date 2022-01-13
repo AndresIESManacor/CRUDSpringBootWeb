@@ -26,6 +26,11 @@ public class MembresiaServiceImpl implements MembresiaService {
     }
 
     @Override
+    public List<Membresia> findMembresiaByNum_Factura(String num_factura) {
+        return membresiaRepository.findMembresiaByNum_Factura(num_factura);
+    }
+
+    @Override
     public Membresia saveMembresia(Membresia membresiaNew) {
         if (membresiaNew != null) {
             return membresiaRepository.save(membresiaNew);

@@ -5,30 +5,64 @@
     <title>MEMBRESIA FORMULARIO</title>
 </head>
 <body>
-<div th:fragment="membresia-field (type)">
+<div th:fragment="membresia-field (type,object)">
     <h3 style="color: white; font-size: medium; text-align: center" th:text="${type}"></h3>
-    <div class="app-form-group" style="display: flex; flex-direction: row; justify-content: center;">
-        <label th:unless="${type=='CREATE'}">
-            <input id="id_membresia" name="idMembresia" type="number" min="0" autocomplete=“off” class="app-form-control" style="text-align: center" placeholder="ID MEMBRESIA" required readonly>
-        </label>
+    <div th:unless="${object!=null}">
+        <div class="app-form-group" style="display: flex; flex-direction: row; justify-content: center;">
+            <label th:if="${type=='CREATE'}">
+                <input id="id_membresia" name="id_membresia" type="hidden" min="0" autocomplete=“off” class="app-form-control" style="text-align: center" placeholder="ID MEMBRESIA" required readonly>
+            </label>
+            <label th:unless="${type=='CREATE'}">
+                <input id="id_membresia" name="id_membresia" min="0" autocomplete=“off” class="app-form-control" style="text-align: center" placeholder="ID MEMBRESIA" required readonly>
+            </label>
+        </div>
+        <div class="app-form-group message">
+            <label>
+                <p style="color: white">Fecha Inicio</p>
+                <input  id="fecha_inicio" name="fecha_inicio" type="datetime-local" class="app-form-control" required>
+            </label>
+        </div>
+        <div class="app-form-group">
+            <label>
+                <p style="color: white">Fecha Fin</p>
+                <input id="fecha_fin" name="fecha_fin" type="datetime-local" class="app-form-control" required>
+            </label>
+        </div>
+        <div class="app-form-group">
+            <label>
+                <p style="color: white">Num. Factura</p>
+                <input id="num_factura" name="num_factura" type="text" class="app-form-control" autocomplete=“off”  placeholder="NAME OF FACTURA" required>
+            </label>
+        </div>
     </div>
-    <div class="app-form-group message">
-        <label>
-            <p style="color: white">Fecha Inicio</p>
-            <input id="fecha_inicio" name="fechaInicio" type="datetime-local" class="app-form-control" required>
-        </label>
-    </div>
-    <div class="app-form-group">
-        <label>
-            <p style="color: white">Fecha Fin</p>
-            <input id="fecha_fin" name="fechaFin" type="datetime-local" class="app-form-control" required>
-        </label>
-    </div>
-    <div class="app-form-group">
-        <label>
-            <p style="color: white">Num. Factura</p>
-            <input id="num_factura" name="numFactura" type="text" class="app-form-control" autocomplete=“off”  placeholder="NAME OF FACTURA" required>
-        </label>
+
+    <div th:if="${object!=null}">
+        <div class="app-form-group" style="display: flex; flex-direction: row; justify-content: center;">
+            <label th:if="${type=='CREATE'}">
+                <input th:value="${object.id_membresia}" id="id_membresia" name="id_membresia" type="hidden" min="0" autocomplete=“off” class="app-form-control" style="text-align: center" placeholder="ID MEMBRESIA" required readonly>
+            </label>
+            <label th:unless="${type=='CREATE'}">
+                <input th:value="${object.id_membresia}" id="id_membresia" name="id_membresia" min="0" autocomplete=“off” class="app-form-control" style="text-align: center" placeholder="ID MEMBRESIA" required readonly>
+            </label>
+        </div>
+        <div class="app-form-group message">
+            <label>
+                <p style="color: white">Fecha Inicio</p>
+                <input th:value="${object.fecha_inicio}" id="fecha_inicio" name="fecha_inicio" type="datetime-local" class="app-form-control" required>
+            </label>
+        </div>
+        <div class="app-form-group">
+            <label>
+                <p style="color: white">Fecha Fin</p>
+                <input th:value="${object.fecha_fin}" id="fecha_fin" name="fecha_fin" type="datetime-local" class="app-form-control" required>
+            </label>
+        </div>
+        <div class="app-form-group">
+            <label>
+                <p style="color: white">Num. Factura</p>
+                <input th:value="${object.factura.num_factura}" id="num_factura" name="num_factura" type="text" class="app-form-control" autocomplete=“off”  placeholder="NAME OF FACTURA" required>
+            </label>
+        </div>
     </div>
 </div>
 </body>

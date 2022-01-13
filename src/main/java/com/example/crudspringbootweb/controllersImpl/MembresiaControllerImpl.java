@@ -28,7 +28,7 @@ public class MembresiaControllerImpl implements MembresiaController {
     @RequestMapping(value = "/membresia/create", method = RequestMethod.GET)
     public String create(ModelMap model) {
         model.addAttribute("type","membresia-create");
-        model.addAttribute("object",new Membresia());
+        model.addAttribute("object",null);
         return "formularis/layout-form";
     }
 
@@ -37,7 +37,7 @@ public class MembresiaControllerImpl implements MembresiaController {
         Optional<Membresia> membresia = membresiaService.findMembresiaById(id);
         if (membresia.isPresent()) {
             model.addAttribute("type","membresia-update");
-            model.addAttribute("type",membresia.get());
+            model.addAttribute("object",membresia.get());
             return "formularis/layout-form";
         }
         model.addAttribute("error","MEMBRESIA SELECTED DOESNT PRESENT");
@@ -55,7 +55,11 @@ public class MembresiaControllerImpl implements MembresiaController {
         inicializeModelMap(model);
         Optional<Factura> factura = facturaService.findFacturaById(num_factura);
         if (factura.isPresent()) {
-            saveMembresia(new Membresia(fecha_inicio, fecha_fin,factura.get()));
+            if (checkNum_Factura(factura.get().getNum_factura())) {
+                model.addAttribute("error","factura relation is already done");
+            } else {
+                saveMembresia(new Membresia(fecha_inicio, fecha_fin, factura.get()));
+            }
         } else {
             model.addAttribute("error","FACTURA NOT FOUND");
         }
@@ -71,17 +75,23 @@ public class MembresiaControllerImpl implements MembresiaController {
             @RequestParam(value="num_factura", required=true) String num_factura,
             ModelMap model) {
         inicializeModelMap(model);
+        Optional<Membresia> membresia = membresiaService.findMembresiaById(id_membresia);
         Optional<Factura> factura = facturaService.findFacturaById(num_factura);
         if (factura.isPresent()) {
-            Membresia membresia = new Membresia(id_membresia, fecha_inicio, fecha_fin,factura.get());
-            Optional<Membresia> requestMembresia = membresiaService.findMembresiaById(membresia.getId_membresia());
-            if (requestMembresia.isPresent()) {
-                model.addAttribute("error","MEMBRESIA IS PRESENT ALLREADY");
+            Membresia membresiaUpdated = new Membresia(id_membresia, fecha_inicio, fecha_fin,factura.get());
+            if (membresia.isPresent()) {
+                if (membresia.get().getFactura().getNum_factura().equals(membresiaUpdated.getFactura().getNum_factura())) {
+                    updateMembresia(membresiaUpdated);
+                } else if (membresiaService.findMembresiaByNum_Factura(factura.get().getNum_factura()).isEmpty()) {
+                    updateMembresia(membresiaUpdated);
+                } else {
+                    model.addAttribute("error","factura is already vinculada");
+                }
             } else {
-                updateMembresia(membresia);
+                model.addAttribute("error","membresia is not present");
             }
         } else {
-            model.addAttribute("error","FACTURA NOT FOUND");
+            model.addAttribute("error","factura is not present");
         }
         return show(model);
     }
@@ -138,6 +148,11 @@ public class MembresiaControllerImpl implements MembresiaController {
     @Override
     public String deleteMembresiaById(int id) {
         return membresiaService.deleteMembresia(id);
+    }
+
+
+    public boolean checkNum_Factura(String num_factura) {
+        return !membresiaService.findMembresiaByNum_Factura(num_factura).isEmpty();
     }
 
     @Override
