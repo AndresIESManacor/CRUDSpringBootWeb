@@ -56,9 +56,8 @@ public class LocalidadControllerImpl implements LocalidadController {
             model.addAttribute("error","TRYING TO SAVE FACTURA THAT EXIST");
         } else {
             //MIRAR TAMBIEN POR EL NOMBRE PARA QUE HAYA DOS REPETIDOS
-            List<Localidad> localidades = localidadService.findAllLocalidad();
-            if (isNombreInTheList(localidades,localidad)) {
-                model.addAttribute("error","LOCALIDAD name allready exist");
+            if (!localidadService.findLocalidadByNombre_localidad(localidad.getNombre_localidad()).isEmpty()) {
+                model.addAttribute("error","name allready exist");
             } else {
                 saveLocalidad(localidad);
             }
@@ -69,12 +68,17 @@ public class LocalidadControllerImpl implements LocalidadController {
     @RequestMapping(value = "/localidad/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
     public String put(@ModelAttribute Localidad localidad, ModelMap model) {
         inicializeModelMap(model);
-        List<Localidad> localidades = localidadService.findAllLocalidad();
-        if (isNombreInTheList(localidades,localidad)) {
-            model.addAttribute("error","LOCALIDAD name allready exist");
+        Optional<Localidad> localidadUpdate = localidadService.findLocalidadById(localidad.getId_localidad());
+        if (localidadUpdate.isPresent()) {
+            if (isNombreTaken(localidad,localidadUpdate.get())) {
+                model.addAttribute("error","name allready exist");
+            } else {
+                updateLocalidad(localidad);
+            }
         } else {
-            updateLocalidad(localidad);
+            model.addAttribute("error","localidad id doesnt exist");
         }
+
         return show(model);
     }
 
@@ -119,6 +123,10 @@ public class LocalidadControllerImpl implements LocalidadController {
         }
     }
 
+    public boolean checkName(String name) {
+        return !localidadService.findLocalidadByNombre_localidad(name).isEmpty();
+    }
+
     @Override
     public String deleteLocalidadById(int id) {
         return localidadService.deleteLocalidad(id);
@@ -129,13 +137,12 @@ public class LocalidadControllerImpl implements LocalidadController {
         return localidadService.updateLocalidad(localidadNew);
     }
 
-    public boolean isNombreInTheList(List<Localidad> localidades, Localidad localidad) {
-        for (Localidad localidade : localidades) {
-            if (Objects.equals(localidade.getNombre_localidad(), localidad.getNombre_localidad())) {
-                return true;
-            }
+    public boolean isNombreTaken(Localidad localidad, Localidad localidadUpdate) {
+        if (localidad.getNombre_localidad().equals(localidadUpdate.getNombre_localidad())) {
+            return false;
+        } else {
+            return checkName(localidad.getNombre_localidad());
         }
-        return false;
     }
 
     public void inicializeModelMap(ModelMap model) {

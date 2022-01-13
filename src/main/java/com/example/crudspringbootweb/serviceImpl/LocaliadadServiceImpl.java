@@ -56,4 +56,8 @@ public class LocaliadadServiceImpl implements LocalidadService {
         }
         return "Error al Useracount el Restaurant";
     }
+
+    public List<Localidad> findLocalidadByNombre_localidad(String nombre) {
+        return localidadRepository.findLocalidadByNombre_localidad(nombre);
+    }
 }

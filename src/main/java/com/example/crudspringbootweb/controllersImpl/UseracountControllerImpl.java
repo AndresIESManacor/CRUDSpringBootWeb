@@ -154,6 +154,7 @@ public class UseracountControllerImpl implements UseracountController {
     public boolean checkPassword(String password, String passwordUpdate) {
         return password.equals(passwordUpdate);
     }
+
     public ModelMap checkToUpdate(Useracount useracount, Useracount useracountBefore, ModelMap model) {
         if (isCorreoTaken(useracount,useracountBefore)) {
             model.addAttribute("error","correo is taken");
