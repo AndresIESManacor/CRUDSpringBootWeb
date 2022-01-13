@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="useracount-field (type)">
+    <h3 style="color: white; font-size: medium; text-align: center" th:text="${type}"></h3>
+    <div class="app-form-group" style="display: flex; flex-direction: row; justify-content: center;">
+        <label th:if="${type=='CREATE'}">
+            <input th:field="*{idUser}" type="hidden" class="app-form-control" style="text-align: center" placeholder="ID USER" required>
+        </label>
+        <label th:unless="${type=='CREATE'}">
+            <input th:field="*{idUser}" class="app-form-control" style="text-align: center" placeholder="ID USER" required readonly>
+        </label>
+    </div>
+    <div class="app-form-group message">
+        <label>
+            <p style="color: white">Username</p>
+            <input th:field="*{nombreUsuario}" type="text" maxlength="32" class="app-form-control" autocomplete="off" placeholder="USERNAME" required>
+        </label>
+    </div>
+    <div class="app-form-group">
+        <label>
+            <p style="color: white">Password</p>
+            <input th:field="*{password}" type="password" min="0" class="app-form-control" autocomplete=“off”  placeholder="YOUR PASSWORD" required>
+        </label>
+    </div>
+    <div class="app-form-group">
+        <label>
+            <p style="color: white">Correo</p>
+            <input th:field="*{correo}" type="email" min="7" class="app-form-control" autocomplete=“off”  placeholder="YOUR EMAIL" required>
+        </label>
+    </div>
+    <div class="app-form-group">
+        <label>
+            <p style="color: white">Phone</p>
+            <input th:field="*{telefono}" type="number" min="9" class="app-form-control" autocomplete=“off”  placeholder="YOUR PHONE" required>
+        </label>
+    </div>
+    <div class="app-form-group">
+        <label>
+            <p style="color: white">Name</p>
+            <input th:field="*{nombre}" type="text" min="2" class="app-form-control" autocomplete=“off”  placeholder="YOUR NAME" required>
+        </label>
+    </div>
+    <div class="app-form-group">
+        <label>
+            <p style="color: white">Apellido1</p>
+            <input th:field="*{apellido1}" type="text" min="2" class="app-form-control" autocomplete=“off”  placeholder="YOUR APELLIDO" required>
+        </label>
+    </div>
+    <div class="app-form-group">
+        <label>
+            <p style="color: white">Apellido2</p>
+            <input th:field="*{apellido2}" type="text" min="2" class="app-form-control" autocomplete=“off”  placeholder="YOUR APELLIDO" required>
+        </label>
+    </div>
+    <div class="app-form-group">
+        <label>
+            <p style="color: white">DNI</p>
+            <input th:field="*{dni}" type="text" min="9" class="app-form-control" autocomplete=“off”  placeholder="YOUR APELLIDO" required>
+        </label>
+    </div>
+    <div class="app-form-group">
+        <label>
+            <p style="color: white">IsAdmin</p>
+            <select th:field="*{Admin}">
+                <option th:value="1">true</option>
+                <option th:value="0">false</option>
+            </select>
+        </label>
+    </div>
+</div>
+</body>
+</html>

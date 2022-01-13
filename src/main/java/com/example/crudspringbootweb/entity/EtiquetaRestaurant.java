@@ -10,12 +10,12 @@ import java.io.Serializable;
 @Table(name = "RestauranteEtiquetas")
 public class EtiquetaRestaurant implements Serializable {
     @Id
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "idRestaurante")
     private Restaurant restaurant;
 
     @Id
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "idEtiqueta")
     private Etiqueta etiqueta;
 

@@ -25,15 +25,15 @@ public class Restaurant {
     @Column(name = "isValidated")
     private boolean isValidated;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "idLocalidad")
     private Localidad localidad;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "idMembresia")
     private Membresia membresia;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "idUser")
     private Useracount useracount;
 

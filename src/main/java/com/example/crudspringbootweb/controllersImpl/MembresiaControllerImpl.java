@@ -51,28 +51,30 @@ public class MembresiaControllerImpl implements MembresiaController {
     //////////////         MEMBRESIA ACTIONS        ////////////////////
 
     @RequestMapping(value = "/membresia/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public RedirectView save(
+    public String save(
             @RequestParam(value="fechaInicio", required=true) String fechaInicio,
             @RequestParam(value="fechaFin", required=true) String fechaFin,
             @RequestParam(value="numFactura", required=true) String numFactura,
             ModelMap model) {
+        inicializeModelMap(model);
         Optional<Factura> factura = facturaService.findFacturaById(numFactura);
         if (factura.isPresent()) {
             saveMembresia(new Membresia(fechaInicio, fechaFin,factura.get()));
         } else {
             model.addAttribute("error","FACTURA NOT FOUND");
         }
-        return new RedirectView("/membresias");
+        return getAllMembresia(model);
     }
 
 
     @RequestMapping(value = "/membresia/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public RedirectView put(
+    public String put(
             @RequestParam(value="idMembresia", required=true) int idMembresia,
             @RequestParam(value="fechaInicio", required=true) String fechaInicio,
             @RequestParam(value="fechaFin", required=true) String fechaFin,
             @RequestParam(value="numFactura", required=true) String numFactura,
             ModelMap model) {
+        inicializeModelMap(model);
         Optional<Factura> factura = facturaService.findFacturaById(numFactura);
         if (factura.isPresent()) {
             Membresia membresia = new Membresia(idMembresia, fechaInicio, fechaFin,factura.get());
@@ -85,7 +87,7 @@ public class MembresiaControllerImpl implements MembresiaController {
         } else {
             model.addAttribute("error","FACTURA NOT FOUND");
         }
-        return new RedirectView("/membresias");
+        return getAllMembresia(model);
     }
 
     @RequestMapping(value = "/membresia/delete/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -102,7 +104,6 @@ public class MembresiaControllerImpl implements MembresiaController {
     @RequestMapping(value = "/membresias",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String getAllMembresia(ModelMap model) {
-        model.remove("membresia");
         model.addAttribute("membresias",membresiaService.findAllMembresia());
         return "tables/layout-table";
     }
@@ -147,5 +148,11 @@ public class MembresiaControllerImpl implements MembresiaController {
     @Override
     public String updateMembresia(Membresia membresiaNew) {
         return membresiaService.updateMembresia(membresiaNew);
+    }
+
+    public void inicializeModelMap(ModelMap model) {
+        model.remove("membresia");
+        model.remove("membresias");
+        model.remove("error");
     }
 }

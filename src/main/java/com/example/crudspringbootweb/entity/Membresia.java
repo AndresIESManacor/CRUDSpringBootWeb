@@ -23,7 +23,7 @@ public class Membresia {
     @Column(name = "fechaFin")
     private Timestamp fechaFin;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "numFactura")
     private Factura factura;
 

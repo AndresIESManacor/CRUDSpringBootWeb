@@ -79,6 +79,29 @@
                             </form>
                         </div>
 
+
+                        <div th:if="${type} == 'useracount-create'">
+                            <!-- FORM LOCALIDAD CREATE -->
+                            <form th:action="@{/user/save}" method="POST" th:object="${object}">
+                                <div th:replace="formularis/useracount :: useracount-field ('CREATE')"></div>
+                                <div class="app-form-group buttons">
+                                    <button class="app-form-button"><a href="/">RETURN</a></button>
+                                    <input type="submit" class="app-form-button" value="CREATE"/>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div th:if="${type} == 'useracount-update'">
+                            <!-- FORM LOCALIDAD UPDATE -->
+                            <form th:action="@{/user/put}" method="POST" th:object="${object}">
+                                <div th:replace="formularis/useracount :: useracount-field ('UPDATE')"></div>
+                                <div class="app-form-group buttons">
+                                    <button class="app-form-button"><a href="/">RETURN</a></button>
+                                    <input type="submit" class="app-form-button" value="UPDATE"/>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
             </div>

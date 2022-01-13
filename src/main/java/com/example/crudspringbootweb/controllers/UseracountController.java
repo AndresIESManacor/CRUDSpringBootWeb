@@ -13,9 +13,9 @@ public interface UseracountController {
 
     public String getUseracountById(int id, ModelMap model);
 
-    public Useracount addUseracount(Useracount useracount);
+    public Useracount saveUseracount(Useracount useracount);
 
-    public String deleteUseracount(int id);
+    public String deleteUseracountById(int id);
 
     public String updateUseracount(Useracount useracountNew);
 }

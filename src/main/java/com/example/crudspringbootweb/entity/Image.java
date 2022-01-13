@@ -16,7 +16,7 @@ public class Image {
     @Column(name="url")
     String url;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @OneToOne(optional = false)
     @JoinColumn(name = "idRestaurante")
     private Restaurant restaurant;
 

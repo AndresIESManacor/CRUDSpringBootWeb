@@ -14,20 +14,6 @@ public class GeneralController {
         return "links";
     }
 
-    //////////////         USER         ////////////////////
-
-    // http://localhost:8888/userC (CREATE USER)
-    @RequestMapping(value = "/userC", method = RequestMethod.GET)
-    public String userC() {
-        return "formularis/useracount/userAdd";
-    }
-
-    // http://localhost:8888/userU (UPDATE USER)
-    @RequestMapping(value = "/userU", method = RequestMethod.GET)
-    public String userU() {
-        return "formularis/useracount/userUpdate";
-    }
-
 
     /* ------------------------------------------ */
 
