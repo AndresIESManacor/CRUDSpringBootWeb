@@ -5,10 +5,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @Data
@@ -24,11 +21,13 @@ public class Useracount {
 
     @Column(name = "nombre_usuario")
     @NotNull(message = "nombre_usuario cant be null")
+    @Size(min=2, max=40, message = "Length of the name must be between 2 and 40")
     @Pattern(regexp = "^[^ª!\"·$%&/()=?¿\\\\|@#~½¬{\\[\\]}Ç*+\\-`'¡º<>;,:._]*$",message = "Cant use specials characters")
     private String nombre_usuario;
 
     @Column(name = "contraseña")
     @NotNull(message = "contraseña cant be null")
+    @Size(min=2, max=80, message = "Length of the password must be between 2 and 80")
     @Pattern(regexp = "^[^ª!\"·$%&/()=?¿\\\\|@#~½¬{\\[\\]}Ç*+\\-`'¡º<>;,:._]*$",message = "Cant use specials characters")
     private String password;
 
@@ -42,12 +41,15 @@ public class Useracount {
 
     @Column(name = "nombre")
     @NotNull(message = "nombre cant be null")
+    @Pattern(regexp = "^[^ª!\"·$%&/()=?¿\\\\|@#~½¬{\\[\\]}Ç*+\\-`'¡º<>;,:._]*$",message = "Cant use specials characters")
     private String nombre;
 
     @Column(name = "apellido1")
+    @Pattern(regexp = "^[^ª!\"·$%&/()=?¿\\\\|@#~½¬{\\[\\]}Ç*+\\-`'¡º<>;,:._]*$",message = "Cant use specials characters")
     private String apellido1;
 
     @Column(name = "apellido2")
+    @Pattern(regexp = "^[^ª!\"·$%&/()=?¿\\\\|@#~½¬{\\[\\]}Ç*+\\-`'¡º<>;,:._]*$",message = "Cant use specials characters")
     private String apellido2;
 
     @Column(name = "dni")

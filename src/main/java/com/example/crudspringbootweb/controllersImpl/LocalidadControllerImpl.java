@@ -75,7 +75,7 @@ public class LocalidadControllerImpl implements LocalidadController {
     }
 
     @RequestMapping(value = "/localidad/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String put(@ModelAttribute Localidad localidad, BindingResult errors,ModelMap model) {
+    public String put(@ModelAttribute @Valid Localidad localidad, BindingResult errors,ModelMap model) {
         inicializeModelMap(model);
 
         if(errors.hasErrors()) {

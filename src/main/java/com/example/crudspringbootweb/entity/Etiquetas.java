@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
@@ -20,6 +21,7 @@ public class Etiquetas {
 
     @NotNull(message = "Nombre cant be null")
     @Size(min=2, max=30, message = "Length of the name must be between 2 and 30")
+    @Pattern(regexp = "^[^ª!\"·$%&/()=?¿\\\\|@#~½¬{\\[\\]}Ç*+\\-`'¡º<>;,:._]*$",message = "Cant use specials characters")
     @Column(name="nombre")
     String nombre;
 

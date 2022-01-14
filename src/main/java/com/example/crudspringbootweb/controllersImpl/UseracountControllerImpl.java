@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -48,8 +50,13 @@ public class UseracountControllerImpl implements UseracountController {
 
 
     @RequestMapping(value = "/user/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String save(@ModelAttribute Useracount useracount, ModelMap model) {
+    public String save(@ModelAttribute @Valid Useracount useracount, BindingResult errors, ModelMap model) {
         inicializeModelMap(model);
+
+        if (errors.hasErrors()) {
+            return "redirect:/user/create";
+        }
+
         Optional<Useracount> requestUseracount = useracountService.findUseracountById(useracount.getId_user());
         if (requestUseracount.isPresent()) {
             model.addAttribute("type","useracount-create");
@@ -70,8 +77,13 @@ public class UseracountControllerImpl implements UseracountController {
     }
 
     @RequestMapping(value = "/user/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String put(@ModelAttribute Useracount useracount, ModelMap model) {
+    public String put(@ModelAttribute @Valid Useracount useracount, BindingResult errors, ModelMap model) {
         inicializeModelMap(model);
+
+        if (errors.hasErrors()) {
+            return "redirect:/users";
+        }
+
         Optional<Useracount> useracountBefore =  useracountService.findUseracountById(useracount.getId_user());
         if (useracountBefore.isPresent()) {
             if (checkPassword(useracountBefore.get().getPassword(), useracount.getPassword())) {
