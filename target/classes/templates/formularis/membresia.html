@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MEMBRESIA FORMULARIO</title>
+</head>
+<body>
+<div th:fragment="membresia-field (type,facturas)">
+    <h3 style="color: white; font-size: medium; text-align: center" th:text="${type}"></h3>
+    <div class="app-form-group" style="display: flex; flex-direction: row; justify-content: center;">
+        <label th:if="${type=='CREATE'}">
+            <input th:field="*{id_membresia}" type="hidden">
+        </label>
+        <label th:unless="${type=='CREATE'}">
+            <input th:field="*{id_membresia}" class="app-form-control" style="text-align: center" required readonly>
+        </label>
+    </div>
+    <div class="app-form-group message">
+        <label>
+            <p style="color: white">Fecha Inicio</p>
+            <input th:field="*{fecha_inicio}" type="datetime-local" class="app-form-control" required>
+        </label>
+    </div>
+    <div class="app-form-group">
+        <label>
+            <p style="color: white">Fecha Fin</p>
+            <input th:field="*{fecha_fin}" type="datetime-local" class="app-form-control" required>
+        </label>
+    </div>
+    <label th:if="facturas!=null">
+        <p style="color: white">Num Factura</p>
+        <select th:field="*{factura}">
+            <option th:each="factura : ${facturas}" th:value="${factura.num_factura}" th:text="${factura.num_factura}">
+        </select>
+        <p style="color: white">or <a style="color: green" href="/factura/create">create</a> one</p>
+    </label>
+</div>
+</body>
+</html>

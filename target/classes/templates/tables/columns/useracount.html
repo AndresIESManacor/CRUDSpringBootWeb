@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- ALL USERACOUNT -->
+<table th:fragment="thead">
+  <thead>
+  <tr class="row100 head">
+    <th class="column-width5 first-column">idUser</th>
+    <th class="column-width10">nombreUsuario</th>
+    <th class="column-width5">contraseña</th>
+
+    <th class="column-width10">correo</th>
+    <th class="column-width10">telefono</th>
+    <th class="column-width10">nombre</th>
+    <th class="column-width10">apellido1</th>
+    <th class="column-width10">apellido2</th>
+    <th class="column-width5">dni</th>
+    <th class="column-width5">isAdmin</th>
+
+    <th class="column-width5">Create</th>
+    <th class="column-width5">Update</th>
+    <th class="column-width5">Read</th>
+    <th class="column-width5">Delete</th>
+  </tr>
+  </thead>
+</table>
+
+<div th:fragment="tbody-compose (useracounts)">
+  <table>
+    <tbody>
+    <tr class="row100 body" th:each="useracount : ${useracounts}" th:include="tables/columns/useracount :: body-rows(${useracount})">
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div th:fragment="tbody-single(useracount)">
+  <table>
+    <tbody>
+      <tr class="row100 body" th:include="tables/columns/useracount :: body-rows(${useracount})">
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<tr class="body" th:fragment="body-rows(useracount)">
+  <td class="column-width5 first-column" th:text="${useracount.id_user}"></td>
+  <td class="column-width10" th:text="${useracount.nombre_usuario}"></th>
+  <td class="column-width5" th:text="${useracount.password}"></td>
+
+  <td class="column-width10" th:text="${useracount.correo}"></td>
+  <td class="column-width10" th:text="${useracount.telefono}"></td>
+  <td class="column-width10" th:text="${useracount.nombre}"></td>
+  <td class="column-width10" th:text="${useracount.apellido1}"></td>
+  <td class="column-width10" th:text="${useracount.apellido2}"></td>
+  <td class="column-width5" th:text="${useracount.dni}"></td>
+  <td class="column-width5" th:text="${useracount.admin}"></td>
+
+  <td class="column-width5"><a href="/user/create" class="create-column">Create</a></td>
+  <td class="column-width5"><a th:href="@{'/user/update/' + ${useracount.id_user}}" class="update-column">Update</a></td>
+  <td class="column-width5"><a th:href="@{'/user/' + ${useracount.id_user}}" class="read-column">Read</a></td>
+  <td class="column-width5"><a th:href="@{'/user/delete/' + ${useracount.id_user}}" class="delete-column">Delete</a></td>
+</tr>
+</body>
+</html>

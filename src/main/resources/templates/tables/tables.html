@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FRAGMENTS OF THE TABLES</title>
+</head>
+<body>
+    <!-- ///////*               FACTURA               ///////// -->
+
+    <!-- TABLE FACTURAS -->
+    <div th:fragment="table-facturas (facturas)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/facturas :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/facturas :: tbody-compose (${facturas})"></div>
+        </div>
+    </div>
+
+    <!-- TABLE FACTURAS SINGLE -->
+    <div th:fragment="table-facturas-single (factura)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/facturas :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/facturas :: tbody-single(${factura})"></div>
+        </div>
+    </div>
+
+    <!-- ///////*               MEMBRESIA               ///////// -->
+
+    <!-- TABLE MEMBRESIA -->
+    <div th:fragment="table-membresias (membresias)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/membresia :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/membresia :: tbody-compose (${membresias})"></div>
+        </div>
+    </div>
+
+    <!-- TABLE MEMBRESIA SINGLE -->
+    <div th:fragment="table-membresia-single (membresia)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/membresia :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/membresia :: tbody-single(${membresia})"></div>
+        </div>
+    </div>
+
+
+    <!-- ///////*               LOCALIDADES               ///////// -->
+
+    <!-- TABLE LOCALIDADES -->
+    <div th:fragment="table-localidades (localidades)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/localidad :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/localidad :: tbody-compose (${localidades})"></div>
+        </div>
+    </div>
+
+    <!-- TABLE LOCALIDADES SINGLE -->
+    <div th:fragment="table-localidad-single (localidad)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/localidad :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/localidad :: tbody-single(${localidad})"></div>
+        </div>
+    </div>
+
+
+    <!-- ///////*               USERACOUNT               ///////// -->
+
+    <!-- TABLE USERACOUNT -->
+    <div th:fragment="table-useracounts (useracounts)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/useracount :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/useracount :: tbody-compose (${useracounts})"></div>
+        </div>
+    </div>
+
+    <!-- TABLE USERACOUNT SINGLE -->
+    <div th:fragment="table-useracount-single (useracount)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/useracount :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/useracount :: tbody-single(${useracount})"></div>
+        </div>
+    </div>
+
+    <!-- ///////*               RESTAURANTES               ///////// -->
+
+    <!-- TABLE RESTAURANTES -->
+    <div th:fragment="table-restaurants (restaurants)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/restaurant :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/restaurant :: tbody-compose (${restaurants})"></div>
+        </div>
+    </div>
+
+    <!-- TABLE RESTAURANTES SINGLE -->
+    <div th:fragment="table-restaurant-single (restaurant)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/restaurant :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/restaurant :: tbody-single(${restaurant})"></div>
+        </div>
+    </div>
+
+</body>
+</html>

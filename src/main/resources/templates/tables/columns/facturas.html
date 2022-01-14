@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- ALL FACTURAS -->
+<table th:fragment="thead">
+  <thead>
+    <tr class="row100 head">
+      <th class="column-width20 first-column">Num Factura</th>
+      <th class="column-width20">Direccion</th>
+      <th class="column-width20">Importe</th>
+      <th class="column-width10">Create</th>
+      <th class="column-width10">Update</th>
+      <th class="column-width10">Read</th>
+      <th class="column-width10">Delete</th>
+    </tr>
+  </thead>
+</table>
+
+<div th:fragment="tbody-compose (facturas)">
+  <table>
+    <tbody>
+      <tr class="row100 body" th:each="factura : ${facturas}" th:include="tables/columns/facturas :: body-rows(${factura})">
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div th:fragment="tbody-single(factura)">
+  <table>
+    <tbody>
+      <tr class="row100 body" th:include="tables/columns/facturas :: body-rows(${factura})">
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<tr class="row100 body" th:fragment="body-rows(factura)">
+    <td class="column-width20 first-column" th:text="${factura.num_factura}"></td>
+    <td class="column-width20" th:text="${factura.direccion}"></td>
+    <td class="column-width20" th:text="${factura.importe}"></td>
+    <td class="column-width10"><a href="/factura/create" class="create-column">Create</a></td>
+    <td class="column-width10"><a th:href="@{'/factura/update/' + ${factura.num_factura}}" class="update-column">Update</a></td>
+    <td class="column-width10"><a th:href="@{'/factura/' + ${factura.num_factura}}" class="read-column">Read</a></td>
+    <td class="column-width10"><a th:href="@{'/factura/delete/' + ${factura.num_factura}}" class="delete-column">Delete</a></td>
+</tr>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link th:href="@{/css/custom.css}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@1,700&display=swap');
+    </style>
+</head>
+<body>
+<div th:insert="components/header :: header" class="sticky-top top-0"></div>
+
+<section class="w-100 h-100 p-0 d-flex flex-row justify-content-center">
+    <div class="position-relative w-80">
+        <h2 class="title_principal position-absolute bottom-0 text-shadow-white text-center w-100 pb-5">
+            Tienes hambre?
+            <p class="text-uppercase">Encuentra tu restaurante perfecto</p>
+            <button class="p-2">Buscador</button>
+        </h2>
+        <img class="principal w-100" style="height: 65vh; margin-top: 100px; border-radius: 20px" th:src="@{/img/imgFront.jpg}" alt="front" />
+    </div>
+</section>
+<br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+<section>
+
+    <aside>
+
+    </aside>
+
+    <div>
+        <article th:each="restaurante : ${restaurantes}">
+
+        </article>
+    </div>
+</section>
+
+<div th:replace="components/footer :: footer"></div>
+</body>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/js/header.js}"></script>
+</html>

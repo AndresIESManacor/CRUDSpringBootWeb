@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script></head>
+<body style="margin-left: 100px; margin-right: 100px; margin-top: 100px">
+    <!-- IF NOT ERROR -->
+    <div th:if="${error!=null}">
+        <div style="color: red" th:text="${error}"></div>
+    </div>
+    <h1>My Crud Restaurante</h1>
+    <table class="table align-middle" >
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Entity</th>
+                <th scope="col">Create</th>
+                <th scope="col">Read all</th>
+                <th scope="col">Read one</th>
+                <th scope="col">Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td style="font-weight: bold; font-size: 20px">Restaurant</td>
+                <td><a href="/restaurant/create" style="color: #4CAF50; font-weight: bold; text-decoration-line: none">Create</a></td>
+                <td><a href="/restaurants" style="text-decoration-line: none">Read all</a></td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td style="font-weight: bold; font-size: 20px">User</td>
+                <td><a href="/user/create" style="color: #4CAF50; font-weight: bold; text-decoration-line: none">Create</a></td>
+                <td><a href="/users" style="text-decoration-line: none">Read all</a></td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td style="font-weight: bold; font-size: 20px">Localizacion</td>
+                <td><a href="/localidad/create" style="color: #4CAF50; font-weight: bold; text-decoration-line: none">Create</a></td>
+                <td><a href="/localidades" style="text-decoration-line: none">Read all</a></td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td style="font-weight: bold; font-size: 20px">Membresia</td>
+                <td><a href="/membresia/create" style="color: #4CAF50; font-weight: bold; text-decoration-line: none">Create</a></td>
+                <td><a href="/membresias" style="text-decoration-line: none">Read all</a></td>
+            </tr>
+            <tr>
+                <th scope="row">5</th>
+                <td style="font-weight: bold; font-size: 20px">Factura</td>
+                <td><a href="/factura/create" style="color: #4CAF50; font-weight: bold; text-decoration-line: none">Create</a></td>
+                <td><a href="/facturas" style="text-decoration-line: none">Read all</a></td>
+            </tr>
+            <tr>
+                <th scope="row">6</th>
+                <td style="font-weight: bold; font-size: 20px">Etiquetas</td>
+                <td><a href="/etiquetaC" style="color: #4CAF50; font-weight: bold; text-decoration-line: none">Create</a></td>
+                <td><a href="/etiquetas" style="text-decoration-line: none">Read all</a></td>
+                <td><a href="/etiqueta/1" style="text-decoration-line: none">Read one</a></td>
+                <td><a href="/etiquetaU" style="text-decoration-line: none; color: orange">Update</a></td>
+            </tr>
+            <tr>
+                <th scope="row">7</th>
+                <td style="font-weight: bold; font-size: 20px">Images</td>
+                <td><a href="/imagenC" style="color: #4CAF50; font-weight: bold; text-decoration-line: none">Create</a></td>
+                <td><a href="/imagenes" style="text-decoration-line: none">Read all</a></td>
+                <td><a href="/imagen/1" style="text-decoration-line: none">Read one</a></td>
+                <td><a href="/imagenU" style="text-decoration-line: none; color: orange">Update</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="#" style="text-decoration-line: none; color: black; border: solid 2px black; padding: 10px">Insert Restaurant with one command</a>
+</body>
+</html>
