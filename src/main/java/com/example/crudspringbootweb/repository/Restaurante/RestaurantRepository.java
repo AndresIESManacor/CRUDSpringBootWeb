@@ -7,4 +7,13 @@ import java.util.Optional;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>{
     Void save(Optional<Restaurant> customerToUpdate);
+
+    //IS VALIDATED BOOLEAN
+
+    //IS RESTAURANT NAME CHECK
+
+    //ID MEMBRESIA IS ALREADY VINCULADA
+
+    //IS VISIBLE BOOLEAN
+
 }

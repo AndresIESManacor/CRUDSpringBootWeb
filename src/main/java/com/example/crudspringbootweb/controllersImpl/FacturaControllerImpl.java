@@ -6,10 +6,15 @@ import com.example.crudspringbootweb.service.FacturaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -17,6 +22,8 @@ public class FacturaControllerImpl implements FacturaController {
 
     @Autowired
     FacturaService facturaService;
+
+    private static Validator validator;
 
     //////////////         FACTURAS FORMULARIOS        ////////////////////
 
@@ -42,8 +49,11 @@ public class FacturaControllerImpl implements FacturaController {
     //////////////         ROUTES        ////////////////////
 
     @RequestMapping(value = "/factura/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String save(@ModelAttribute Factura factura, ModelMap model) {
+    public String save(@ModelAttribute("factura") @Valid Factura factura, BindingResult errors, ModelMap model) {
         inicializeModelMap(model);
+        if (errors.hasErrors()) {
+            return "redirect:/factura/create";
+        }
         Optional<Factura> requestFactura = facturaService.findFacturaById(factura.getNum_factura());
         if (requestFactura.isPresent()) {
             model.addAttribute("type","factura-create");
@@ -57,8 +67,11 @@ public class FacturaControllerImpl implements FacturaController {
 
 
     @RequestMapping(value = "/factura/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String put(@ModelAttribute Factura factura, ModelMap model) {
+    public String put(@ModelAttribute @Valid Factura factura, ModelMap model, Errors errors) {
         inicializeModelMap(model);
+        if (errors.hasErrors()) {
+            return "formularis/layout-form";
+        }
         updateFactura(factura);
         return show(model);
     }

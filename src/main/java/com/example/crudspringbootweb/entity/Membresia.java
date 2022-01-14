@@ -3,6 +3,8 @@ package com.example.crudspringbootweb.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,9 +17,12 @@ public class Membresia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_membresia")
+    @NotNull(message = "id_membresia cant be null")
+    @Min(0)
     private int id_membresia;
 
     @Column(name = "fecha_inicio")
+    @NotNull(message = "fecha_inicio cant be null")
     private Timestamp fecha_inicio;
 
     @Column(name = "fecha_fin")
@@ -25,6 +30,7 @@ public class Membresia {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "num_factura")
+    @NotNull(message = "num_factura cant be null")
     private Factura factura;
 
     public Membresia(int id_membresia, Timestamp fecha_inicio, Timestamp fecha_fin, Factura factura) {

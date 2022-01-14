@@ -5,6 +5,10 @@ import lombok.EqualsAndHashCode;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @Data
@@ -14,21 +18,30 @@ public class Useracount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
+    @NotNull(message = "id_user cant be null")
+    @Min(0)
     private int id_user;
 
     @Column(name = "nombre_usuario")
+    @NotNull(message = "nombre_usuario cant be null")
+    @Pattern(regexp = "^[^ª!\"·$%&/()=?¿\\\\|@#~½¬{\\[\\]}Ç*+\\-`'¡º<>;,:._]*$",message = "Cant use specials characters")
     private String nombre_usuario;
 
     @Column(name = "contraseña")
+    @NotNull(message = "contraseña cant be null")
+    @Pattern(regexp = "^[^ª!\"·$%&/()=?¿\\\\|@#~½¬{\\[\\]}Ç*+\\-`'¡º<>;,:._]*$",message = "Cant use specials characters")
     private String password;
 
     @Column(name = "correo")
+    @NotNull(message = "correo cant be null")
+    @Email
     private String correo;
 
     @Column(name = "telefono")
     private long telefono;
 
     @Column(name = "nombre")
+    @NotNull(message = "nombre cant be null")
     private String nombre;
 
     @Column(name = "apellido1")
@@ -38,9 +51,12 @@ public class Useracount {
     private String apellido2;
 
     @Column(name = "dni")
+    @NotNull(message = "dni cant be null")
+    @Pattern(regexp = "^[0-9]{8}[A-Za-z]$",message = "Cant use specials characters")
     private String dni;
 
     @Column(name = "admin")
+    @NotNull(message = "admin cant be null")
     private boolean admin;
 
     public Useracount(String nombre_usuario, String password, String correo, long telefono, String nombre, String apellido1, String apellido2, String dni, boolean admin) {

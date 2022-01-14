@@ -29,6 +29,7 @@ public class MembresiaControllerImpl implements MembresiaController {
     public String create(ModelMap model) {
         model.addAttribute("type","membresia-create");
         model.addAttribute("object",null);
+        model.addAttribute("array",facturaService.findAllFactura());
         return "formularis/layout-form";
     }
 
@@ -38,6 +39,7 @@ public class MembresiaControllerImpl implements MembresiaController {
         if (membresia.isPresent()) {
             model.addAttribute("type","membresia-update");
             model.addAttribute("object",membresia.get());
+            model.addAttribute("array",facturaService.findAllFactura());
             return "formularis/layout-form";
         }
         model.addAttribute("error","MEMBRESIA SELECTED DOESNT PRESENT");
