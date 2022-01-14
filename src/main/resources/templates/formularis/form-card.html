@@ -36,8 +36,8 @@
 
                         <div th:if="${type} == 'membresia-create'">
                             <!-- FORM MEMBRESIA CREATE -->
-                            <form th:action="@{/membresia/save}" method="POST">
-                                <div th:replace="formularis/membresia :: membresia-field ('CREATE',${object},${array})"></div>
+                            <form th:action="@{/membresia/save}" method="POST" th:object="${object}">
+                                <div th:replace="formularis/membresia :: membresia-field ('CREATE',${array})"></div>
                                 <div class="app-form-group buttons">
                                     <button class="app-form-button"><a href="/">RETURN</a></button>
                                     <input type="submit" class="app-form-button" value="CREATE"/>
@@ -47,8 +47,8 @@
 
                         <div th:if="${type} == 'membresia-update'">
                             <!-- FORM MEMBRESIA UPDATE -->
-                            <form th:action="@{/membresia/put}" method="POST">
-                                <div th:replace="formularis/membresia :: membresia-field ('UPDATE',${object},${array})"></div>
+                            <form th:action="@{/membresia/put}" method="POST" th:object="${object}">
+                                <div th:replace="formularis/membresia :: membresia-field ('UPDATE',${array})"></div>
                                 <div class="app-form-group buttons">
                                     <button class="app-form-button"><a href="/">RETURN</a></button>
                                     <input type="submit" class="app-form-button" value="UPDATE"/>

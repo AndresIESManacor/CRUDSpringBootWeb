@@ -11,10 +11,12 @@ import com.example.crudspringbootweb.service.UseracountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.example.crudspringbootweb.controllers.RestaurantControllers;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 
@@ -58,8 +60,12 @@ public class RestaurantControllerImpl implements RestaurantControllers {
     //////////////         RESTAURANTES   ACTIONS      ////////////////////
 
     @RequestMapping(value = "/restaurant/save")
-    public String save(@ModelAttribute Restaurant restaurant, ModelMap model) {
+    public String save(@ModelAttribute @Valid Restaurant restaurant, BindingResult errors, ModelMap model) {
         inicializeModelMap(model);
+
+        if (errors.hasErrors()) {
+            return "redirect:/restaurant/create";
+        }
         String validation = validateRestaurant(restaurant);
         if (!validation.equals("OK")) {
             model.addAttribute("error",validation);
@@ -70,8 +76,13 @@ public class RestaurantControllerImpl implements RestaurantControllers {
     }
 
     @RequestMapping(value = "/restaurant/put")
-    public String put(@ModelAttribute Restaurant restaurant, ModelMap model) {
+    public String put(@ModelAttribute @Valid Restaurant restaurant, BindingResult errors, ModelMap model) {
         inicializeModelMap(model);
+
+        if (errors.hasErrors()) {
+            return "redirect:/restaurants";
+        }
+
         String validation = validateRestaurant(restaurant);
         if (!validation.equals("OK")) {
             model.addAttribute("error",validation);

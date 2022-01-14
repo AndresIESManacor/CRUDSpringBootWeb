@@ -14,7 +14,9 @@ public interface LocalidadService {
 
     public String deleteLocalidad(int id);
 
-    public List<Localidad> findLocalidadByNombre_localidad(String nombre);
-
     public String updateLocalidad(Localidad localidad);
+
+    // QUERY
+
+    public List<Localidad> findLocalidadByNombre_localidad(String nombre);
 }

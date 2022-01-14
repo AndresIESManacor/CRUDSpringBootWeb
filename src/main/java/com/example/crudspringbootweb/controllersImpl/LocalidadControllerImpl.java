@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -47,8 +49,15 @@ public class LocalidadControllerImpl implements LocalidadController {
 
 
     @RequestMapping(value = "/localidad/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String save(@ModelAttribute Localidad localidad, ModelMap model) {
+    public String save(@ModelAttribute @Valid Localidad localidad, BindingResult errors, ModelMap model) {
         inicializeModelMap(model);
+
+        if(errors.hasErrors()) {
+            model.addAttribute("type","localidad-create");
+            model.addAttribute("object",new Localidad());
+            return "redirect:/localidad/create";
+        }
+
         Optional<Localidad> requestLocalidad = localidadService.findLocalidadById(localidad.getId_localidad());
         if (requestLocalidad.isPresent()) {
             model.addAttribute("type","factura-create");
@@ -66,8 +75,15 @@ public class LocalidadControllerImpl implements LocalidadController {
     }
 
     @RequestMapping(value = "/localidad/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String put(@ModelAttribute Localidad localidad, ModelMap model) {
+    public String put(@ModelAttribute Localidad localidad, BindingResult errors,ModelMap model) {
         inicializeModelMap(model);
+
+        if(errors.hasErrors()) {
+            model.addAttribute("type","localidad-create");
+            model.addAttribute("object",new Localidad());
+            return "redirect:/localidades";
+        }
+
         Optional<Localidad> localidadUpdate = localidadService.findLocalidadById(localidad.getId_localidad());
         if (localidadUpdate.isPresent()) {
             if (isNombreTaken(localidad,localidadUpdate.get())) {

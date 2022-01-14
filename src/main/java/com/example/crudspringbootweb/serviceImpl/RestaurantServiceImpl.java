@@ -1,5 +1,6 @@
 package com.example.crudspringbootweb.serviceImpl;
 
+import com.example.crudspringbootweb.entity.Membresia;
 import com.example.crudspringbootweb.entity.Restaurant;
 import com.example.crudspringbootweb.repository.Restaurante.RestaurantRepository;
 import com.example.crudspringbootweb.service.RestaurantService;
@@ -62,5 +63,25 @@ public class RestaurantServiceImpl implements RestaurantService {
             return "Restaurant modificado";
         }
         return "Error al modificar el Restaurant";
+    }
+
+    @Override
+    public List<Membresia> findRestaurantByValidated(boolean validated) {
+        return restaurantRepository.findRestaurantByValidated(validated);
+    }
+
+    @Override
+    public List<Membresia> findRestaurantByVisible(boolean visible) {
+        return restaurantRepository.findRestaurantByVisible(visible);
+    }
+
+    @Override
+    public List<Membresia> findRestaurantByNombre(String nombre) {
+        return restaurantRepository.findRestaurantByNombre(nombre);
+    }
+
+    @Override
+    public List<Membresia> findRestaurantById_Membresia(int id_membresia) {
+        return restaurantRepository.findRestaurantById_Membresia(id_membresia);
     }
 }

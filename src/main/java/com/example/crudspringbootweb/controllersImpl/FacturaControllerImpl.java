@@ -67,10 +67,20 @@ public class FacturaControllerImpl implements FacturaController {
 
 
     @RequestMapping(value = "/factura/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String put(@ModelAttribute @Valid Factura factura, ModelMap model, Errors errors) {
+    public String put(@ModelAttribute("factura") @Valid Factura factura, ModelMap model, Errors errors) {
         inicializeModelMap(model);
         if (errors.hasErrors()) {
-            return "formularis/layout-form";
+            return "redirect:/faturas";
+        }
+        Optional<Factura> facturaBefore = facturaService.findFacturaById(factura.getNum_factura());
+        if (facturaBefore.isPresent()) {
+            if (factura.getNum_factura().equals(facturaBefore.get().getNum_factura())) {
+                updateFactura(factura);
+            } else {
+                model.addAttribute("error","factura id doesnt match with the actual factura id");
+            }
+        } else {
+            model.addAttribute("error","factura id doesnt exit");
         }
         updateFactura(factura);
         return show(model);

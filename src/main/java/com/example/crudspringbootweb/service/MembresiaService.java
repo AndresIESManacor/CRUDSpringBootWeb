@@ -10,11 +10,14 @@ public interface MembresiaService {
 
     public Optional<Membresia> findMembresiaById(int id);
 
-    public List<Membresia> findMembresiaByNum_Factura(String num_factura);
-
     public Membresia saveMembresia(Membresia membresiaNew);
 
     public String deleteMembresia(int id);
 
     public String updateMembresia(Membresia membresia);
+
+    // QUERY
+
+    public List<Membresia> findMembresiaByNum_Factura(String num_factura);
+
 }

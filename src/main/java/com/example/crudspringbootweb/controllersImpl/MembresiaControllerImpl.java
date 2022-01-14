@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -28,7 +30,7 @@ public class MembresiaControllerImpl implements MembresiaController {
     @RequestMapping(value = "/membresia/create", method = RequestMethod.GET)
     public String create(ModelMap model) {
         model.addAttribute("type","membresia-create");
-        model.addAttribute("object",null);
+        model.addAttribute("object",new Membresia());
         model.addAttribute("array",facturaService.findAllFactura());
         return "formularis/layout-form";
     }
@@ -49,18 +51,19 @@ public class MembresiaControllerImpl implements MembresiaController {
     //////////////         MEMBRESIA ACTIONS        ////////////////////
 
     @RequestMapping(value = "/membresia/save",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String save(
-            @RequestParam(value="fecha_inicio", required=true) String fecha_inicio,
-            @RequestParam(value="fecha_fin", required=true) String fecha_fin,
-            @RequestParam(value="num_factura", required=true) String num_factura,
-            ModelMap model) {
+    public String save(@ModelAttribute @Valid Membresia membresia, BindingResult errors, ModelMap model) {
         inicializeModelMap(model);
-        Optional<Factura> factura = facturaService.findFacturaById(num_factura);
+
+        if (errors.hasErrors()) {
+            return "redirect:/membresia/create";
+        }
+
+        Optional<Factura> factura = facturaService.findFacturaById(membresia.getFactura().getNum_factura());
         if (factura.isPresent()) {
             if (checkNum_Factura(factura.get().getNum_factura())) {
                 model.addAttribute("error","factura relation is already done");
             } else {
-                saveMembresia(new Membresia(fecha_inicio, fecha_fin, factura.get()));
+                saveMembresia(membresia);
             }
         } else {
             model.addAttribute("error","FACTURA NOT FOUND");
@@ -70,22 +73,21 @@ public class MembresiaControllerImpl implements MembresiaController {
 
 
     @RequestMapping(value = "/membresia/put",method = RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-    public String put(
-            @RequestParam(value="id_membresia", required=true) int id_membresia,
-            @RequestParam(value="fecha_inicio", required=true) String fecha_inicio,
-            @RequestParam(value="fecha_fin", required=true) String fecha_fin,
-            @RequestParam(value="num_factura", required=true) String num_factura,
-            ModelMap model) {
+    public String put(@ModelAttribute @Valid Membresia membresia, BindingResult errors, ModelMap model) {
         inicializeModelMap(model);
-        Optional<Membresia> membresia = membresiaService.findMembresiaById(id_membresia);
-        Optional<Factura> factura = facturaService.findFacturaById(num_factura);
+
+        if (errors.hasErrors()) {
+            return "redirect:/membresias";
+        }
+
+        Optional<Membresia> membresiaBefore = membresiaService.findMembresiaById(membresia.getId_membresia());
+        Optional<Factura> factura = facturaService.findFacturaById(membresia.getFactura().getNum_factura());
         if (factura.isPresent()) {
-            Membresia membresiaUpdated = new Membresia(id_membresia, fecha_inicio, fecha_fin,factura.get());
-            if (membresia.isPresent()) {
-                if (membresia.get().getFactura().getNum_factura().equals(membresiaUpdated.getFactura().getNum_factura())) {
-                    updateMembresia(membresiaUpdated);
+            if (membresiaBefore.isPresent()) {
+                if (membresiaBefore.get().getFactura().getNum_factura().equals(membresia.getFactura().getNum_factura())) {
+                    updateMembresia(membresia);
                 } else if (membresiaService.findMembresiaByNum_Factura(factura.get().getNum_factura()).isEmpty()) {
-                    updateMembresia(membresiaUpdated);
+                    updateMembresia(membresia);
                 } else {
                     model.addAttribute("error","factura is already vinculada");
                 }
