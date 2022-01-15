@@ -118,10 +118,10 @@ public class ImgControllerImpl implements ImgController {
                 String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
 
                 if (checkUrlisEmpty(fileName) && imgBefore.isPresent()) {
-                    FileUploadUtil.saveFile(__path_file, fileName, multipartFile);
+                    Path source = Paths.get(__path_file+"/"+imgBefore.get().getUrl());
+                    Files.move(source, source.resolveSibling(fileName));
                     img.setUrl(fileName);
                     updateImg(img);
-                    deleteImgOnDirectory(imgBefore.get().getUrl(),__path_file);
                 } else {
                     model.addAttribute("error","name of the img is in");
                 }
@@ -180,7 +180,11 @@ public class ImgControllerImpl implements ImgController {
 
     @Override
     public void deleteImgById(BigInteger id) {
-        imgService.deleteImg(id);
+        Optional<Img> img = imgService.findImgById(id);
+        if (img.isPresent()) {
+            imgService.deleteImg(id);
+            deleteImgOnDirectory(img.get().getUrl(),__path_file);
+        }
     }
 
     @Override
@@ -197,8 +201,12 @@ public class ImgControllerImpl implements ImgController {
     public boolean checkUrlisEmpty(String url) {
         return imgService.findImgByUrl(url).isEmpty();
     }
-    public void deleteImgOnDirectory(String filename, String directory) throws IOException {
+    public void deleteImgOnDirectory(String filename, String directory) {
         Path fileToDeletePath = Paths.get(directory+"/"+filename);
-        Files.delete(fileToDeletePath);
+        try {
+            Files.delete(fileToDeletePath);
+        } catch (Exception e) {
+            // ERROR
+        }
     }
 }
