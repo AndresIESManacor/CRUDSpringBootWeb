@@ -17,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -71,7 +72,14 @@ public class EtiquetasControllerImpl implements EtiquetasController {
                 return show(model);
             }
         }
-        saveEtiquetas(etiquetas);
+
+        if (etiquetas.getNombre()!=null) {
+            if (checkNameIsEmpty(etiquetas)) {
+                saveEtiquetas(etiquetas);
+            } else {
+                model.addAttribute("error", "ETIQUETA name already taken");
+            }
+        }
         return show(model);
     }
 
@@ -87,7 +95,13 @@ public class EtiquetasControllerImpl implements EtiquetasController {
             Optional<Etiquetas> etiquetasOptional = etiquetasService.findEtiquetaById(etiquetas.getId_etiqueta());
             if (etiquetasOptional.isPresent()) {
                 if (etiquetas.getId_etiqueta().equals(etiquetasOptional.get().getId_etiqueta())) {
-                    updateEtiquetas(etiquetas);
+                    if (etiquetas.getNombre()!=null && etiquetas.getId_etiqueta()!=null) {
+                        if (checkNameIsEmpty(etiquetas)) {
+                            updateEtiquetas(etiquetas);
+                        } else {
+                            model.addAttribute("error", "ETIQUETA name already taken");
+                        }
+                    }
                 } else {
                     model.addAttribute("error","factura id doesnt match with the actual factura id");
                 }
@@ -147,6 +161,13 @@ public class EtiquetasControllerImpl implements EtiquetasController {
     @Override
     public void updateEtiquetas(Etiquetas etiquetasNew) {
         etiquetasService.updateEtiqueta(etiquetasNew);
+    }
+
+    public boolean checkNameIsEmpty(Etiquetas etiquetas) {
+        if (etiquetas.getNombre()!=null) {
+            return etiquetasService.findEtiquetaByName(etiquetas.getNombre()).isEmpty();
+        }
+        return false;
     }
 
     public void inicializeModelMap(ModelMap model) {

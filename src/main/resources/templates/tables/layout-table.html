@@ -65,6 +65,13 @@
     <h2 style="text-align: center;">TABLA SINGLE IMAGENES </h2>
 </div>
 
+<div th:if="${etiquetas}!=null">
+    <h2 style="text-align: center;">TABLA ETIQUETAS </h2>
+</div>
+<div th:if="${etiqueta} != null">
+    <h2 style="text-align: center;">TABLA SINGLE ETIQUETAS </h2>
+</div>
+
 <div class="container-table100">
     <div class="wrap-table100">
         <div class="table100 ver1 m-b-110">
@@ -201,6 +208,20 @@
 
 
 
+            <div th:if="${etiquetas} != null">
+                <!-- TABLE COMENTARIOS -->
+                <div th:if="${etiquetas.size()} != 0">
+                    <div th:replace="tables/tables :: table-etiquetas (${etiquetas})"></div>
+                </div>
+                <div th:unless="${etiquetas.size()} != 0">
+                    THERE IS NO ETIQUETAS NOW
+                </div>
+            </div>
+
+            <div th:if="${etiqueta} != null">
+                <!-- TABLE SINGLE RESERVAS -->
+                <div th:replace="tables/tables :: table-etiquetas-single (${etiqueta})"></div>
+            </div>
 
         </div>
     </div>

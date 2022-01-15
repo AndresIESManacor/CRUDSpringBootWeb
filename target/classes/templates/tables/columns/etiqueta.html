@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- ALL FACTURAS -->
+<table th:fragment="thead">
+  <thead>
+  <tr class="row100 head">
+    <th style="width: 25%" class="first-column">ID Etiqueta</th>
+    <th style="width: 25%">Nombre</th>
+    <th class="column-width20">Create</th>
+    <th class="column-width10">Update</th>
+    <th class="column-width10">Read</th>
+    <th class="column-width10">Delete</th>
+  </tr>
+  </thead>
+</table>
+
+<div th:fragment="tbody-compose (etiquetas)">
+  <table>
+    <tbody>
+    <tr class="row100 body" th:each="etiqueta : ${etiquetas}" th:include="tables/columns/etiqueta :: body-rows(${etiqueta})">
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div th:fragment="tbody-single(etiqueta)">
+  <table>
+    <tbody>
+    <tr class="row100 body" th:include="tables/columns/etiqueta :: body-rows(${etiqueta})">
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<tr class="row100 body" th:fragment="body-rows(etiqueta)">
+  <td style="width: 25%" class="first-column" th:text="${etiqueta.id_etiqueta}"></td>
+  <td style="width: 25%" th:text="${etiqueta.nombre}"></td>
+  <td class="column-width20"><a href="/etiqueta/create" class="create-column">Create</a></td>
+  <td class="column-width10"><a th:href="@{'/etiqueta/update/' + ${etiqueta.id_etiqueta}}" class="update-column">Update</a></td>
+  <td class="column-width10"><a th:href="@{'/etiqueta/' + ${etiqueta.id_etiqueta}}" class="read-column">Read</a></td>
+  <td class="column-width10"><a th:href="@{'/etiqueta/delete/' + ${etiqueta.id_etiqueta}}" class="delete-column">Delete</a></td>
+</tr>
+</body>
+</html>

@@ -192,6 +192,30 @@
                             </form>
                         </div>
 
+
+
+                        <div th:if="${type} == 'etiquetas-create'">
+                            <!-- FORM RESTAURANT CREATE -->
+                            <form th:action="@{/etiqueta/save}" method="POST" th:object="${object}">
+                                <div th:replace="formularis/etiquetas :: etiqueta-field ('CREATE')"></div>
+                                <div class="app-form-group buttons">
+                                    <button class="app-form-button"><a href="/">RETURN</a></button>
+                                    <input type="submit" class="app-form-button" value="CREATE"/>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div th:if="${type} == 'etiquetas-update'">
+                            <!-- FORM RESTAURANT UPDATE -->
+                            <form th:action="@{/etiqueta/put}" method="POST" th:object="${object}">
+                                <div th:replace="formularis/etiquetas :: etiqueta-field ('UPDATE')"></div>
+                                <div class="app-form-group buttons">
+                                    <button class="app-form-button"><a href="/">RETURN</a></button>
+                                    <input type="submit" class="app-form-button" value="UPDATE"/>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
             </div>

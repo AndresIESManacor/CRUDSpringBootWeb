@@ -14,7 +14,6 @@ import java.math.BigInteger;
 public class Etiquetas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull(message = "Etiqueta cant be null")
     @Column(name="id_etiqueta")
     BigInteger id_etiqueta;
 

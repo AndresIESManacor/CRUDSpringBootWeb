@@ -184,5 +184,27 @@
         </div>
     </div>
 
+    <!-- ///////*               ETIQUETAS               ///////// -->
+
+    <!-- TABLE ETIQUETAS -->
+    <div th:fragment="table-etiquetas (etiquetas)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/etiqueta :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/etiqueta :: tbody-compose (${etiquetas})"></div>
+        </div>
+    </div>
+
+    <!-- TABLE ETIQUETAS SINGLE -->
+    <div th:fragment="table-etiquetas-single (etiqueta)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/etiqueta :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/etiqueta :: tbody-single(${etiqueta})"></div>
+        </div>
+    </div>
+
 </body>
 </html>

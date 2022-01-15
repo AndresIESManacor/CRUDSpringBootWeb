@@ -16,4 +16,6 @@ public interface EtiquetasService {
     public void deleteEtiqueta(BigInteger id);
 
     public void updateEtiqueta(Etiquetas etiquetas);
+
+    public List<Etiquetas> findEtiquetaByName(String name);
 }

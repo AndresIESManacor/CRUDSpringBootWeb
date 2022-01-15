@@ -50,4 +50,9 @@ public class EtiquetasServiceImpl implements EtiquetasService {
             etiquetasRepository.save(etiquetasUpdate);
         }
     }
+
+    @Override
+    public List<Etiquetas> findEtiquetaByName(String name) {
+        return etiquetasRepository.findEtiquetasByNombre(name);
+    }
 }
