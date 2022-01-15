@@ -68,6 +68,7 @@ public class FacturaControllerImpl implements FacturaController {
                 saveFactura(factura);
             }
         }
+        saveFactura(factura);
         return show(model);
     }
 
@@ -90,7 +91,6 @@ public class FacturaControllerImpl implements FacturaController {
             } else {
                 model.addAttribute("error","factura id doesnt exit");
             }
-            updateFactura(factura);
         }
 
         return show(model);

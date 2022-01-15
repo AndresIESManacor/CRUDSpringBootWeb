@@ -53,4 +53,9 @@ public class ImgServiceImpl implements ImgService {
             imgRepository.save(imgUpdate);
         }
     }
+
+    @Override
+    public List<Img> findImgByUrl(String url) {
+        return imgRepository.findImgByUrl(url);
+    }
 }

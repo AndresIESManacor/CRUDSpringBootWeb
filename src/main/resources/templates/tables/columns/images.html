@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- ALL IMAGES  -->
+<table th:fragment="thead">
+  <thead>
+  <tr class="row100 head">
+    <th class="column-width20 first-column">id_img</th>
+    <th class="column-width20">url</th>
+    <th class="column-width20">id_restaurante</th>
+    <th class="column-width10">Create</th>
+    <th class="column-width10">Update</th>
+    <th class="column-width10">Read</th>
+    <th class="column-width10">Delete</th>
+  </tr>
+  </thead>
+</table>
+
+<div th:fragment="tbody-compose (imgs)">
+  <table>
+    <tbody>
+    <tr class="row100 body" th:each="img : ${imgs}" th:include="tables/columns/images :: body-rows(${img})">
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div th:fragment="tbody-single(img)">
+  <table>
+    <tbody>
+    <tr class="row100 body" th:include="tables/columns/images :: body-rows(${img})">
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<tr class="body" th:fragment="body-rows(img)">
+  <td class="column-width20 first-column" th:text="${img.id_img}"></td>
+  <td class="column-width20" th:text="${img.url}"></td>
+  <td class="column-width20"><a th:href="@{'/restaurant/'+${img.restaurant.id_restaurante}}" th:text="${img.restaurant.nombre}"></a></td>
+  <td class="column-width10"><a href="/img/create" class="create-column">Create</a></td>
+  <td class="column-width10"><a th:href="@{'/img/update/' + ${img.id_img}}" class="update-column">Update</a></td>
+  <td class="column-width10"><a th:href="@{'/img/' + ${img.id_img}}" class="read-column">Read</a></td>
+  <td class="column-width10"><a th:href="@{'/img/delete/' + ${img.id_img}}" class="delete-column">Delete</a></td>
+</tr>
+</body>
+</html>

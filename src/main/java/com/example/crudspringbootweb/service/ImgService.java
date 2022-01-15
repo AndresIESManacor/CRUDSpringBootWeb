@@ -17,4 +17,8 @@ public interface ImgService {
     public void deleteImg(BigInteger id);
 
     public void updateImg(Img img);
+
+    // QUERY
+
+    public List<Img> findImgByUrl(String url);
 }

@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.math.BigInteger;
 
 @Data
@@ -15,12 +16,10 @@ public class Img {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_img")
-    @Min(0)
     BigInteger id_img;
 
     @Column(name="url")
-    @NotNull(message = "url cant be null")
-    @Pattern(regexp = "[png|jpg|gif]$",message = "Cant use specials characters")
+    @Size(min = 1, max = 254)
     String url;
 
     @ManyToOne(optional = false)

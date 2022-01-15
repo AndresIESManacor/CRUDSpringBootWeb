@@ -161,5 +161,28 @@
         </div>
     </div>
 
+
+    <!-- ///////*               IMAGES               ///////// -->
+
+    <!-- TABLE COMENTARIOS -->
+    <div th:fragment="table-img (imgs)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/images :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/images :: tbody-compose (${imgs})"></div>
+        </div>
+    </div>
+
+    <!-- TABLE COMENTARIOS SINGLE -->
+    <div th:fragment="table-img-single (img)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/images :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/images :: tbody-single(${img})"></div>
+        </div>
+    </div>
+
 </body>
 </html>

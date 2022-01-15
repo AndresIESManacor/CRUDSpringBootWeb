@@ -81,7 +81,7 @@
 
 
                         <div th:if="${type} == 'useracount-create'">
-                            <!-- FORM LOCALIDAD CREATE -->
+                            <!-- FORM USERACOUNT CREATE -->
                             <form th:action="@{/user/save}" method="POST" th:object="${object}">
                                 <div th:replace="formularis/useracount :: useracount-field ('CREATE')"></div>
                                 <div class="app-form-group buttons">
@@ -92,7 +92,7 @@
                         </div>
 
                         <div th:if="${type} == 'useracount-update'">
-                            <!-- FORM LOCALIDAD UPDATE -->
+                            <!-- FORM USERACOUNT UPDATE -->
                             <form th:action="@{/user/put}" method="POST" th:object="${object}">
                                 <div th:replace="formularis/useracount :: useracount-field ('UPDATE')"></div>
                                 <div class="app-form-group buttons">
@@ -126,7 +126,7 @@
                         </div>
 
                         <div th:if="${type} == 'comentario-create'">
-                            <!-- FORM RESTAURANT CREATE -->
+                            <!-- FORM COMENTARIO CREATE -->
                             <form th:action="@{/comentario/save}" method="POST" th:object="${object}">
                                 <div th:replace="formularis/comentario :: comentario-field ('CREATE',${array})"></div>
                                 <div class="app-form-group buttons">
@@ -137,7 +137,7 @@
                         </div>
 
                         <div th:if="${type} == 'comentario-update'">
-                            <!-- FORM RESTAURANT UPDATE -->
+                            <!-- FORM COMENTARIO UPDATE -->
                             <form th:action="@{/comentario/put}" method="POST" th:object="${object}">
                                 <div th:replace="formularis/comentario :: comentario-field ('UPDATE',${array})"></div>
                                 <div class="app-form-group buttons">
@@ -148,7 +148,7 @@
                         </div>
 
                         <div th:if="${type} == 'reserva-create'">
-                            <!-- FORM RESTAURANT CREATE -->
+                            <!-- FORM RESERVA CREATE -->
                             <form th:action="@{/reserva/save}" method="POST" th:object="${object}">
                                 <div th:replace="formularis/reserva :: reserva-field ('CREATE',${array})"></div>
                                 <div class="app-form-group buttons">
@@ -159,9 +159,32 @@
                         </div>
 
                         <div th:if="${type} == 'reserva-update'">
-                            <!-- FORM RESTAURANT UPDATE -->
+                            <!-- FORM RESERVA UPDATE -->
                             <form th:action="@{/reserva/put}" method="POST" th:object="${object}">
                                 <div th:replace="formularis/reserva :: reserva-field ('UPDATE',${array})"></div>
+                                <div class="app-form-group buttons">
+                                    <button class="app-form-button"><a href="/">RETURN</a></button>
+                                    <input type="submit" class="app-form-button" value="UPDATE"/>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div th:if="${type} == 'img-create'">
+                            <!-- FORM RESTAURANT CREATE -->
+                            <form th:action="@{/img/save}" method="POST" th:object="${object}" enctype="multipart/form-data">
+                                <div th:replace="formularis/images :: images-field ('CREATE',${array})"></div>
+                                <div class="app-form-group buttons">
+                                    <button class="app-form-button"><a href="/">RETURN</a></button>
+                                    <input type="submit" class="app-form-button" value="CREATE"/>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div th:if="${type} == 'img-update'">
+                            <!-- FORM RESTAURANT UPDATE -->
+                            <form th:action="@{/img/put}" method="POST" th:object="${object}" enctype="multipart/form-data">
+                                <div th:replace="formularis/images :: images-field ('UPDATE',${array})"></div>
                                 <div class="app-form-group buttons">
                                     <button class="app-form-button"><a href="/">RETURN</a></button>
                                     <input type="submit" class="app-form-button" value="UPDATE"/>

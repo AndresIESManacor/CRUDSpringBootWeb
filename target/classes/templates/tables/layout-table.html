@@ -58,6 +58,13 @@
     <h2 style="text-align: center;">TABLA SINGLE COMENTARIOS </h2>
 </div>
 
+<div th:if="${imgs}!=null">
+    <h2 style="text-align: center;">TABLA IMAGENES </h2>
+</div>
+<div th:if="${img} != null">
+    <h2 style="text-align: center;">TABLA SINGLE IMAGENES </h2>
+</div>
+
 <div class="container-table100">
     <div class="wrap-table100">
         <div class="table100 ver1 m-b-110">
@@ -173,6 +180,25 @@
                 <!-- TABLE SINGLE RESERVAS -->
                 <div th:replace="tables/tables :: table-comentario-single (${comentario})"></div>
             </div>
+
+
+
+
+            <div th:if="${imgs} != null">
+                <!-- TABLE COMENTARIOS -->
+                <div th:if="${imgs.size()} != 0">
+                    <div th:replace="tables/tables :: table-img (${imgs})"></div>
+                </div>
+                <div th:unless="${imgs.size()} != 0">
+                    THERE IS NO IMG NOW
+                </div>
+            </div>
+
+            <div th:if="${img} != null">
+                <!-- TABLE SINGLE RESERVAS -->
+                <div th:replace="tables/tables :: table-img-single (${img})"></div>
+            </div>
+
 
 
 

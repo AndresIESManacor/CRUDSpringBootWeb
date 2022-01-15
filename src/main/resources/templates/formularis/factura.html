@@ -10,11 +10,9 @@
         <div class="app-form-group" style="display: flex; flex-direction: row; justify-content: center;">
             <label th:if="${type=='CREATE'}">
                 <input th:field="*{num_factura}" type="text" maxlength="30" onkeypress="return event.charCode !== 32" autocomplete="off" class="app-form-control" style="text-align: center" placeholder="NUMFACTURA" required>
-                <span th:if="${#fields.hasErrors('num_factura')}" th:errors="*{num_factura}">Error en el num_factura</span>
             </label>
             <label th:unless="${type=='CREATE'}">
                 <input th:field="*{num_factura}" class="app-form-control" style="text-align: center" placeholder="NUMFACTURA" required readonly>
-                <span th:if="${#fields.hasErrors('num_factura')}" th:errors="*{num_factura}">Error en el num_factura</span>
             </label>
         </div>
         <div class="app-form-group message">
@@ -22,7 +20,6 @@
                 <p style="color: white">Direccion</p>
                 <input th:field="*{direccion}" type="text" maxlength="50" class="app-form-control" autocomplete="off" placeholder="TU DIRECCION" required>
             </label>
-            <span th:if="${#fields.hasErrors('direccion')}" th:errors="*{direccion}">Error en el direccion</span>
         </div>
         <div class="app-form-group">
             <label>

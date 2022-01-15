@@ -56,7 +56,7 @@
     <td style="width: 5%;" th:text="${reserva.validated}"></td>
     <td style="width: 10%;" th:text="${reserva.fecha_inicio}"></td>
     <td style="width: 10%;" th:text="${reserva.fecha_fin}"></td>
-    <td style="width: 10%;" th:text="${reserva.restaurant.nombre}"></td>
+    <td style="width: 10%;"><a th:href="@{'/restaurant/'+${reserva.restaurant.id_restaurante}}" th:text="${reserva.restaurant.nombre}"></a></td>
     <td style="width: 5%;"><a href="/reserva/create" class="create-column">Create</a></td>
     <td style="width: 5%;"><a th:href="@{'/reserva/update/' + ${reserva.id_reserva}}" class="update-column">Update</a></td>
     <td style="width: 5%;"><a th:href="@{'/reserva/' + ${reserva.id_reserva}}" class="read-column">Read</a></td>

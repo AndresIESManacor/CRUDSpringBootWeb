@@ -167,8 +167,8 @@ public class ComentariosControllerImpl implements ComentariosController {
     }
 
     public void inicializeModelMap(ModelMap model) {
-        model.remove("factura");
-        model.remove("facturas");
+        model.remove("comentario");
+        model.remove("comentarios");
         model.remove("error");
     }
 }
