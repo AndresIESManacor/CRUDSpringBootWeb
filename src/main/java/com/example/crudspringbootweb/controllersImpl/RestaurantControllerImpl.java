@@ -55,12 +55,14 @@ public class RestaurantControllerImpl implements RestaurantControllers {
 
     @RequestMapping(value = "/restaurant/update/{id}", method = RequestMethod.GET)
     public String update(@PathVariable BigInteger id, ModelMap model) {
-        Optional<Restaurant> restaurant = restaurantService.findRestaurantById(id);
-        if (restaurant.isPresent()) {
-            model.addAttribute("type","restaurant-update");
-            model.addAttribute("object",restaurant.get());
-            model.addAttribute("array",getRelationsWithRestaurant());
-            return __route_formularis;
+        if (id!=null) {
+            Optional<Restaurant> restaurant = restaurantService.findRestaurantById(id);
+            if (restaurant.isPresent()) {
+                model.addAttribute("type", "restaurant-update");
+                model.addAttribute("object", restaurant.get());
+                model.addAttribute("array", getRelationsWithRestaurant());
+                return __route_formularis;
+            }
         }
         model.addAttribute("error","RESTAURANT SELECTED DOESNT PRESENT");
         return __route_home;
@@ -108,13 +110,14 @@ public class RestaurantControllerImpl implements RestaurantControllers {
             return __route_home;
         }
 
-        Optional<Restaurant> restaurantBefore = restaurantService.findRestaurantById(restaurant.getId_restaurante());
-        if (restaurantBefore.isPresent()) {
-            model = checkToUpdate(restaurant, restaurantBefore.get(), model);
-        } else {
-            return "redirect:/restaurants";
+        if (restaurant.getId_restaurante()!=null) {
+            Optional<Restaurant> restaurantBefore = restaurantService.findRestaurantById(restaurant.getId_restaurante());
+            if (restaurantBefore.isPresent()) {
+                model = checkToUpdate(restaurant, restaurantBefore.get(), model);
+            } else {
+                return "redirect:/restaurants";
+            }
         }
-        updateRestaurant(restaurant);
         return show(model);
     }
 
@@ -128,10 +131,12 @@ public class RestaurantControllerImpl implements RestaurantControllers {
     @RequestMapping(value = "/restaurant/{id}", method = RequestMethod.GET, produces = "application/json")
     @Override
     public String getRestaurantById(@PathVariable BigInteger id, ModelMap model) {
-        Optional<Restaurant> restaurant = restaurantService.findRestaurantById(id);
-        if (restaurant.isPresent()) {
-            model.addAttribute("restaurant",restaurant.get());
-            return __route_table;
+        if (id!=null) {
+            Optional<Restaurant> restaurant = restaurantService.findRestaurantById(id);
+            if (restaurant.isPresent()) {
+                model.addAttribute("restaurant", restaurant.get());
+                return __route_table;
+            }
         }
         model.addAttribute("error","RESTAURANT NOT FOUNDED");
         return __route_home;
@@ -147,11 +152,13 @@ public class RestaurantControllerImpl implements RestaurantControllers {
     @RequestMapping(value = "/restaurant/delete/{id}", method = RequestMethod.GET, produces = "application/json")
     @Override
     public RedirectView delete(@PathVariable BigInteger id, ModelMap model) {
-        Optional<Restaurant> restaurant =  restaurantService.findRestaurantById(id);
-        if (restaurant.isPresent()) {
-            restaurantService.deleteRestaurant(id);
-        } else {
-            model.addAttribute("error","LOCALIDAD NOT FOUNDED");
+        if (id!=null) {
+            Optional<Restaurant> restaurant = restaurantService.findRestaurantById(id);
+            if (restaurant.isPresent()) {
+                restaurantService.deleteRestaurant(id);
+            } else {
+                model.addAttribute("error", "LOCALIDAD NOT FOUNDED");
+            }
         }
         return new RedirectView("/restaurants");
     }
@@ -162,18 +169,22 @@ public class RestaurantControllerImpl implements RestaurantControllers {
     }
 
     public String checkRelationsExist(Restaurant restaurant) {
-        Optional<Localidad> localidad = localidadService.findLocalidadById(restaurant.getLocalidad().getId_localidad());
-        Optional<Membresia> membresia = membresiaService.findMembresiaById(restaurant.getMembresia().getId_membresia());
-        Optional<Useracount> useracount = useracountService.findUseracountById(restaurant.getUseracount().getId_user());
+        if (restaurant.getMembresia().getId_membresia() !=null
+                && restaurant.getLocalidad().getId_localidad() !=null
+                && restaurant.getUseracount().getId_user() !=null) {
+            Optional<Localidad> localidad = localidadService.findLocalidadById(restaurant.getLocalidad().getId_localidad());
+            Optional<Membresia> membresia = membresiaService.findMembresiaById(restaurant.getMembresia().getId_membresia());
+            Optional<Useracount> useracount = useracountService.findUseracountById(restaurant.getUseracount().getId_user());
 
-        if (localidad.isEmpty()) {
-            return "LOCALIDAD IS NOT PRESENT";
-        }
-        if (membresia.isEmpty()) {
-            return "MEMBRESIA IS NOT PRESENT";
-        }
-        if (useracount.isEmpty()) {
-            return "USERACOUNT IS NOT PRESENT";
+            if (localidad.isEmpty()) {
+                return "LOCALIDAD IS NOT PRESENT";
+            }
+            if (membresia.isEmpty()) {
+                return "MEMBRESIA IS NOT PRESENT";
+            }
+            if (useracount.isEmpty()) {
+                return "USERACOUNT IS NOT PRESENT";
+            }
         }
         return "OK";
     }
@@ -206,23 +217,29 @@ public class RestaurantControllerImpl implements RestaurantControllers {
     }
 
     public boolean isNameRestaurantTaken(Restaurant restaurant, Restaurant restaurantBefore) {
-        if (restaurant.getNombre().equals(restaurantBefore.getNombre())) {
-            return false;
-        } else return checkNameisEmpty(restaurant.getNombre());
+        if (restaurant.getNombre()!=null) {
+            if (restaurant.getNombre().equals(restaurantBefore.getNombre())) {
+                return false;
+            } else return !checkNameisEmpty(restaurant.getNombre());
+        }
+        return true;
     }
     public boolean isMembresiaRestaurantTaken(Restaurant restaurant, Restaurant restaurantBefore) {
-        if (restaurant.getMembresia().getId_membresia().equals(restaurantBefore.getMembresia().getId_membresia())) {
-            return false;
-        } else return checkMembresiaisEmpty(restaurant.getMembresia().getId_membresia());
+        if (restaurant.getMembresia().getId_membresia()!=null) {
+            if (restaurant.getMembresia().getId_membresia().equals(restaurantBefore.getMembresia().getId_membresia())) {
+                return false;
+            } else return !checkMembresiaisEmpty(restaurant.getMembresia().getId_membresia());
+        }
+        return true;
     }
 
     public ModelMap checkToUpdate(Restaurant restaurant, Restaurant restaurantBefore, ModelMap model) {
         if (isNameRestaurantTaken(restaurant,restaurantBefore)) {
-            model.addAttribute("error","correo is taken");
+            model.addAttribute("error","name restaurant is taken");
             return model;
         }
         if (isMembresiaRestaurantTaken(restaurant,restaurantBefore)) {
-            model.addAttribute("error","username is taken");
+            model.addAttribute("error","membresia relation is taken");
             return model;
         }
         updateRestaurant(restaurant);

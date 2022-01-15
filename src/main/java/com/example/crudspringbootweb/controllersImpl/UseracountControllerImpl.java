@@ -40,11 +40,13 @@ public class UseracountControllerImpl implements UseracountController {
 
     @RequestMapping(value = "/user/update/{id}", method = RequestMethod.GET)
     public String update(@PathVariable BigInteger id, ModelMap model) {
-        Optional<Useracount> useracount = useracountService.findUseracountById(id);
-        if (useracount.isPresent()) {
-            model.addAttribute("type","useracount-update");
-            model.addAttribute("object",useracount.get());
-            return __route_formularis;
+        if (id != null) {
+            Optional<Useracount> useracount = useracountService.findUseracountById(id);
+            if (useracount.isPresent()) {
+                model.addAttribute("type","useracount-update");
+                model.addAttribute("object",useracount.get());
+                return __route_formularis;
+            }
         }
         model.addAttribute("error","MEMBRESIA SELECTED DOESNT PRESENT");
         return __route_home;
@@ -62,22 +64,29 @@ public class UseracountControllerImpl implements UseracountController {
             return "redirect:/user/create";
         }
 
-        Optional<Useracount> requestUseracount = useracountService.findUseracountById(useracount.getId_user());
-        if (requestUseracount.isPresent()) {
-            model.addAttribute("type","useracount-create");
-            model.addAttribute("object",new Useracount());
-            model.addAttribute("error","TRYING TO SAVE USERACOUNT THAT EXIST");
-        } else {
+        if (useracount.getId_user()!=null) {
+            Optional<Useracount> requestUseracount = useracountService.findUseracountById(useracount.getId_user());
+            if (requestUseracount.isPresent()) {
+                model.addAttribute("type", "useracount-create");
+                model.addAttribute("object", new Useracount());
+                model.addAttribute("error", "TRYING TO SAVE USERACOUNT THAT EXIST");
+            }
+        }
+
+        if (useracount.getCorreo()!=null) {
             if (checkCorreo(useracount.getCorreo())) {
-                model.addAttribute("error","correo allready exist");
+                model.addAttribute("error", "correo allready exist");
             } else {
-                if (!checkUsername(useracount.getNombre_usuario())) {
-                    saveUseracount(useracount);
-                } else {
-                    model.addAttribute("error","Username allready exist");
+                if (useracount.getNombre_usuario()!=null) {
+                    if (!checkUsername(useracount.getNombre_usuario())) {
+                        saveUseracount(useracount);
+                    } else {
+                        model.addAttribute("error", "Username allready exist");
+                    }
                 }
             }
         }
+
         return show(model);
     }
 
@@ -89,13 +98,17 @@ public class UseracountControllerImpl implements UseracountController {
             return "redirect:/users";
         }
 
-        Optional<Useracount> useracountBefore =  useracountService.findUseracountById(useracount.getId_user());
-        if (useracountBefore.isPresent()) {
-            if (checkPassword(useracountBefore.get().getPassword(), useracount.getPassword())) {
-                // CHANGES --
-                model = checkToUpdate(useracount,useracountBefore.get(),model);
-            } else {
-                model.addAttribute("error","password is incorrect (to update this user need to know the password)");
+        if (useracount.getId_user()!=null) {
+            Optional<Useracount> useracountBefore = useracountService.findUseracountById(useracount.getId_user());
+            if (useracountBefore.isPresent()) {
+                if (useracount.getPassword()!=null) {
+                    if (checkPassword(useracountBefore.get().getPassword(), useracount.getPassword())) {
+                        // CHANGES --
+                        model = checkToUpdate(useracount, useracountBefore.get(), model);
+                    } else {
+                        model.addAttribute("error", "password is incorrect (to update this user need to know the password)");
+                    }
+                }
             }
         } else {
             model.addAttribute("error","Request user is not present");
@@ -105,11 +118,13 @@ public class UseracountControllerImpl implements UseracountController {
 
     @RequestMapping(value = "/user/delete/{id}", method = RequestMethod.GET, produces = "application/json")
     public RedirectView delete(@PathVariable BigInteger id, ModelMap model) {
-        Optional<Useracount> useracount =  useracountService.findUseracountById(id);
-        if (useracount.isPresent()) {
-            deleteUseracountById(id);
-        } else {
-            model.addAttribute("error","USERACOUNT NOT FOUNDED");
+        if (id!=null) {
+            Optional<Useracount> useracount = useracountService.findUseracountById(id);
+            if (useracount.isPresent()) {
+                deleteUseracountById(id);
+            } else {
+                model.addAttribute("error", "USERACOUNT NOT FOUNDED");
+            }
         }
         return new RedirectView("/users");
     }
@@ -124,10 +139,12 @@ public class UseracountControllerImpl implements UseracountController {
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET, produces = "application/json")
     @Override
     public String getUseracountById(@PathVariable BigInteger id, ModelMap model) {
-        Optional<Useracount> useracount = useracountService.findUseracountById(id);
-        if (useracount.isPresent()) {
-            model.addAttribute("useracount",useracount.get());
-            return __route_table;
+        if (id!=null) {
+            Optional<Useracount> useracount = useracountService.findUseracountById(id);
+            if (useracount.isPresent()) {
+                model.addAttribute("useracount", useracount.get());
+                return __route_table;
+            }
         }
         model.addAttribute("error","USERACOUNT NOT FOUNDED");
         return __route_home;
@@ -186,18 +203,24 @@ public class UseracountControllerImpl implements UseracountController {
     }
 
     public boolean isCorreoTaken(Useracount useracount, Useracount useracountBefore) {
-        if (useracount.getCorreo().equals(useracountBefore.getCorreo())) {
-            return false;
-        } else {
-            return checkCorreo(useracount.getCorreo());
+        if (useracount.getCorreo()!=null) {
+            if (useracount.getCorreo().equals(useracountBefore.getCorreo())) {
+                return false;
+            } else {
+                return checkCorreo(useracount.getCorreo());
+            }
         }
+        return true;
     }
     public boolean isUsernameTaken(Useracount useracount, Useracount useracountBefore) {
-        if (useracount.getNombre_usuario().equals(useracountBefore.getNombre_usuario())) {
-            return false;
-        } else {
-            return checkUsername(useracount.getNombre_usuario());
+        if (useracount.getNombre_usuario()!=null) {
+            if (useracount.getNombre_usuario().equals(useracountBefore.getNombre_usuario())) {
+                return false;
+            } else {
+                return checkUsername(useracount.getNombre_usuario());
+            }
         }
+        return true;
     }
 
 }

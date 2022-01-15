@@ -39,11 +39,13 @@ public class LocalidadControllerImpl implements LocalidadController {
 
     @RequestMapping(value = "/localidad/update/{id}", method = RequestMethod.GET)
     public String update(@PathVariable BigInteger id, ModelMap model) {
-        Optional<Localidad> localidad = localidadService.findLocalidadById(id);
-        if (localidad.isPresent()) {
-            model.addAttribute("type","localidad-update");
-            model.addAttribute("object",localidad.get());
-            return __route_formularis;
+        if (id!=null) {
+            Optional<Localidad> localidad = localidadService.findLocalidadById(id);
+            if (localidad.isPresent()) {
+                model.addAttribute("type", "localidad-update");
+                model.addAttribute("object", localidad.get());
+                return __route_formularis;
+            }
         }
         model.addAttribute("error","LOCALIDAD SELECTED DOESNT PRESENT");
         return __route_home;
@@ -63,15 +65,18 @@ public class LocalidadControllerImpl implements LocalidadController {
             return "redirect:/localidad/create";
         }
 
-        Optional<Localidad> requestLocalidad = localidadService.findLocalidadById(localidad.getId_localidad());
-        if (requestLocalidad.isPresent()) {
-            model.addAttribute("type","factura-create");
-            model.addAttribute("object",new Factura());
-            model.addAttribute("error","TRYING TO SAVE FACTURA THAT EXIST");
-        } else {
+        if (localidad.getId_localidad()!=null) {
+            Optional<Localidad> requestLocalidad = localidadService.findLocalidadById(localidad.getId_localidad());
+            if (requestLocalidad.isPresent()) {
+                model.addAttribute("type", "factura-create");
+                model.addAttribute("object", new Factura());
+                model.addAttribute("error", "TRYING TO SAVE FACTURA THAT EXIST");
+            }
+        }
+        if (localidad.getNombre_localidad()!=null)  {
             //MIRAR TAMBIEN POR EL NOMBRE PARA QUE HAYA DOS REPETIDOS
             if (!localidadService.findLocalidadByNombre_localidad(localidad.getNombre_localidad()).isEmpty()) {
-                model.addAttribute("error","name allready exist");
+                model.addAttribute("error", "name already exist");
             } else {
                 saveLocalidad(localidad);
             }
@@ -89,15 +94,17 @@ public class LocalidadControllerImpl implements LocalidadController {
             return "redirect:/localidades";
         }
 
-        Optional<Localidad> localidadUpdate = localidadService.findLocalidadById(localidad.getId_localidad());
-        if (localidadUpdate.isPresent()) {
-            if (isNombreTaken(localidad,localidadUpdate.get())) {
-                model.addAttribute("error","name allready exist");
+        if (localidad.getId_localidad()!=null) {
+            Optional<Localidad> localidadUpdate = localidadService.findLocalidadById(localidad.getId_localidad());
+            if (localidadUpdate.isPresent()) {
+                if (isNombreTaken(localidad, localidadUpdate.get())) {
+                    model.addAttribute("error", "name already exist");
+                } else {
+                    updateLocalidad(localidad);
+                }
             } else {
-                updateLocalidad(localidad);
+                model.addAttribute("error", "localidad id doesnt exist");
             }
-        } else {
-            model.addAttribute("error","localidad id doesnt exist");
         }
 
         return show(model);
@@ -105,11 +112,13 @@ public class LocalidadControllerImpl implements LocalidadController {
 
     @RequestMapping(value = "/localidad/delete/{id}", method = RequestMethod.GET, produces = "application/json")
     public RedirectView delete(@PathVariable BigInteger id, ModelMap model) {
-        Optional<Localidad> localidad =  localidadService.findLocalidadById(id);
-        if (localidad.isPresent()) {
-            deleteLocalidadById(id);
-        } else {
-            model.addAttribute("error","LOCALIDAD NOT FOUNDED");
+        if (id!=null) {
+            Optional<Localidad> localidad = localidadService.findLocalidadById(id);
+            if (localidad.isPresent()) {
+                deleteLocalidadById(id);
+            } else {
+                model.addAttribute("error", "LOCALIDAD NOT FOUNDED");
+            }
         }
         return new RedirectView("/localidades");
     }
@@ -124,10 +133,12 @@ public class LocalidadControllerImpl implements LocalidadController {
     @RequestMapping(value = "/localidad/{id}",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String findLocalidadById(@PathVariable BigInteger id, ModelMap model) {
-        Optional<Localidad> Localidad = localidadService.findLocalidadById(id);
-        if (Localidad.isPresent()) {
-            model.addAttribute("localidad",Localidad.get());
-            return __route_table;
+        if (id!=null) {
+            Optional<Localidad> Localidad = localidadService.findLocalidadById(id);
+            if (Localidad.isPresent()) {
+                model.addAttribute("localidad", Localidad.get());
+                return __route_table;
+            }
         }
         model.addAttribute("error","FACTURA NOT FOUNDED");
         return __route_home;
@@ -159,11 +170,14 @@ public class LocalidadControllerImpl implements LocalidadController {
     }
 
     public boolean isNombreTaken(Localidad localidad, Localidad localidadUpdate) {
-        if (localidad.getNombre_localidad().equals(localidadUpdate.getNombre_localidad())) {
-            return false;
-        } else {
-            return checkName(localidad.getNombre_localidad());
+        if (localidad.getNombre_localidad()!=null) {
+            if (localidad.getNombre_localidad().equals(localidadUpdate.getNombre_localidad())) {
+                return false;
+            } else {
+                return checkName(localidad.getNombre_localidad());
+            }
         }
+        return true;
     }
 
     public void inicializeModelMap(ModelMap model) {

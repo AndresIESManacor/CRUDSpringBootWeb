@@ -15,7 +15,6 @@ public class Membresia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_membresia")
-    @Min(0)
     private BigInteger id_membresia;
 
     @Column(name = "fecha_inicio")

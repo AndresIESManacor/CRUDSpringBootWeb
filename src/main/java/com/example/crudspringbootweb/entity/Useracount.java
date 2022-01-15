@@ -16,7 +16,6 @@ public class Useracount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
-    @Min(0)
     private BigInteger id_user;
 
     @Column(name = "nombre_usuario")
@@ -27,8 +26,8 @@ public class Useracount {
 
     @Column(name = "contraseña")
     @NotNull(message = "contraseña cant be null")
-    @Size(min=2, max=80, message = "Length of the password must be between 2 and 80")
-    @Pattern(regexp = "^[^ª!\"·$%&/()=?¿\\\\|@#~½¬{\\[\\]}Ç*+\\-`'¡º<>;,:._]*$",message = "Cant use specials characters")
+    @Size(min=8, max=80, message = "Length of the password must be between 8 and 80")
+    @Pattern(regexp = "^[a-zA-Z0-9]{8,80}$",message = "Only numbers and letters 8 to 80 length, without space")
     private String password;
 
     @Column(name = "correo")
@@ -54,7 +53,7 @@ public class Useracount {
 
     @Column(name = "dni")
     @NotNull(message = "dni cant be null")
-    @Pattern(regexp = "^[0-9]{8}[A-Za-z]$",message = "Cant use specials characters")
+    @Pattern(regexp = "^[0-9]{8}[A-Za-z]$",message = "Not regex DNI")
     private String dni;
 
     @Column(name = "admin")

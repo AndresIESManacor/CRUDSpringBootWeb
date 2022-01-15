@@ -10,6 +10,6 @@ public class GeneralController {
     // http://localhost:8888/ (SHOW All Forms)
     @RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
     public String getAllForms(){
-        return "principalPage";
+        return "links";
     }
 }

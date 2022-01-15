@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.math.BigInteger;
 
 @Data
@@ -14,15 +15,16 @@ public class Localidad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_localidad")
-    @Min(0)
     private BigInteger id_localidad;
 
     @Column(name = "nombre_localidad")
     @NotNull(message = "nombre_localidad cant be null")
+    @Pattern(regexp = "^[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*$") // UPPERCASE THE FIRST LETTER AND SPACE ANOTHER UPPERCASE
     private String nombre_localidad;
 
     @Column(name = "codigo_postal")
     @NotNull(message = "codigo_postal cant be null")
+    @Min(0)
     private int codigo_postal;
 
     public Localidad(BigInteger id_localidad, String nombre_localidad, int codigo_postal) {

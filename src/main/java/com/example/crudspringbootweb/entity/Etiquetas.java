@@ -17,7 +17,6 @@ public class Etiquetas {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull(message = "Etiqueta cant be null")
     @Column(name="id_etiqueta")
-    @Min(0)
     BigInteger id_etiqueta;
 
     @NotNull(message = "Nombre cant be null")

@@ -39,11 +39,13 @@ public class FacturaControllerImpl implements FacturaController {
 
     @RequestMapping(value = "/factura/update/{id}", method = RequestMethod.GET)
     public String update(@PathVariable String id, ModelMap model) {
-        Optional<Factura> factura = facturaService.findFacturaById(id);
-        if (factura.isPresent()) {
-            model.addAttribute("type","factura-update");
-            model.addAttribute("object",factura.get());
-            return __route_formularis;
+        if (id!=null) {
+            Optional<Factura> factura = facturaService.findFacturaById(id);
+            if (factura.isPresent()) {
+                model.addAttribute("type", "factura-update");
+                model.addAttribute("object", factura.get());
+                return __route_formularis;
+            }
         }
         model.addAttribute("error","FACTURA SELECTED DOESNT PRESENT");
         return __route_home;
@@ -57,13 +59,16 @@ public class FacturaControllerImpl implements FacturaController {
         if (errors.hasErrors()) {
             return "redirect:/factura/create";
         }
-        Optional<Factura> requestFactura = facturaService.findFacturaById(factura.getNum_factura());
-        if (requestFactura.isPresent()) {
-            model.addAttribute("type","factura-create");
-            model.addAttribute("object",new Factura());
-            model.addAttribute("error","TRYING TO SAVE FACTURA THAT EXIST");
-        } else {
-            saveFactura(factura);
+
+        if (factura.getNum_factura()!=null) {
+            Optional<Factura> requestFactura = facturaService.findFacturaById(factura.getNum_factura());
+            if (requestFactura.isPresent()) {
+                model.addAttribute("type","factura-create");
+                model.addAttribute("object",new Factura());
+                model.addAttribute("error","TRYING TO SAVE FACTURA THAT EXIST");
+            } else {
+                saveFactura(factura);
+            }
         }
         return show(model);
     }
@@ -75,27 +80,33 @@ public class FacturaControllerImpl implements FacturaController {
         if (errors.hasErrors()) {
             return "redirect:/faturas";
         }
-        Optional<Factura> facturaBefore = facturaService.findFacturaById(factura.getNum_factura());
-        if (facturaBefore.isPresent()) {
-            if (factura.getNum_factura().equals(facturaBefore.get().getNum_factura())) {
-                updateFactura(factura);
+
+        if (factura.getNum_factura()!=null) {
+            Optional<Factura> facturaBefore = facturaService.findFacturaById(factura.getNum_factura());
+            if (facturaBefore.isPresent()) {
+                if (factura.getNum_factura().equals(facturaBefore.get().getNum_factura())) {
+                    updateFactura(factura);
+                } else {
+                    model.addAttribute("error","factura id doesnt match with the actual factura id");
+                }
             } else {
-                model.addAttribute("error","factura id doesnt match with the actual factura id");
+                model.addAttribute("error","factura id doesnt exit");
             }
-        } else {
-            model.addAttribute("error","factura id doesnt exit");
+            updateFactura(factura);
         }
-        updateFactura(factura);
+
         return show(model);
     }
 
     @RequestMapping(value = "/factura/delete/{id}", method = RequestMethod.GET, produces = "application/json")
     public RedirectView delete(@PathVariable String id, ModelMap model) {
-        Optional<Factura> factura =  facturaService.findFacturaById(id);
-        if (factura.isPresent()) {
-            deleteFacturaById(id);
-        } else {
-            model.addAttribute("error","FACTURA NOT FOUNDED");
+        if (id!=null) {
+            Optional<Factura> factura = facturaService.findFacturaById(id);
+            if (factura.isPresent()) {
+                deleteFacturaById(id);
+            } else {
+                model.addAttribute("error", "FACTURA NOT FOUNDED");
+            }
         }
         return new RedirectView("/facturas");
     }
@@ -110,10 +121,12 @@ public class FacturaControllerImpl implements FacturaController {
     @RequestMapping(value = "/factura/{id}",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
     @Override
     public String findFacturaById(@PathVariable String id, ModelMap model) {
-        Optional<Factura> factura = facturaService.findFacturaById(id);
-        if (factura.isPresent()) {
-            model.addAttribute("factura",factura.get());
-            return __route_table;
+        if (id!=null) {
+            Optional<Factura> factura = facturaService.findFacturaById(id);
+            if (factura.isPresent()) {
+                model.addAttribute("factura", factura.get());
+                return __route_table;
+            }
         }
         model.addAttribute("error","FACTURA NOT FOUNDED");
         return __route_home;
