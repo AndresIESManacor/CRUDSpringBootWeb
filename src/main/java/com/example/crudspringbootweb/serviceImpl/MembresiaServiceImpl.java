@@ -40,16 +40,14 @@ public class MembresiaServiceImpl implements MembresiaService {
     }
 
     @Override
-    public String deleteMembresia(BigInteger id) {
+    public void deleteMembresia(BigInteger id) {
         if (membresiaRepository.findById(id).isPresent()) {
             membresiaRepository.deleteById(id);
-            return "Membresia eliminado correctamente.";
         }
-        return "Error! El Membresia no existe";
     }
 
     @Override
-    public String updateMembresia(Membresia membresia) {
+    public void updateMembresia(Membresia membresia) {
         BigInteger num = membresia.getId_membresia();
         if (membresiaRepository.findById(num).isPresent()) {
             Membresia membresiaUpdate = new Membresia(
@@ -59,8 +57,6 @@ public class MembresiaServiceImpl implements MembresiaService {
                     membresia.getFactura()
             );
             membresiaRepository.save(membresiaUpdate);
-            return "Useracount modificado";
         }
-        return "Error al Useracount el Restaurant";
     }
 }

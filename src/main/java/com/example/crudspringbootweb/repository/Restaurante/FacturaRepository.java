@@ -8,6 +8,4 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface FacturaRepository extends JpaRepository<Factura,String> {
-    Void save(Optional<FacturaRepository> factura);
-}
+public interface FacturaRepository extends JpaRepository<Factura,String> { }

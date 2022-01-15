@@ -14,5 +14,5 @@ public interface MembresiaController {
 
     public void deleteMembresiaById(BigInteger id);
 
-    public String updateMembresia(Membresia membresiaNew);
+    public void updateMembresia(Membresia membresiaNew);
 }

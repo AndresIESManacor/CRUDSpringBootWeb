@@ -175,8 +175,8 @@ public class MembresiaControllerImpl implements MembresiaController {
     }
 
     @Override
-    public String updateMembresia(Membresia membresiaNew) {
-        return membresiaService.updateMembresia(membresiaNew);
+    public void updateMembresia(Membresia membresiaNew) {
+        membresiaService.updateMembresia(membresiaNew);
     }
 
     public void inicializeModelMap(ModelMap model) {

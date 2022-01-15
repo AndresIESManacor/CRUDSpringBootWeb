@@ -13,9 +13,9 @@ public interface MembresiaService {
 
     public Membresia saveMembresia(Membresia membresiaNew);
 
-    public String deleteMembresia(BigInteger id);
+    public void deleteMembresia(BigInteger id);
 
-    public String updateMembresia(Membresia membresia);
+    public void updateMembresia(Membresia membresia);
 
     // QUERY
 

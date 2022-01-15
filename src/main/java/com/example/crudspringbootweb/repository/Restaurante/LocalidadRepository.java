@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LocalidadRepository extends JpaRepository<Localidad, BigInteger> {
-    Void save(Optional<Localidad> localidadOptional);
-
     @Query(value = "SELECT * FROM localidad WHERE nombre_localidad = ?1",nativeQuery = true)
     List<Localidad> findLocalidadByNombre_localidad(String nombre);
 }

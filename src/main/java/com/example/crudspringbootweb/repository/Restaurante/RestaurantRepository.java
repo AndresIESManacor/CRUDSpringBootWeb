@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, BigInteger>{
-    Void save(Optional<Restaurant> customerToUpdate);
-
     //IS VALIDATED BOOLEAN
     @Query(value = "SELECT * FROM restaurante WHERE validated = ?1",nativeQuery = true)
     List<Restaurant> findRestaurantByValidated(boolean validated);

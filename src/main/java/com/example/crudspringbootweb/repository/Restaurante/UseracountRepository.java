@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UseracountRepository extends JpaRepository<Useracount, BigInteger> {
-    Void save(Optional<Useracount> useracountOptional);
-
     @Query(value = "SELECT * FROM user_acount WHERE correo = ?1",nativeQuery = true)
     List<Useracount> findUseracountsByCorreo(String correo);
 
