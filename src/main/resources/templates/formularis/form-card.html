@@ -125,27 +125,27 @@
                             </form>
                         </div>
 
-<!--                        <div th:if="${type} == 'comentario-create'">-->
-<!--                            &lt;!&ndash; FORM RESTAURANT CREATE &ndash;&gt;-->
-<!--                            <form th:action="@{/comentario/save}" method="POST" th:object="${object}">-->
-<!--                                <div th:replace="formularis/comentario :: comentario-field ('CREATE')"></div>-->
-<!--                                <div class="app-form-group buttons">-->
-<!--                                    <button class="app-form-button"><a href="/">RETURN</a></button>-->
-<!--                                    <input type="submit" class="app-form-button" value="CREATE"/>-->
-<!--                                </div>-->
-<!--                            </form>-->
-<!--                        </div>-->
+                        <div th:if="${type} == 'comentario-create'">
+                            <!-- FORM RESTAURANT CREATE -->
+                            <form th:action="@{/comentario/save}" method="POST" th:object="${object}">
+                                <div th:replace="formularis/comentario :: comentario-field ('CREATE',${array})"></div>
+                                <div class="app-form-group buttons">
+                                    <button class="app-form-button"><a href="/">RETURN</a></button>
+                                    <input type="submit" class="app-form-button" value="CREATE"/>
+                                </div>
+                            </form>
+                        </div>
 
-<!--                        <div th:if="${type} == 'comentario-update'">-->
-<!--                            &lt;!&ndash; FORM RESTAURANT UPDATE &ndash;&gt;-->
-<!--                            <form th:action="@{/comentario/put}" method="POST" th:object="${object}">-->
-<!--                                <div th:replace="formularis/comentario :: comentario-field ('UPDATE')"></div>-->
-<!--                                <div class="app-form-group buttons">-->
-<!--                                    <button class="app-form-button"><a href="/">RETURN</a></button>-->
-<!--                                    <input type="submit" class="app-form-button" value="UPDATE"/>-->
-<!--                                </div>-->
-<!--                            </form>-->
-<!--                        </div>-->
+                        <div th:if="${type} == 'comentario-update'">
+                            <!-- FORM RESTAURANT UPDATE -->
+                            <form th:action="@{/comentario/put}" method="POST" th:object="${object}">
+                                <div th:replace="formularis/comentario :: comentario-field ('UPDATE',${array})"></div>
+                                <div class="app-form-group buttons">
+                                    <button class="app-form-button"><a href="/">RETURN</a></button>
+                                    <input type="submit" class="app-form-button" value="UPDATE"/>
+                                </div>
+                            </form>
+                        </div>
 
                         <div th:if="${type} == 'reserva-create'">
                             <!-- FORM RESTAURANT CREATE -->

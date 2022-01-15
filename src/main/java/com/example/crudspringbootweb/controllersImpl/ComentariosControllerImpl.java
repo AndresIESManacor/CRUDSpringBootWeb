@@ -3,6 +3,7 @@ package com.example.crudspringbootweb.controllersImpl;
 import com.example.crudspringbootweb.controllers.ComentariosController;
 import com.example.crudspringbootweb.entity.*;
 import com.example.crudspringbootweb.service.ComentariosService;
+import com.example.crudspringbootweb.service.ReservasService;
 import com.example.crudspringbootweb.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.math.BigInteger;
@@ -31,6 +33,8 @@ public class ComentariosControllerImpl implements ComentariosController {
     @Autowired
     ComentariosService comentariosService;
 
+    @Autowired
+    ReservasService reservasService;
 
     //////////////         COMENTARIOS FORMULARIOS        ////////////////////
 
@@ -38,6 +42,7 @@ public class ComentariosControllerImpl implements ComentariosController {
     public String create(ModelMap model) {
         model.addAttribute("type","comentario-create");
         model.addAttribute("object",new Comentarios());
+        model.addAttribute("array",reservasService.findAllReservass());
         return __route_formularis;
     }
 
@@ -48,6 +53,7 @@ public class ComentariosControllerImpl implements ComentariosController {
             if (comentarios.isPresent()) {
                 model.addAttribute("type", "comentario-update");
                 model.addAttribute("object", comentarios.get());
+                model.addAttribute("array",reservasService.findAllReservass());
                 return __route_formularis;
             }
         }
@@ -77,6 +83,7 @@ public class ComentariosControllerImpl implements ComentariosController {
                 saveComentario(comentarios);
             }
         }
+        saveComentario(comentarios);
         return show(model);
     }
 
@@ -99,7 +106,6 @@ public class ComentariosControllerImpl implements ComentariosController {
             } else {
                 model.addAttribute("error","comentario id doesnt exit");
             }
-            updateComentario(comentario);
         }
 
         return show(model);
@@ -112,24 +118,52 @@ public class ComentariosControllerImpl implements ComentariosController {
         return __route_table;
     }
 
-    @Override
-    public String findComentarioById(String id, ModelMap model) {
-        return null;
+    @RequestMapping(value = "/comentario/delete/{id}", method = RequestMethod.GET, produces = "application/json")
+    public RedirectView delete(@PathVariable BigInteger id, ModelMap model) {
+        if (id!=null) {
+            Optional<Comentarios> comentarios = comentariosService.findComentarioById(id);
+            if (comentarios.isPresent()) {
+                deleteComentarioById(id);
+            } else {
+                model.addAttribute("error", "FACTURA NOT FOUNDED");
+            }
+        }
+        return new RedirectView("/comentarios");
     }
+
+
+    @RequestMapping(value = "/comentario/{id}",method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    @Override
+    public String findComentarioById(@PathVariable BigInteger id, ModelMap model) {
+        if (id!=null) {
+            Optional<Comentarios> comentarios = comentariosService.findComentarioById(id);
+            if (comentarios.isPresent()) {
+                model.addAttribute("comentario", comentarios.get());
+                return __route_table;
+            }
+        }
+        model.addAttribute("error","COMENTARIO NOT FOUNDED");
+        return __route_home;
+    }
+
+    /* ------------------------------------------ */
+
 
     @Override
     public void saveComentario(Comentarios comentarios) {
-
+        if (comentarios!=null) {
+            comentariosService.saveComentario(comentarios);
+        }
     }
 
     @Override
-    public void deleteComentarioById(String id) {
-
+    public void deleteComentarioById(BigInteger id) {
+        comentariosService.deleteComentario(id);
     }
 
     @Override
     public void updateComentario(Comentarios comentariosNew) {
-
+        comentariosService.updateComentario(comentariosNew);
     }
 
     public void inicializeModelMap(ModelMap model) {

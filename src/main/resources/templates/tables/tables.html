@@ -139,5 +139,27 @@
         </div>
     </div>
 
+    <!-- ///////*               COMENTARIOS               ///////// -->
+
+    <!-- TABLE COMENTARIOS -->
+    <div th:fragment="table-comentario (comentarios)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/comentarios :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/comentarios :: tbody-compose (${comentarios})"></div>
+        </div>
+    </div>
+
+    <!-- TABLE COMENTARIOS SINGLE -->
+    <div th:fragment="table-comentario-single (comentario)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/comentarios :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/comentarios :: tbody-single(${comentario})"></div>
+        </div>
+    </div>
+
 </body>
 </html>

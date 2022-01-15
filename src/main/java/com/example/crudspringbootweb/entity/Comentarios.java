@@ -3,8 +3,8 @@ package com.example.crudspringbootweb.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigInteger;
 
 @Data
@@ -18,7 +18,7 @@ public class Comentarios {
 
     @Column(name = "comentario")
     @NotNull
-    @Max(254)
+    @Size(min = 0,max = 254)
     private String comentario;
 
     @Column(name = "valoracion")

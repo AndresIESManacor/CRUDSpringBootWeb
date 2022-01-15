@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- ALL COMENTARIOS -->
+<table th:fragment="thead">
+  <thead>
+  <tr class="row100 head">
+    <th class="column-width10 first-column">id_comentario</th>
+    <th style="width: 50%;">comentario</th>
+    <th class="column-width5">valoracion</th>
+    <th class="column-width5">reserva</th>
+    <th class="column-width5">Create</th>
+    <th class="column-width5">Update</th>
+    <th class="column-width5">Read</th>
+    <th class="column-width5">Delete</th>
+  </tr>
+  </thead>
+</table>
+
+<div th:fragment="tbody-compose (comentarios)">
+  <table>
+    <tbody>
+    <tr class="row100 body" th:each="comentario : ${comentarios}" th:include="tables/columns/comentarios :: body-rows(${comentario})">
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div th:fragment="tbody-single(comentario)">
+  <table>
+    <tbody>
+    <tr class="row100 body" th:include="tables/columns/comentarios :: body-rows(${comentario})">
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<tr class="row100 body" th:fragment="body-rows(comentario)">
+  <td class="column-width10 first-column" th:text="${comentario.id_comentario}"></td>
+  <td style="width: 50%;" th:text="${comentario.comentario}"></td>
+  <td class="column-width5" th:text="${comentario.valoracion}"></td>
+  <td class="column-width5"><a th:href="@{'/reserva/'+${comentario.reserva.id_reserva}}" th:text="${comentario.reserva.id_reserva}"></a></td>
+  <td class="column-width5"><a href="/comentario/create" class="create-column">Create</a></td>
+  <td class="column-width5"><a th:href="@{'/comentario/update/' + ${comentario.id_comentario}}" class="update-column">Update</a></td>
+  <td class="column-width5"><a th:href="@{'/comentario/' + ${comentario.id_comentario}}" class="read-column">Read</a></td>
+  <td class="column-width5"><a th:href="@{'/comentario/delete/' + ${comentario.id_comentario}}" class="delete-column">Delete</a></td>
+</tr>
+</body>
+</html>

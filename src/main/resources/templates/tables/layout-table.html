@@ -51,6 +51,13 @@
     <h2 style="text-align: center;">TABLA SINGLE RESERVAS </h2>
 </div>
 
+<div th:if="${comentarios}!=null">
+    <h2 style="text-align: center;">TABLA COMENTARIOS </h2>
+</div>
+<div th:if="${comentario} != null">
+    <h2 style="text-align: center;">TABLA SINGLE COMENTARIOS </h2>
+</div>
+
 <div class="container-table100">
     <div class="wrap-table100">
         <div class="table100 ver1 m-b-110">
@@ -132,8 +139,10 @@
                 <div th:replace="tables/tables :: table-restaurant-single (${restaurant})"></div>
             </div>
 
+
+
             <div th:if="${reservas} != null">
-                <!-- TABLE FACTURAS -->
+                <!-- TABLE RESERVAS -->
                 <div th:if="${reservas.size()} != 0">
                     <div th:replace="tables/tables :: table-reservas (${reservas})"></div>
                 </div>
@@ -143,9 +152,30 @@
             </div>
 
             <div th:if="${reserva} != null">
-                <!-- TABLE SINGLE FACTURA -->
+                <!-- TABLE SINGLE RESERVAS -->
                 <div th:replace="tables/tables :: table-reserva-single (${reserva})"></div>
             </div>
+
+
+
+
+            <div th:if="${comentarios} != null">
+                <!-- TABLE COMENTARIOS -->
+                <div th:if="${comentarios.size()} != 0">
+                    <div th:replace="tables/tables :: table-comentario (${comentarios})"></div>
+                </div>
+                <div th:unless="${comentarios.size()} != 0">
+                    THERE IS NO COMENTARIOS NOW
+                </div>
+            </div>
+
+            <div th:if="${comentario} != null">
+                <!-- TABLE SINGLE RESERVAS -->
+                <div th:replace="tables/tables :: table-comentario-single (${comentario})"></div>
+            </div>
+
+
+
         </div>
     </div>
 </div>
