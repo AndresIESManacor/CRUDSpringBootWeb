@@ -164,8 +164,8 @@ public class RestaurantControllerImpl implements RestaurantControllers {
     }
 
     @Override
-    public String updateRestaurant(Restaurant restaurantNew) {
-        return restaurantService.updateRestaurant(restaurantNew);
+    public void updateRestaurant(Restaurant restaurantNew) {
+        restaurantService.updateRestaurant(restaurantNew);
     }
 
     public String checkRelationsExist(Restaurant restaurant) {

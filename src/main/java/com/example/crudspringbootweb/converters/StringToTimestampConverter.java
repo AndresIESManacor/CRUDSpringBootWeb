@@ -1,6 +1,5 @@
 package com.example.crudspringbootweb.converters;
 
-
 import org.springframework.core.convert.converter.Converter;
 
 import java.sql.Timestamp;

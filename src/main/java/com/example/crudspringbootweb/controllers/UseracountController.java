@@ -16,7 +16,7 @@ public interface UseracountController {
 
     public void saveUseracount(Useracount useracount);
 
-    public String deleteUseracountById(BigInteger id);
+    public void deleteUseracountById(BigInteger id);
 
-    public String updateUseracount(Useracount useracountNew);
+    public void updateUseracount(Useracount useracountNew);
 }

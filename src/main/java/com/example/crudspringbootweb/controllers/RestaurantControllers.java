@@ -17,5 +17,5 @@ public interface RestaurantControllers {
 
     public RedirectView delete(BigInteger id, ModelMap model);
 
-    public String updateRestaurant(Restaurant restaurantNew);
+    public void updateRestaurant(Restaurant restaurantNew);
 }

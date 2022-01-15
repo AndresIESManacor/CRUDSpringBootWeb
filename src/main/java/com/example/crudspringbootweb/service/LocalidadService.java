@@ -13,9 +13,9 @@ public interface LocalidadService {
 
     public Localidad saveLocalidad(Localidad localidadNew);
 
-    public String deleteLocalidad(BigInteger id);
+    public void deleteLocalidad(BigInteger id);
 
-    public String updateLocalidad(Localidad localidad);
+    public void updateLocalidad(Localidad localidad);
 
     // QUERY
 

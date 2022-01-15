@@ -35,16 +35,14 @@ public class LocaliadadServiceImpl implements LocalidadService {
     }
 
     @Override
-    public String deleteLocalidad(BigInteger id) {
+    public void deleteLocalidad(BigInteger id) {
         if (localidadRepository.findById(id).isPresent()) {
             localidadRepository.deleteById(id);
-            return "Localidad eliminado correctamente.";
         }
-        return "Error! El Localidad no existe";
     }
 
     @Override
-    public String updateLocalidad(Localidad localidad) {
+    public void updateLocalidad(Localidad localidad) {
         BigInteger num = localidad.getId_localidad();
         if (localidadRepository.findById(num).isPresent()) {
             Localidad localidadUpdate = new Localidad(
@@ -53,9 +51,7 @@ public class LocaliadadServiceImpl implements LocalidadService {
                     localidad.getCodigo_postal()
             );
             localidadRepository.save(localidadUpdate);
-            return "Useracount modificado";
         }
-        return "Error al Useracount el Restaurant";
     }
 
     public List<Localidad> findLocalidadByNombre_localidad(String nombre) {

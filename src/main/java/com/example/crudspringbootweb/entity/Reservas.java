@@ -29,7 +29,7 @@ public class Reservas {
 
     @Column(name = "nombre")
     @NotNull
-    @Max(40)
+    @Pattern(regexp = "^[A-Z][a-z]+(?:[ ]+[A-Z][a-z]+)*$") // UPPERCASE THE FIRST LETTER AND SPACE ANOTHER UPPERCASE
     private String nombre;
 
     @Column(name = "lenguaje")

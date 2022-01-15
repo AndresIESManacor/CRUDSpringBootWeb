@@ -164,13 +164,13 @@ public class UseracountControllerImpl implements UseracountController {
     }
 
     @Override
-    public String deleteUseracountById(@PathVariable BigInteger id) {
-        return useracountService.deleteUseracount(id);
+    public void deleteUseracountById(@PathVariable BigInteger id) {
+        useracountService.deleteUseracount(id);
     }
 
     @Override
-    public String updateUseracount(Useracount useracountNew) {
-        return useracountService.updateUseracount(useracountNew);
+    public void updateUseracount(Useracount useracountNew) {
+        useracountService.updateUseracount(useracountNew);
     }
 
     public void inicializeModelMap(ModelMap model) {

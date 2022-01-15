@@ -13,9 +13,9 @@ public interface UseracountService {
 
     public Useracount saveUseracount(Useracount useracountnew);
 
-    public String deleteUseracount(BigInteger id);
+    public void deleteUseracount(BigInteger id);
 
-    public String updateUseracount(Useracount useracount);
+    public void updateUseracount(Useracount useracount);
 
     // QUERY
 

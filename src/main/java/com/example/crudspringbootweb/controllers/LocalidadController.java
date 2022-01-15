@@ -12,7 +12,7 @@ public interface LocalidadController {
 
     public void saveLocalidad(Localidad localidad);
 
-    public String deleteLocalidadById(BigInteger id);
+    public void deleteLocalidadById(BigInteger id);
 
-    public String updateLocalidad(Localidad localidadNew);
+    public void updateLocalidad(Localidad localidadNew);
 }

@@ -37,16 +37,14 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public String deleteRestaurant(BigInteger id) {
+    public void deleteRestaurant(BigInteger id) {
         if (restaurantRepository.findById(id).isPresent()) {
             restaurantRepository.deleteById(id);
-            return "Restaurant eliminado correctamente.";
         }
-        return "Error! El Restaurant no existe";
     }
 
     @Override
-    public String updateRestaurant(Restaurant restaurantNew) {
+    public void updateRestaurant(Restaurant restaurantNew) {
         BigInteger num = restaurantNew.getId_restaurante();
         if (restaurantRepository.findById(num).isPresent()) {
             Restaurant customerToUpdate = new Restaurant(
@@ -61,9 +59,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                     restaurantNew.isVisible()
             );
             restaurantRepository.save(customerToUpdate);
-            return "Restaurant modificado";
         }
-        return "Error al modificar el Restaurant";
     }
 
     @Override

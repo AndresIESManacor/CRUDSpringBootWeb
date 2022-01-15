@@ -14,9 +14,9 @@ public interface RestaurantService {
 
     public Restaurant saveRestaurant(Restaurant restaurantNew);
 
-    public String deleteRestaurant(BigInteger id);
+    public void deleteRestaurant(BigInteger id);
 
-    public String updateRestaurant(Restaurant restaurantNew);
+    public void updateRestaurant(Restaurant restaurantNew);
 
     //QUERYS
 

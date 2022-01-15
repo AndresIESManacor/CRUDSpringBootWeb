@@ -117,5 +117,27 @@
         </div>
     </div>
 
+    <!-- ///////*               RESERVAS               ///////// -->
+
+    <!-- TABLE RESERVAS -->
+    <div th:fragment="table-reservas (reservas)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/reserva :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/reserva :: tbody-compose (${reservas})"></div>
+        </div>
+    </div>
+
+    <!-- TABLE RESERVAS SINGLE -->
+    <div th:fragment="table-reserva-single (reserva)">
+        <div class="table100-head">
+            <div th:replace="tables/columns/reserva :: thead"></div>
+        </div>
+        <div class="table100-body js-pscroll">
+            <div th:replace="tables/columns/reserva :: tbody-single(${reserva})"></div>
+        </div>
+    </div>
+
 </body>
 </html>

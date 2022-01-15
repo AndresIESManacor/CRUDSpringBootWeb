@@ -44,6 +44,13 @@
     <h2 style="text-align: center;">TABLA SINGLE RESTAURANT </h2>
 </div>
 
+<div th:if="${reservas}!=null">
+    <h2 style="text-align: center;">TABLA RESERVAS </h2>
+</div>
+<div th:if="${reserva} != null">
+    <h2 style="text-align: center;">TABLA SINGLE RESERVAS </h2>
+</div>
+
 <div class="container-table100">
     <div class="wrap-table100">
         <div class="table100 ver1 m-b-110">
@@ -123,6 +130,21 @@
             <div th:if="${restaurant} != null">
                 <!-- TABLE SINGLE RESTAURANTES -->
                 <div th:replace="tables/tables :: table-restaurant-single (${restaurant})"></div>
+            </div>
+
+            <div th:if="${reservas} != null">
+                <!-- TABLE FACTURAS -->
+                <div th:if="${reservas.size()} != 0">
+                    <div th:replace="tables/tables :: table-reservas (${reservas})"></div>
+                </div>
+                <div th:unless="${reservas.size()} != 0">
+                    THERE IS NO RESERVAS NOW
+                </div>
+            </div>
+
+            <div th:if="${reserva} != null">
+                <!-- TABLE SINGLE FACTURA -->
+                <div th:replace="tables/tables :: table-reserva-single (${reserva})"></div>
             </div>
         </div>
     </div>

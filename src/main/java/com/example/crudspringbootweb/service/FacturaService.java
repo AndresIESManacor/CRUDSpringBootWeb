@@ -12,7 +12,7 @@ public interface FacturaService {
 
     public Factura saveFactura(Factura facturaNew);
 
-    public String deleteFactura(String id);
+    public void deleteFactura(String id);
 
-    public String updateFactura(Factura factura);
+    public void updateFactura(Factura factura);
 }

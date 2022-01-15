@@ -160,13 +160,13 @@ public class LocalidadControllerImpl implements LocalidadController {
     }
 
     @Override
-    public String deleteLocalidadById(BigInteger id) {
-        return localidadService.deleteLocalidad(id);
+    public void deleteLocalidadById(BigInteger id) {
+        localidadService.deleteLocalidad(id);
     }
 
     @Override
-    public String updateLocalidad(Localidad localidadNew) {
-        return localidadService.updateLocalidad(localidadNew);
+    public void updateLocalidad(Localidad localidadNew) {
+        localidadService.updateLocalidad(localidadNew);
     }
 
     public boolean isNombreTaken(Localidad localidad, Localidad localidadUpdate) {

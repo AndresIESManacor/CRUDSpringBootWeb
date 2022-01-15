@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="reserva-field (type, restaurantes)">
+  <h3 style="color: white; font-size: medium; text-align: center" th:text="${type}"></h3>
+  <div class="app-form-group" style="display: flex; flex-direction: row; justify-content: center;">
+    <label th:if="${type=='CREATE'}">
+      <input th:field="*{id_reserva}" type="hidden">
+    </label>
+    <label th:unless="${type=='CREATE'}">
+      <input th:field="*{id_reserva}" type="number" class="app-form-control" style="text-align: center" required readonly>
+    </label>
+  </div>
+  <div class="app-form-group message">
+    <label>
+      <p style="color: white">Personas</p>
+      <input th:field="*{personas}" type="number" oninput="this.value = Math.abs(this.value)" class="app-form-control" autocomplete="off" placeholder="PERSONAS" required>
+    </label>
+  </div>
+  <div class="app-form-group">
+    <label>
+      <p style="color: white">Correo</p>
+      <input th:field="*{correo}" type="email" step="any" class="app-form-control" autocomplete="off" placeholder="CORREO" required>
+    </label>
+  </div>
+  <div class="app-form-group">
+    <label>
+      <p style="color: white">Telefono</p>
+      <input th:field="*{telefono}" type="number" oninput="this.value = Math.abs(this.value)" class="app-form-control" autocomplete="off" placeholder="TELEFONO" required>
+    </label>
+  </div>
+  <div class="app-form-group">
+    <label>
+      <p style="color: white">Validated</p>
+      <select th:field="*{validated}">
+        <option th:value="1">true</option>
+        <option th:value="0">false</option>
+      </select>
+    </label>
+  </div>
+  <div class="app-form-group message">
+    <label>
+      <p style="color: white">nombre</p>
+      <input th:field="*{nombre}" type="text" class="app-form-control" autocomplete="off" placeholder="NOMBRE" required>
+    </label>
+  </div>
+  <div class="app-form-group">
+    <label>
+      <p style="color: white">lenguaje</p>
+      <input th:field="*{lenguaje}" type="text" maxlength="2" class="app-form-control" autocomplete="off" placeholder="LENGUAJE" required>
+    </label>
+  </div>
+  <div class="app-form-group">
+    <label>
+      <p style="color: white">fecha_inicio</p>
+      <input th:field="*{fecha_inicio}" type="datetime-local" class="app-form-control" autocomplete="off" placeholder="FECHA INICIO" required>
+    </label>
+  </div>
+  <div class="app-form-group">
+    <label>
+      <p style="color: white">fecha_fin</p>
+      <input th:field="*{fecha_fin}" type="datetime-local" class="app-form-control" autocomplete="off" placeholder="FECHA FIN" required>
+    </label>
+  </div>
+  <label th:if="${restaurantes}!=null">
+    <p style="color: white">Restaurant Relation</p>
+    <select th:field="*{restaurant}">
+      <option th:each="restaurant : ${restaurantes}" th:value="${restaurant.id_restaurante}" th:text="${restaurant.nombre}">
+    </select>
+    <p style="color: white">or <a style="color: green" href="/restaurant/create">create</a> one</p>
+  </label>
+</div>
+</body>
+</html>

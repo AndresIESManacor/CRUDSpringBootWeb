@@ -26,8 +26,6 @@ public class FacturaControllerImpl implements FacturaController {
     @Autowired
     FacturaService facturaService;
 
-    private static Validator validator;
-
     //////////////         FACTURAS FORMULARIOS        ////////////////////
 
     @RequestMapping(value = "/factura/create", method = RequestMethod.GET)

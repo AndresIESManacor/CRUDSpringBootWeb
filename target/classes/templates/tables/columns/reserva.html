@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- ALL LOCALIDAD  -->
+<table th:fragment="thead">
+    <thead>
+    <tr class="row100 head">
+        <th style="width: 10%;" class="first-column">id_reserva</th>
+        <th style="width: 5%;">personas</th>
+        <th style="width: 10%;">correo</th>
+        <th style="width: 5%;">telefono</th>
+        <th style="width: 5%;">nombre</th>
+        <th style="width: 5%;">lenguaje</th>
+        <th style="width: 5%;">validated</th>
+        <th style="width: 10%;">fecha_inicio</th>
+        <th style="width: 10%;">fecha_fin</th>
+        <th style="width: 10%;">id_restaurante</th>
+        <th style="width: 5%;">CREATE</th>
+        <th style="width: 5%;">UPDATE</th>
+        <th style="width: 5%;">READ</th>
+        <th style="width: 5%;">DELETE</th>
+    </tr>
+    </thead>
+</table>
+
+<div th:fragment="tbody-compose (reservas)">
+    <table>
+        <tbody>
+        <tr class="row100 body" th:each="reserva : ${reservas}" th:include="tables/columns/reserva :: body-rows(${reserva})">
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="tbody-single(reserva)">
+    <table>
+        <tbody>
+        <tr class="row100 body" th:include="tables/columns/reserva :: body-rows(${reserva})">
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<tr class="body" th:fragment="body-rows(reserva)">
+    <td style="width: 10%;" class="first-column" th:text="${reserva.id_reserva}"></td>
+    <td style="width: 5%;" th:text="${reserva.personas}"></td>
+    <td style="width: 10%;" th:text="${reserva.correo}"></td>
+    <td style="width: 5%;" th:text="${reserva.telefono}"></td>
+    <td style="width: 5%;" th:text="${reserva.nombre}"></td>
+    <td style="width: 5%;" th:text="${reserva.lenguaje}"></td>
+    <td style="width: 5%;" th:text="${reserva.validated}"></td>
+    <td style="width: 10%;" th:text="${reserva.fecha_inicio}"></td>
+    <td style="width: 10%;" th:text="${reserva.fecha_fin}"></td>
+    <td style="width: 10%;" th:text="${reserva.restaurant.nombre}"></td>
+    <td style="width: 5%;"><a href="/reserva/create" class="create-column">Create</a></td>
+    <td style="width: 5%;"><a th:href="@{'/reserva/update/' + ${reserva.id_reserva}}" class="update-column">Update</a></td>
+    <td style="width: 5%;"><a th:href="@{'/reserva/' + ${reserva.id_reserva}}" class="read-column">Read</a></td>
+    <td style="width: 5%;"><a th:href="@{'/reserva/delete/' + ${reserva.id_reserva}}" class="delete-column">Delete</a></td>
+</tr>
+</body>
+</html>

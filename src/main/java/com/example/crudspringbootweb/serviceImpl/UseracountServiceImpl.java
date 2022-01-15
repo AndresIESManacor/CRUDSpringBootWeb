@@ -36,16 +36,14 @@ public class UseracountServiceImpl implements UseracountService {
     }
 
     @Override
-    public String deleteUseracount(BigInteger id) {
+    public void deleteUseracount(BigInteger id) {
         if (useracountRepository.findById(id).isPresent()) {
             useracountRepository.deleteById(id);
-            return "Useracount eliminado correctamente.";
         }
-        return "Error! El Useracount no existe";
     }
 
     @Override
-    public String updateUseracount(Useracount useracount) {
+    public void updateUseracount(Useracount useracount) {
         BigInteger num = useracount.getId_user();
         if (useracountRepository.findById(num).isPresent()) {
             Useracount useracountUpdate = new Useracount(
@@ -61,9 +59,7 @@ public class UseracountServiceImpl implements UseracountService {
                     useracount.isAdmin()
             );
             useracountRepository.save(useracountUpdate);
-            return "Useracount modificado";
         }
-        return "Error al Useracount el Restaurant";
     }
 
     public List<Useracount> findUseracountsByEmail(String email) {

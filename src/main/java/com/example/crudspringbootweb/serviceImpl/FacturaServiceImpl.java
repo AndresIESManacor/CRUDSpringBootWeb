@@ -34,16 +34,14 @@ public class FacturaServiceImpl implements FacturaService {
     }
 
     @Override
-    public String deleteFactura(String id) {
+    public void deleteFactura(String id) {
         if (facturaRepository.findById(id).isPresent()) {
             facturaRepository.deleteById(id);
-            return "Useracount eliminado correctamente.";
         }
-        return "Error! El Useracount no existe";
     }
 
     @Override
-    public String updateFactura(Factura factura) {
+    public void updateFactura(Factura factura) {
         String id = factura.getNum_factura();
         if (facturaRepository.findById(id).isPresent()) {
             Factura facturaUpdate = new Factura();
@@ -51,8 +49,6 @@ public class FacturaServiceImpl implements FacturaService {
             facturaUpdate.setDireccion(factura.getDireccion());
             facturaUpdate.setImporte(factura.getImporte());
             facturaRepository.save(facturaUpdate);
-            return "Useracount modificado";
         }
-        return "Error al Useracount el Restaurant";
     }
 }
