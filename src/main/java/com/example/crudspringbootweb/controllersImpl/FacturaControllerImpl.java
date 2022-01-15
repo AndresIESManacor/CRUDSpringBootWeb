@@ -64,8 +64,7 @@ public class FacturaControllerImpl implements FacturaController {
                 model.addAttribute("type","factura-create");
                 model.addAttribute("object",new Factura());
                 model.addAttribute("error","TRYING TO SAVE FACTURA THAT EXIST");
-            } else {
-                saveFactura(factura);
+                return show(model);
             }
         }
         saveFactura(factura);

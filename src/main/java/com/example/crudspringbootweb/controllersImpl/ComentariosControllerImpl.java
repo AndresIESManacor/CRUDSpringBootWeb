@@ -79,8 +79,7 @@ public class ComentariosControllerImpl implements ComentariosController {
                 model.addAttribute("type","comentario-create");
                 model.addAttribute("object",new Comentarios());
                 model.addAttribute("error","TRYING TO SAVE COMENTARIO THAT EXIST");
-            } else {
-                saveComentario(comentarios);
+                return show(model);
             }
         }
         saveComentario(comentarios);

@@ -70,6 +70,7 @@ public class UseracountControllerImpl implements UseracountController {
                 model.addAttribute("type", "useracount-create");
                 model.addAttribute("object", new Useracount());
                 model.addAttribute("error", "TRYING TO SAVE USERACOUNT THAT EXIST");
+                return show(model);
             }
         }
 
@@ -86,7 +87,6 @@ public class UseracountControllerImpl implements UseracountController {
                 }
             }
         }
-
         return show(model);
     }
 

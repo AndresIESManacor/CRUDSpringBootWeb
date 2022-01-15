@@ -81,16 +81,11 @@ public class ImgControllerImpl implements ImgController {
         if (img.getId_img()!=null) {
             Optional<Img> requestImg = imgService.findImgById(img.getId_img());
             if (requestImg.isPresent()) {
-                model.addAttribute("type","img-create");
-                model.addAttribute("object",new Img());
-                model.addAttribute("array",restaurantService.findAllRestaurants());
-                model.addAttribute("error","TRYING TO SAVE IMG THAT EXIST");
-            } else {
-                String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-
-                FileUploadUtil.saveFile(__path_file, fileName, multipartFile);
-                img.setUrl(fileName);
-                saveImg(img);
+                model.addAttribute("type", "img-create");
+                model.addAttribute("object", new Img());
+                model.addAttribute("array", restaurantService.findAllRestaurants());
+                model.addAttribute("error", "TRYING TO SAVE IMG THAT EXIST");
+                return show(model);
             }
         }
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));

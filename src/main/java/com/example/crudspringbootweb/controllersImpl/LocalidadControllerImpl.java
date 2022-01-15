@@ -71,6 +71,7 @@ public class LocalidadControllerImpl implements LocalidadController {
                 model.addAttribute("type", "factura-create");
                 model.addAttribute("object", new Factura());
                 model.addAttribute("error", "TRYING TO SAVE FACTURA THAT EXIST");
+                return show(model);
             }
         }
         if (localidad.getNombre_localidad()!=null)  {

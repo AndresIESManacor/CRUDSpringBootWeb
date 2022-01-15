@@ -74,8 +74,7 @@ public class ReservaControllerImpl implements ReservaController {
                 model.addAttribute("type","reserva-create");
                 model.addAttribute("object",new Reservas());
                 model.addAttribute("error","TRYING TO SAVE RESERVA THAT EXIST");
-            } else {
-                saveReserva(reservas);
+                return show(model);
             }
         }
         saveReserva(reservas);
