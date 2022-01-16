@@ -1,12 +1,12 @@
 package com.example.crudspringbootweb.entity;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.io.Serializable;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.math.BigInteger;
 
 @Data

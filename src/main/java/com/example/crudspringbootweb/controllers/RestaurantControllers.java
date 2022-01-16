@@ -5,8 +5,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.math.BigInteger;
-import java.util.List;
-import java.util.Optional;
 
 public interface RestaurantControllers {
     public String show(ModelMap model);

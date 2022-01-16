@@ -3,7 +3,6 @@ package com.example.crudspringbootweb.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -27,9 +26,9 @@ public class Membresia {
     @ManyToOne(optional = false)
     @JoinColumn(name = "num_factura")
     @NotNull(message = "num_factura cant be null")
-    private Factura factura;
+    private cat.iesmanacor.backend_private.entities.Factura factura;
 
-    public Membresia(BigInteger id_membresia, Timestamp fecha_inicio, Timestamp fecha_fin, Factura factura) {
+    public Membresia(BigInteger id_membresia, Timestamp fecha_inicio, Timestamp fecha_fin, cat.iesmanacor.backend_private.entities.Factura factura) {
         this.id_membresia = id_membresia;
         this.fecha_inicio = fecha_inicio;
         this.fecha_fin = fecha_fin;
@@ -40,7 +39,7 @@ public class Membresia {
 
     }
 
-    public Membresia(Timestamp fecha_inicio, Timestamp fecha_fin, Factura factura) {
+    public Membresia(Timestamp fecha_inicio, Timestamp fecha_fin, cat.iesmanacor.backend_private.entities.Factura factura) {
         this.fecha_inicio = fecha_inicio;
         this.fecha_fin = fecha_fin;
         this.factura = factura;

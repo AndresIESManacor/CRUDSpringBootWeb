@@ -3,7 +3,6 @@ package com.example.crudspringbootweb.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -57,7 +56,7 @@ public class Restaurant {
 
     }
 
-    public Restaurant(BigInteger id_restaurante, String nombre, int dies_anticipacion_reservas, long telefono_restaurante, boolean validated, Localidad localidad, Membresia membresia, Useracount user, boolean visible) {
+    public Restaurant(BigInteger id_restaurante, String nombre, int dies_anticipacion_reservas, long telefono_restaurante, boolean validated, Localidad localidad,Membresia membresia, Useracount user, boolean visible) {
         this.id_restaurante = id_restaurante;
         this.nombre = nombre;
         this.dies_anticipacion_reservas = dies_anticipacion_reservas;
